@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "gargurevich-dev-website",
   "builds": [
     {
       "src": "package.json",
@@ -8,30 +7,6 @@
       "config": {
         "distDir": "dist/gargurevich-dev-website/browser"
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|webp|webmanifest))",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/sitemap.xml",
-      "headers": {
-        "content-type": "application/xml"
-      }
-    },
-    {
-      "src": "/robots.txt",
-      "headers": {
-        "content-type": "text/plain"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ],
   "headers": [
@@ -59,12 +34,21 @@
           "value": "camera=(), microphone=(), geolocation=()"
         }
       ]
+    },
+    {
+      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|webp|webmanifest))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ],
   "cleanUrls": true,
