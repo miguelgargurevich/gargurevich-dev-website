@@ -364,6 +364,18 @@ p, span, div {
   app-icon {
     transition: transform 0.3s ease;
   }
+  &.hovered {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow:
+      0 10px 28px rgba(252, 163, 17, 0.45),
+      0 6px 16px rgba(0, 0, 0, 0.18);
+    &::before {
+      opacity: 1;
+    }
+    app-icon {
+      transform: translateX(2px) scale(1.08);
+    }
+  }
 }
 
 .btn-outline-modern {

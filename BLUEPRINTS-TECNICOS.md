@@ -122,13 +122,28 @@ Marca profesional con blog, portafolio, casos de éxito y enfoque SEO.
 - Rutas protegidas (admin/blog)
 - Dark/Light Mode toggle con persistencia localStorage
 
+
 ### 🎨 Estilo Visual
 **Colores:**
 - `#14213D` Azul oscuro
 - `#FCA311` Amarillo acento
 - `#E5E5E5` Gris claro
 
-**UI Elements:** Cards, Tabs, Grid filtrable, Accordions
+**UI Elements:**
+- Cards, Tabs, Grid filtrable, Accordions
+- Botones `.btn-modern` con micro-interacciones y accesibilidad (hover, focus, ripple)
+- Badges y tags con alto contraste
+- Sistema de iconos SVG standalone y accesible
+
+**Lectura de artículos (blog):**
+- Contenedor de artículo con padding generoso, border-radius grande y sombra suave
+- Tipografía grande, interlineado 1.85, jerarquía clara en títulos y subtítulos
+- Párrafos, listas y citas con separación editorial
+- Imágenes y videos con margen y sombra
+- Bloques de código y blockquotes destacados
+- Enlaces subrayados y con transición
+- Responsive y mobile-first
+- Accesibilidad: contraste, foco visible, navegación por teclado
 
 ---
 

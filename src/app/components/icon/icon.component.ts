@@ -222,7 +222,13 @@ import { CommonModule } from '@angular/common';
         <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
         <polyline points="12,5 19,12 12,19" stroke-linecap="round" stroke-linejoin="round"/>
       </ng-container>
-      
+
+      <!-- Arrow Left -->
+      <ng-container *ngIf="name === 'arrow-left'">
+        <line x1="19" y1="12" x2="5" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="12,19 5,12 12,5" stroke-linecap="round" stroke-linejoin="round"/>
+      </ng-container>
+
       <!-- Arrow Up -->
       <ng-container *ngIf="name === 'arrow-up'">
         <line x1="12" y1="19" x2="12" y2="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -378,7 +384,7 @@ export class IconComponent {
       'mail', 'phone', 'map-pin', 'linkedin', 'github', 'message-circle',
       'menu', 'x', 'check', 'send', 'refresh', 'plus', 'rocket',
       'calendar', 'clock', 'folder', 'tag', 'bar-chart', 'external-link',
-      'sun', 'moon', 'arrow-right', 'arrow-up',
+      'sun', 'moon', 'arrow-right', 'arrow-left', 'arrow-up',
       'landing-page', 'website', 'web-scalable', 'ecommerce', 'custom-app',
       'ai-integration', 'chat', 'whatsapp', 'marketplace', 'migration',
       'target', 'lightning', 'tools', 'handshake', 'growth'
