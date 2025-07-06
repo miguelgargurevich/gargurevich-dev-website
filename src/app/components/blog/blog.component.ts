@@ -62,7 +62,7 @@ export class BlogComponent implements OnInit {
     }
 
     this.blogService.getPosts(filters, page).subscribe({
-      next: (response) => {
+      next: (response: { posts: BlogPost[]; pagination: BlogPagination }) => {
         this.posts = response.posts;
         this.pagination = response.pagination;
         this.isLoading = false;
