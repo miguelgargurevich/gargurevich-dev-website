@@ -44,7 +44,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   contactInfo: ContactInfo[] = [
     {
-      icon: 'email',
+      icon: 'mail',
       title: 'Email',
       description: 'Envíanos un mensaje',
       value: 'hola@gargurevich.dev',
@@ -65,7 +65,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       link: 'tel:+5112345678'
     },
     {
-      icon: 'location',
+      icon: 'map-pin',
       title: 'Ubicación',
       description: 'Lima, Perú',
       value: 'Remoto y presencial',

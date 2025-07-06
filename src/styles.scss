@@ -45,6 +45,11 @@
   --alert-warning-border: rgba(245, 158, 11, 0.3);
   --alert-warning-text: #FBBF24;
   
+  // Heading colors for proper contrast in dark mode
+  --heading-primary: #FCA311;      // Accent color for main headings (h2)
+  --heading-secondary: #FFFFFF;    // White for secondary headings (h3, h4)
+  --heading-tertiary: #D1D5DB;     // Light gray for tertiary headings
+  
   // Button text colors for proper contrast
   --btn-primary-text: #FFFFFF;
   --btn-primary-bg: var(--color-primary);
@@ -156,6 +161,11 @@
   --btn-secondary-text: #475569;
   --btn-secondary-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
   --btn-secondary-hover-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+  
+  // Heading colors for proper contrast in light mode
+  --heading-primary: #1E293B;      // Dark gray for main headings (h2)
+  --heading-secondary: #334155;    // Medium gray for secondary headings (h3, h4)
+  --heading-tertiary: #475569;     // Lighter gray for tertiary headings
 }
 
 // Reset and base styles
@@ -357,7 +367,24 @@ p, span, div {
 }
 
 .btn-outline-modern {
-  @extend .btn-modern;
+  // Base button styles (same as btn-modern)
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  overflow: hidden;
+  white-space: nowrap;
+  
+  // Outline specific styles
   background: transparent;
   color: var(--color-accent);
   border: 2px solid var(--color-accent);
@@ -365,18 +392,52 @@ p, span, div {
     0 2px 8px rgba(252, 163, 17, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   
+  // Ripple effect overlay
   &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
     opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  // Icon positioning
+  app-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: inherit; // Hereda el color del botón
   }
   
   &:hover {
-    color: var(--color-primary);
     border-color: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 8px 25px rgba(252, 163, 17, 0.4),
+      0 4px 10px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
     
     &::before {
       opacity: 1;
     }
+    
+    // Cambio de color diferente para modo claro y oscuro
+    color: #FFFFFF; // Blanco para contraste en ambos modos
+    
+    // Icon movement effect
+    app-icon {
+      transform: translateX(2px);
+      color: #FFFFFF; // Icono también en blanco para contraste
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 
+      0 2px 8px rgba(252, 163, 17, 0.3),
+      0 1px 3px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -1392,4 +1453,31 @@ body.light-theme .footer {
   color: #334155 !important;
   opacity: 1 !important;
   visibility: visible !important;
+}
+
+// Hero Code Preview Colors - Light Theme Override
+body.light-theme {
+  .code-keyword { 
+    color: #d63384 !important; // Rosa más oscuro para keywords
+  }
+  .code-variable { 
+    color: #0ea5e9 !important; // Azul más oscuro para variables
+  }
+  .code-string { 
+    color: #dc6b19 !important; // Naranja para strings
+  }
+  .code-function { 
+    color: #16a34a !important; // Verde más oscuro para funciones
+  }
+  .filename {
+    color: #3b82f6 !important; // Azul para el filename
+  }
+}
+
+// Ensure dark theme keeps original colors
+:root:not(.light-theme) {
+  .code-keyword { color: #ff79c6; }
+  .code-variable { color: #8be9fd; }
+  .code-string { color: #f1fa8c; }
+  .code-function { color: #50fa7b; }
 }

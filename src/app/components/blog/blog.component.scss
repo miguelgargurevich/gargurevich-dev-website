@@ -22,6 +22,24 @@
   }
 }
 
+// Blog Main Content
+.blog-main {
+  margin-bottom: 6rem; // Más espaciado adicional después del blog
+  
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem; // Más espacio entre tarjetas
+    margin-bottom: 4rem; // Más espaciado después de la grilla
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+  }
+}
+
 // Featured Posts
 .featured-posts {
   .featured-grid {
@@ -249,14 +267,18 @@
 
 // Blog Main Content
 .blog-main {
+  margin-bottom: 5rem; // Espaciado adicional después del blog
+  
   .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2.5rem; // Más espacio entre tarjetas
+    margin-bottom: 4rem; // Mayor espaciado después de la grilla
     
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       gap: 2rem;
+      margin-bottom: 3rem; // Mayor espaciado en móvil
     }
   }
 }

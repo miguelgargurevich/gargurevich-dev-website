@@ -189,7 +189,7 @@
                   [class.error]="isFieldInvalid('privacy')"
                 >
                 <label for="privacy">
-                  Acepto la <a href="#" target="_blank">política de privacidad</a> y el tratamiento de mis datos *
+                  Acepto la <a routerLink="/privacy" target="_blank">política de privacidad</a> y el tratamiento de mis datos *
                 </label>
                 <div class="error-message" *ngIf="isFieldInvalid('privacy')">
                   {{ getFieldError('privacy') }}
