@@ -37,8 +37,8 @@
 
         <!-- Theme Toggle & Mobile Menu -->
         <div class="header-actions">
-          <app-theme-toggle></app-theme-toggle>
-          
+          <!-- Mostrar toggle solo en desktop -->
+          <app-theme-toggle class="desktop-only"></app-theme-toggle>
           <!-- Mobile Menu Toggle -->
           <button class="mobile-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
             <span class="hamburger"></span>
@@ -69,7 +69,8 @@
           <a routerLink="/contact" class="nav-link btn btn-accent" (click)="closeMobileMenu()">Contacto</a>
         </li>
         <li class="nav-item mobile-theme-toggle">
-          <app-theme-toggle></app-theme-toggle>
+          <!-- Mostrar toggle solo en mobile -->
+          <app-theme-toggle class="mobile-only"></app-theme-toggle>
         </li>
       </ul>
     </div>
