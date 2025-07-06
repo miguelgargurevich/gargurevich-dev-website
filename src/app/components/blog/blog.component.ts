@@ -73,8 +73,13 @@ export class BlogComponent implements OnInit {
     });
 
     // Load featured posts
-    this.blogService.getFeaturedPosts().subscribe(featured => {
-      this.featuredPosts = featured;
+    this.blogService.getFeaturedPosts().subscribe({
+      next: (featured: BlogPost[]) => {
+        this.featuredPosts = featured;
+      },
+      error: () => {
+        this.featuredPosts = [];
+      }
     });
   }
 
