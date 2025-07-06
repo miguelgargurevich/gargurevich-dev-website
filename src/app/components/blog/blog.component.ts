@@ -42,11 +42,18 @@ export class BlogComponent implements OnInit {
   }
 
   private loadCategories(): void {
-    this.blogService.getCategories().subscribe(categories => {
-      this.categories = [
-        { id: 'all', name: 'Todos los Artículos', slug: 'all', description: '', color: '' },
-        ...categories
-      ];
+    (this.blogService.getCategories() as any).subscribe({
+      next: (categories: BlogCategory[]) => {
+        this.categories = [
+          { id: 'all', name: 'Todos los Artículos', slug: 'all', description: '', color: '' },
+          ...categories
+        ];
+      },
+      error: () => {
+        this.categories = [
+          { id: 'all', name: 'Todos los Artículos', slug: 'all', description: '', color: '' }
+        ];
+      }
     });
   }
 
