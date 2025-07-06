@@ -44,11 +44,6 @@ export class CookieBannerComponent implements OnInit {
     }
   }
 
-  customize(): void {
-    // Aquí se podría abrir un modal de configuración de cookies
-    console.log('Personalizar cookies');
-  }
-
   private enableAnalytics(): void {
     // Habilitar analytics solo si se aceptaron y estamos en el navegador
     if (isPlatformBrowser(this.platformId) && typeof gtag !== 'undefined') {
