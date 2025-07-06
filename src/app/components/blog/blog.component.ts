@@ -42,7 +42,7 @@ export class BlogComponent implements OnInit {
   }
 
   private loadCategories(): void {
-    (this.blogService.getCategories() as any).subscribe({
+    this.blogService.getCategories().subscribe({
       next: (categories: BlogCategory[]) => {
         this.categories = [
           { id: 'all', name: 'Todos los Artículos', slug: 'all', description: '', color: '' },
@@ -68,7 +68,7 @@ export class BlogComponent implements OnInit {
       filters.search = this.searchTerm;
     }
 
-    (this.blogService.getPosts(filters, page) as any).subscribe({
+    this.blogService.getPosts(filters, page).subscribe({
       next: (response: { posts: BlogPost[]; pagination: BlogPagination }) => {
         this.posts = response.posts;
         this.pagination = response.pagination;
@@ -80,7 +80,7 @@ export class BlogComponent implements OnInit {
     });
 
     // Load featured posts
-    (this.blogService.getFeaturedPosts() as any).subscribe({
+    this.blogService.getFeaturedPosts().subscribe({
       next: (featured: BlogPost[]) => {
         this.featuredPosts = featured;
       },
