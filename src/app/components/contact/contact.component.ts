@@ -124,44 +124,50 @@ export class ContactComponent implements OnInit, OnDestroy {
     if (this.contactForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
       this.submitError = false;
-      
       try {
-        // Simular envío de formulario
-        await this.simulateFormSubmission();
-        
+
+        // Armar mensaje para WhatsApp con campos en negrita real
+        const form = this.contactForm.value;
+        const servicio = this.serviceOptions.find(opt => opt.id === form.service)?.name || form.service;
+        let mensaje = `¡Hola! Me gustaría información sobre:\n\n`;
+        mensaje += `*Nombre*: ${form.name}\n`;
+        mensaje += `*Email*: ${form.email}\n`;
+        if (form.phone) mensaje += `*Teléfono*: ${form.phone}\n`;
+        if (form.company) mensaje += `*Empresa*: ${form.company}\n`;
+        mensaje += `*Servicio*: ${servicio}\n`;
+        if (form.budget) mensaje += `*Presupuesto*: ${form.budget}\n`;
+        if (form.timeline) mensaje += `*Plazo*: ${form.timeline}\n`;
+        mensaje += `*Mensaje*: ${form.message}\n`;
+        if (form.newsletter) mensaje += `Deseo recibir newsletter.\n`;
+        mensaje += `\nEnviado desde el formulario web.`;
+
+        // WhatsApp: usar _blank en desktop, _self en mobile para mejor UX
+        const url = `https://wa.me/51966918363?text=${encodeURIComponent(mensaje)}`;
+        const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+        window.open(url, isMobile ? '_self' : '_blank');
+
         this.submitSuccess = true;
         this.contactForm.reset();
-        
-        // Resetear después de 5 segundos
+
         setTimeout(() => {
           this.submitSuccess = false;
         }, 5000);
-        
       } catch (error) {
         this.submitError = true;
-        console.error('Error al enviar formulario:', error);
+        console.error('Error al armar mensaje de WhatsApp:', error);
       } finally {
         this.isSubmitting = false;
       }
-    } else {
-      // Marcar todos los campos como touched para mostrar errores
+    } else if (!this.contactForm.valid) {
+      // Log visual si el formulario no es válido
+      this.submitError = true;
+      setTimeout(() => {
+        this.submitError = false;
+      }, 4000);
       Object.keys(this.contactForm.controls).forEach(key => {
         this.contactForm.get(key)?.markAsTouched();
       });
     }
-  }
-
-  private simulateFormSubmission(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simular 90% de éxito
-        if (Math.random() > 0.1) {
-          resolve();
-        } else {
-          reject(new Error('Error simulado'));
-        }
-      }, 2000);
-    });
   }
 
   resetForm() {
