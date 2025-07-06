@@ -52,6 +52,7 @@
       grid-template-columns: 1fr;
     }
   }
+  margin-bottom: 3.5rem; // Más espacio debajo de destacados
 }
 
 .featured-post-card {
@@ -189,6 +190,7 @@
   padding-bottom: 2rem; // Más espacio entre filtros y tarjetas
   margin-bottom: 2rem; // Separación adicional
   
+  margin-bottom: 2.5rem; // Más espacio debajo del filtro
   .filter-tabs {
     display: flex;
     justify-content: center;
@@ -634,6 +636,23 @@
       align-items: center;
     }
   }
+}
+
+// Mejora visibilidad de botones outline en el blog
+.btn-outline {
+  border: 2px solid var(--primary, #14213D);
+  color: var(--primary, #14213D);
+  background: transparent;
+  font-weight: 600;
+  padding: 0.7em 1.6em;
+  border-radius: 0.5em;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+}
+.btn-outline:hover {
+  background: var(--primary, #14213D);
+  color: #fff;
+  border-color: var(--primary, #14213D);
+  box-shadow: 0 0 0 4px rgba(252,163,17,0.13);
 }
 
 // Responsive Adjustments

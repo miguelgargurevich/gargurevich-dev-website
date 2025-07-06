@@ -1,0 +1,83 @@
+<section class="blog-article-section section fade-in">
+  <div class="container">
+    <ng-container *ngIf="isLoading">
+      <div class="loading text-center">
+        <p>Cargando artículo...</p>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="notFound && !isLoading">
+      <div class="not-found text-center">
+        <h2>Artículo no encontrado</h2>
+        <p>El artículo que buscas no existe o ha sido eliminado.</p>
+        <a routerLink="/blog" class="btn btn-primary">Volver al Blog</a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="post && !isLoading">
+      <script type="application/ld+json">
+      {{ '{' }}
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "{{ post.title }}",
+        "description": "{{ post.excerpt }}",
+        "author": {
+          "@type": "Person",
+          "name": "{{ post.author.name }}"
+        },
+        "datePublished": "{{ post.publishedAt }}",
+        "image": "{{ post.image?.url }}",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://gargurevich.dev/blog/{{ post.slug }}"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Gargurevich.Dev",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://gargurevich.dev/assets/icons/icon-192x192.png"
+          }
+        }
+      {{ '}' }}
+      </script>
+      <article class="blog-article">
+        <header class="article-header">
+          <h1 class="article-title">{{ post.title }}</h1>
+          <div class="article-meta">
+            <div class="author-info">
+              <img [src]="post.author.avatar" [alt]="post.author.name" class="author-avatar">
+              <span class="author-name">{{ post.author.name }}</span>
+            </div>
+            <span class="publish-date">
+              <app-icon name="calendar" size="16px"></app-icon>
+              {{ formatDate(post.publishedAt) }}
+            </span>
+            <span class="read-time">
+              <app-icon name="clock" size="16px"></app-icon>
+              {{ post.readingTime }} min lectura
+            </span>
+            <span class="category">
+              <app-icon name="folder" size="16px"></app-icon>
+              {{ post.category }}
+            </span>
+          </div>
+          <div class="article-tags">
+            <span class="tag" *ngFor="let tag of post.tags">{{ tag }}</span>
+          </div>
+        </header>
+        <div class="article-image image-animate" *ngIf="post.image?.url">
+          <img [src]="post.image.url" [alt]="post.image.alt" loading="lazy">
+        </div>
+        <section class="article-content" [innerHTML]="post.content"></section>
+      </article>
+      <div class="back-link text-center">
+        <a routerLink="/blog" class="btn-modern btn-lg"
+           (mouseover)="onBackBtnHover($event)" (mouseout)="onBackBtnOut($event)">
+          <span class="icon-wrapper">
+            <app-icon name="arrow-left" size="18px"></app-icon>
+          </span>
+          Volver al Blog
+        </a>
+      </div>
+    </ng-container>
+  </div>
+</section>
