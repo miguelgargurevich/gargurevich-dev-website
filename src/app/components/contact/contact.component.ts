@@ -54,15 +54,15 @@ export class ContactComponent implements OnInit, OnDestroy {
       icon: 'whatsapp',
       title: 'WhatsApp',
       description: 'Mensaje directo',
-      value: '+51 999 123 456',
-      link: 'https://wa.me/51999123456'
+      value: '+51 966 918 363',
+      link: 'https://wa.me/51966918363'
     },
     {
       icon: 'phone',
       title: 'Teléfono',
       description: 'Llamada directa',
-      value: '+51 1 234 5678',
-      link: 'tel:+5112345678'
+      value: '+51 966 918 363',
+      link: 'tel:+51966918363'
     },
     {
       icon: 'map-pin',

@@ -24,24 +24,24 @@
         *ngFor="let post of featuredPosts; trackBy: trackByPostId"
       >
         <div class="post-image">
-          <img [src]="post.image.url" [alt]="post.image.alt" loading="lazy">
+          <img [src]="post.image" [alt]="post.title" loading="lazy">
           <div class="post-category">{{ getCategoryName(post.category) }}</div>
         </div>
         
         <div class="post-content">
           <div class="post-meta">
             <div class="author-info">
-              <img [src]="post.author.avatar" [alt]="post.author.name" class="author-avatar">
-              <span class="author-name">{{ post.author.name }}</span>
+              <img [src]="post.authorImage" [alt]="post.author" class="author-avatar">
+              <span class="author-name">{{ post.author }}</span>
             </div>
             <div class="post-stats">
               <span class="publish-date">
                 <app-icon name="calendar" size="14px"></app-icon>
-                {{ formatDate(post.publishedAt) }}
+                {{ formatDate(post.publishDate) }}
               </span>
               <span class="read-time">
                 <app-icon name="clock" size="14px"></app-icon>
-                {{ post.readingTime }} min lectura
+                {{ post.readTime }} min lectura
               </span>
             </div>
           </div>
@@ -54,7 +54,7 @@
           </div>
           
           <div class="post-actions">
-            <a [routerLink]="['/blog', post.slug]" class="btn btn-accent">
+            <a [routerLink]="['/blog', post.id]" class="btn btn-accent">
               <app-icon name="external-link" size="16px"></app-icon>
               Leer Artículo
             </a>
@@ -71,11 +71,12 @@
     <div class="filter-tabs">
       <button 
         *ngFor="let category of categories"
-        [class.active]="selectedCategory === category.slug"
-        (click)="selectCategory(category.slug)"
+        [class.active]="selectedCategory === category.id"
+        (click)="selectCategory(category.id)"
         class="filter-tab"
       >
         {{ category.name }}
+        <span class="count">({{ category.count }})</span>
       </button>
     </div>
   </div>
@@ -91,33 +92,33 @@
         <div class="posts-grid">
           <article 
             class="post-card" 
-            *ngFor="let post of posts; trackBy: trackByPostId"
+            *ngFor="let post of filteredPosts; trackBy: trackByPostId"
           >
             <div class="post-image">
-              <img [src]="post.image.url" [alt]="post.image.alt" loading="lazy">
+              <img [src]="post.image" [alt]="post.title" loading="lazy">
               <div class="post-overlay">
-                <a [routerLink]="['/blog', post.slug]" class="read-more-link">Leer Artículo</a>
+                <a [routerLink]="['/blog', post.id]" class="read-more-link">Leer Artículo</a>
               </div>
             </div>
             
             <div class="post-content">
               <div class="post-meta">
                 <span class="post-category">{{ getCategoryName(post.category) }}</span>
-                <span class="post-date">{{ formatDate(post.publishedAt) }}</span>
+                <span class="post-date">{{ formatDate(post.publishDate) }}</span>
               </div>
               
-              <h3 class="post-title">
-                <a [routerLink]="['/blog', post.slug]">{{ post.title }}</a>
-              </h3>
+                <h3 class="post-title">
+                  <a [routerLink]="['/blog', post.id]">{{ post.title }}</a>
+                </h3>
               
               <p class="post-excerpt">{{ post.excerpt }}</p>
               
               <div class="post-footer">
                 <div class="author-info">
-                  <img [src]="post.author.avatar" [alt]="post.author.name" class="author-avatar">
-                  <span class="author-name">{{ post.author.name }}</span>
+                  <img [src]="post.authorImage" [alt]="post.author" class="author-avatar">
+                  <span class="author-name">{{ post.author }}</span>
                 </div>
-                <span class="read-time">{{ post.readingTime }} min</span>
+                <span class="read-time">{{ post.readTime }} min</span>
               </div>
               
               <div class="post-tags">
@@ -128,15 +129,10 @@
         </div>
 
         <!-- No Results -->
-        <div *ngIf="posts.length === 0 && !isLoading" class="no-results text-center">
+        <div *ngIf="filteredPosts.length === 0" class="no-results text-center">
           <h3>No hay artículos en esta categoría</h3>
           <p>Explora otras categorías o vuelve pronto para ver nuevo contenido.</p>
           <button (click)="selectCategory('all')" class="btn btn-primary">Ver Todos los Artículos</button>
-        </div>
-
-        <!-- Loading -->
-        <div *ngIf="isLoading" class="loading text-center">
-          <p>Cargando artículos...</p>
         </div>
       </div>
 
@@ -166,11 +162,11 @@
             Artículos Recientes
           </h3>
           <div class="recent-posts">
-            <div class="recent-post" *ngFor="let post of featuredPosts.slice(0, 3)">
-              <img [src]="post.image.url" [alt]="post.image.alt" class="recent-post-image">
+            <div class="recent-post" *ngFor="let post of recentPosts">
+              <img [src]="post.image" [alt]="post.title" class="recent-post-image">
               <div class="recent-post-content">
-                <h4><a [routerLink]="['/blog', post.slug]">{{ post.title }}</a></h4>
-                <span class="recent-post-date">{{ formatDate(post.publishedAt) }}</span>
+                <h4><a [routerLink]="['/blog', post.id]">{{ post.title }}</a></h4>
+                <span class="recent-post-date">{{ formatDate(post.publishDate) }}</span>
               </div>
             </div>
           </div>
@@ -190,6 +186,7 @@
                 [class.active]="selectedCategory === category.id"
               >
                 {{ category.name }}
+                <span class="count">({{ category.count }})</span>
               </a>
             </li>
           </ul>

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../icon/icon.component';
-
 interface TeamMember {
   name: string;
   role: string;
@@ -41,9 +40,9 @@ export class TeamComponent {
     {
       name: 'Miguel Fernandez',
       role: 'Founder & Lead Developer',
-      description: 'Full-stack developer con más de 3 años de experiencia creando soluciones web modernas. Especializado en Angular, Node.js y arquitecturas escalables.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face',
-      skills: ['Angular', 'TypeScript', 'Node.js', 'AWS', 'DevOps'],
+      description: 'Full-stack developer con más de 3 años de experiencia creando soluciones web modernas. Especializado en Angular, React, Node.js, Azure y arquitecturas backend escalables.',
+      image: 'assets/images/team/miguel.jpg',
+      skills: ['Angular', 'React', 'TypeScript', 'Node.js', 'Azure', 'AWS', 'Backend', 'DevOps'],
       social: {
         linkedin: 'https://linkedin.com/in/miguelfernandezgargurevich',
         github: 'https://github.com/miguelfernandezgargurevich',
@@ -54,7 +53,7 @@ export class TeamComponent {
       name: 'Sofia Rodriguez',
       role: 'UI/UX Designer',
       description: 'Diseñadora especializada en experiencias digitales que convierten. Experta en diseño centrado en el usuario y optimización de conversiones.',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b784?w=300&h=300&fit=crop&crop=face',
+      image: 'assets/images/team/placeholder.svg',
       skills: ['Figma', 'Adobe Creative Suite', 'Prototyping', 'User Research', 'Design Systems'],
       social: {
         linkedin: 'https://linkedin.com/in/sofia-rodriguez-design'
@@ -135,4 +134,11 @@ export class TeamComponent {
     { number: '3 años', label: 'de Experiencia' },
     { number: '24/7', label: 'Soporte Técnico' }
   ];
+
+  onImgError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement && !imgElement.src.endsWith('placeholder.svg')) {
+      imgElement.src = 'assets/images/team/placeholder.svg';
+    }
+  }
 }
