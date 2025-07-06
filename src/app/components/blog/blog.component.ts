@@ -61,7 +61,7 @@ export class BlogComponent implements OnInit {
       filters.search = this.searchTerm;
     }
 
-    this.blogService.getPosts(filters, page).subscribe({
+    (this.blogService.getPosts(filters, page) as any).subscribe({
       next: (response: { posts: BlogPost[]; pagination: BlogPagination }) => {
         this.posts = response.posts;
         this.pagination = response.pagination;
@@ -73,7 +73,7 @@ export class BlogComponent implements OnInit {
     });
 
     // Load featured posts
-    this.blogService.getFeaturedPosts().subscribe({
+    (this.blogService.getFeaturedPosts() as any).subscribe({
       next: (featured: BlogPost[]) => {
         this.featuredPosts = featured;
       },
