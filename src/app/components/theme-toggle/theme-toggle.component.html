@@ -1,0 +1,11 @@
+<button 
+  class="theme-toggle" 
+  (click)="toggleTheme()" 
+  [attr.aria-label]="isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+  title="{{ isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro' }}">
+  <div class="theme-toggle-track">
+    <div class="theme-toggle-thumb" [class.dark]="isDarkMode">
+      <span class="icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
+    </div>
+  </div>
+</button>

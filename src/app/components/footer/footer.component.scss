@@ -1,0 +1,517 @@
+.footer {
+  color: #FFFFFF;
+  padding: 4rem 0 1.5rem;
+  margin-top: auto;
+  position: relative;
+  min-height: 400px;
+  
+  // Dark mode - Simple dark background
+  background: #1E293B;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+// LIGHT THEME - Simple gray background
+:root.light-theme .footer,
+.light-theme .footer {
+  background: #94A3B8 !important;
+  color: #334155 !important;
+  border-top: 1px solid rgba(203, 213, 225, 0.5) !important;
+  
+  // Modern typography for light mode
+  h1, h2, h3, h4, h5, h6 {
+    color: #1E293B !important;
+    font-weight: 700;
+  }
+  
+  p, span, div, li {
+    color: #475569 !important;
+  }
+  
+  a {
+    color: #334155 !important;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: #3B82F6 !important;
+    }
+  }
+  
+  .logo-text {
+    color: #1E293B !important;
+    text-shadow: none;
+    font-weight: 800;
+  }
+  
+  .logo-accent {
+    color: #3B82F6 !important;
+    text-shadow: none;
+  }
+  
+  .footer-description {
+    color: #64748B !important;
+    opacity: 1 !important;
+    font-weight: 500;
+  }
+  
+  // Modern social links for light mode
+  .social-link {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(203, 213, 225, 0.5) !important;
+    color: #475569 !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.1);
+    
+    &:hover {
+      background: #3B82F6 !important;
+      color: #FFFFFF !important;
+      border-color: #3B82F6 !important;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    app-icon {
+      color: inherit !important;
+    }
+  }
+  
+  // Modern contact icons for light mode
+  .contact-icon {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    color: #3B82F6 !important;
+    
+    &:hover {
+      background: #3B82F6 !important;
+      color: #FFFFFF !important;
+      border-color: #3B82F6 !important;
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    app-icon {
+      color: inherit !important;
+    }
+  }
+  
+  // Footer links styling for light mode
+  .footer-links a {
+    color: #E0E7FF !important;
+    position: relative;
+    transition: all 0.3s ease;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FCD34D;
+      transition: width 0.3s ease;
+    }
+    
+    &:hover {
+      color: #FCD34D !important;
+      transform: translateX(4px);
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+  
+  // Footer bottom section for light mode
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    
+    p {
+      color: #E0E7FF !important;
+    }
+    
+    .footer-link {
+      color: #E0E7FF !important;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #FCD34D;
+        transition: width 0.3s ease;
+      }
+      
+      &:hover {
+        color: #FCD34D !important;
+        
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Container layout improvements
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  
+  @media (max-width: 640px) {
+    padding: 0 1rem;
+  }
+}
+
+// Enhanced footer content styling with improved layout
+.footer-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+  align-items: start;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+// Enhanced footer sections with better organization
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #FFFFFF;
+    position: relative;
+    padding-bottom: 0.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, #FCA311, #F59E0B);
+      border-radius: 1px;
+    }
+    
+    .light-theme & {
+      color: #1E293B !important;
+    }
+  }
+  
+  // Brand section specific styling
+  &.footer-brand {
+    .footer-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      
+      .light-theme & {
+        opacity: 1;
+      }
+    }
+  }
+  
+  // Services and Company sections
+  &.footer-services,
+  &.footer-company {
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      
+      li {
+        margin-bottom: 0.75rem;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          font-size: 0.95rem;
+          position: relative;
+          
+          &::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background: #FCA311;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.3s ease;
+          }
+          
+          &:hover {
+            color: #FFFFFF;
+            transform: translateX(8px);
+            
+            &::before {
+              opacity: 1;
+              left: -8px;
+            }
+          }
+          
+          .light-theme & {
+            color: #64748B !important;
+            
+            &:hover {
+              color: #3B82F6 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Contact section specific styling
+  &.footer-contact {
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+  }
+}
+
+// Enhanced contact item layout
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0; // Allow text to wrap
+    
+    .contact-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      
+      .light-theme & {
+        color: #94A3B8 !important;
+      }
+    }
+    
+    .contact-value {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      word-break: break-word;
+      
+      .light-theme & {
+        color: #475569 !important;
+      }
+    }
+  }
+}
+
+// Modern logo styling
+.logo {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+  
+  .logo-text {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    .light-theme & {
+      color: #1E293B !important;
+      text-shadow: none;
+    }
+  }
+  
+  .logo-accent {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #FCA311;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    .light-theme & {
+      color: #3B82F6 !important;
+      text-shadow: none;
+    }
+  }
+}
+
+// Enhanced social links
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto; // Push to bottom in flex container
+  
+  @media (max-width: 640px) {
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+}
+
+.social-link {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: rgba(59, 130, 246, 0.9);
+    border-color: #3B82F6;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+  }
+}
+
+// Enhanced contact icon styling
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3B82F6;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #3B82F6;
+    color: #FFFFFF;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  }
+  
+  app-icon {
+    transition: color 0.3s ease;
+  }
+}
+
+// Enhanced footer bottom section
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
+  margin-top: 3rem;
+  position: relative;
+  
+  .light-theme & {
+    border-top-color: rgba(203, 213, 225, 0.5) !important;
+  }
+  
+  .footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    @media (max-width: 640px) {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+    }
+    
+    .copyright {
+      margin: 0;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      
+      .light-theme & {
+        color: #64748B !important;
+      }
+    }
+    
+    .footer-bottom-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      
+      .separator {
+        color: rgba(255, 255, 255, 0.3);
+        font-weight: 300;
+        
+        .light-theme & {
+          color: #CBD5E1 !important;
+        }
+      }
+      
+      .footer-link {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background: #FCA311;
+          transition: width 0.3s ease;
+        }
+        
+        &:hover {
+          color: #FCA311;
+          
+          &::after {
+            width: 100%;
+          }
+        }
+        
+        .light-theme & {
+          color: #64748B !important;
+          
+          &:hover {
+            color: #3B82F6 !important;
+            
+            &::after {
+              background: #3B82F6;
+            }
+          }
+        }
+      }
+    }
+  }
+}

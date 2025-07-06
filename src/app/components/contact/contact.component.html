@@ -1,0 +1,295 @@
+<!-- Page Header -->
+<section class="page-header section">
+  <div class="container">
+    <div class="page-header-content text-center">
+      <h1>Hablemos de tu Proyecto</h1>
+      <p class="page-subtitle">
+        Estamos aquí para convertir tu idea en una solución digital exitosa
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Content -->
+<section class="contact-content section">
+  <div class="container">
+    <div class="contact-grid">
+      
+      <!-- Contact Form -->
+      <div class="contact-form-section">
+        <div class="form-header">
+          <h2>Cuéntanos sobre tu proyecto</h2>
+          <p>Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas</p>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="submitSuccess" class="alert alert-success">
+          <div class="alert-icon">✅</div>
+          <div class="alert-content">
+            <h3>¡Mensaje enviado correctamente!</h3>
+            <p>Gracias por contactarnos. Responderemos a tu consulta muy pronto.</p>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="submitError" class="alert alert-error">
+          <div class="alert-icon">❌</div>
+          <div class="alert-content">
+            <h3>Error al enviar el mensaje</h3>
+            <p>Por favor, intenta nuevamente o contáctanos directamente por email.</p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form" *ngIf="!submitSuccess">
+          
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3>Información Personal</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nombre completo *</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  formControlName="name"
+                  [class.error]="isFieldInvalid('name')"
+                  placeholder="Tu nombre completo"
+                >
+                <div class="error-message" *ngIf="isFieldInvalid('name')">
+                  {{ getFieldError('name') }}
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email"
+                  [class.error]="isFieldInvalid('email')"
+                  placeholder="tu@email.com"
+                >
+                <div class="error-message" *ngIf="isFieldInvalid('email')">
+                  {{ getFieldError('email') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Teléfono / WhatsApp</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  formControlName="phone"
+                  [class.error]="isFieldInvalid('phone')"
+                  placeholder="+51 999 123 456"
+                >
+                <div class="error-message" *ngIf="isFieldInvalid('phone')">
+                  {{ getFieldError('phone') }}
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="company">Empresa</label>
+                <input 
+                  type="text" 
+                  id="company" 
+                  formControlName="company"
+                  placeholder="Nombre de tu empresa (opcional)"
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Information -->
+          <div class="form-section">
+            <h3>Información del Proyecto</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="service">Tipo de Servicio *</label>
+                <select 
+                  id="service" 
+                  formControlName="service"
+                  [class.error]="isFieldInvalid('service')"
+                >
+                  <option value="">Selecciona un servicio</option>
+                  <option 
+                    *ngFor="let option of serviceOptions" 
+                    [value]="option.id"
+                  >
+                    {{ option.name }} - {{ option.description }}
+                  </option>
+                </select>
+                <div class="error-message" *ngIf="isFieldInvalid('service')">
+                  {{ getFieldError('service') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="budget">Presupuesto Estimado</label>
+                <select id="budget" formControlName="budget">
+                  <option value="">Selecciona un rango</option>
+                  <option value="300-800">$300 - $800 USD</option>
+                  <option value="800-1500">$800 - $1,500 USD</option>
+                  <option value="1500-3000">$1,500 - $3,000 USD</option>
+                  <option value="3000-5000">$3,000 - $5,000 USD</option>
+                  <option value="5000+">Más de $5,000 USD</option>
+                  <option value="discuss">Prefiero discutirlo</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="timeline">Plazo de Entrega</label>
+                <select id="timeline" formControlName="timeline">
+                  <option value="">Selecciona un plazo</option>
+                  <option value="urgent">Urgente (1-2 semanas)</option>
+                  <option value="normal">Normal (3-4 semanas)</option>
+                  <option value="flexible">Flexible (1-2 meses)</option>
+                  <option value="planning">Solo estoy planificando</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Descripción del Proyecto *</label>
+              <textarea 
+                id="message" 
+                formControlName="message"
+                [class.error]="isFieldInvalid('message')"
+                rows="5"
+                placeholder="Cuéntanos más detalles sobre tu proyecto, objetivos, funcionalidades que necesitas, etc."
+              ></textarea>
+              <div class="error-message" *ngIf="isFieldInvalid('message')">
+                {{ getFieldError('message') }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="form-section">
+            <div class="form-checkboxes">
+              <div class="form-checkbox">
+                <input type="checkbox" id="newsletter" formControlName="newsletter">
+                <label for="newsletter">
+                  Quiero recibir newsletter con tips de desarrollo web y ofertas especiales
+                </label>
+              </div>
+              
+              <div class="form-checkbox">
+                <input 
+                  type="checkbox" 
+                  id="privacy" 
+                  formControlName="privacy"
+                  [class.error]="isFieldInvalid('privacy')"
+                >
+                <label for="privacy">
+                  Acepto la <a href="#" target="_blank">política de privacidad</a> y el tratamiento de mis datos *
+                </label>
+                <div class="error-message" *ngIf="isFieldInvalid('privacy')">
+                  {{ getFieldError('privacy') }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-actions">
+            <button 
+              type="submit" 
+              class="btn-modern-light primary large"
+              [disabled]="isSubmitting"
+            >
+              <app-icon name="send" size="18px"></app-icon>
+              <span *ngIf="isSubmitting">Enviando...</span>
+              <span *ngIf="!isSubmitting">Enviar Consulta</span>
+            </button>
+            
+            <button 
+              type="button" 
+              class="btn-modern-light outline"
+              (click)="resetForm()"
+              [disabled]="isSubmitting"
+            >
+              <app-icon name="refresh" size="18px"></app-icon>
+              Limpiar Formulario
+            </button>
+          </div>
+        </form>
+
+        <!-- Reset Button (when success is shown) -->
+        <div *ngIf="submitSuccess" class="form-actions">
+          <button class="btn-modern-light primary" (click)="resetForm()">
+            <app-icon name="add" size="18px"></app-icon>
+            Enviar Otra Consulta
+          </button>
+        </div>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="contact-info-section">
+        <div class="contact-info">
+          <h2>Otras formas de contacto</h2>
+          <p>¿Prefieres contactarnos directamente? Aquí tienes todas nuestras opciones</p>
+          
+          <div class="contact-methods">
+            <div 
+              class="contact-method" 
+              *ngFor="let info of contactInfo"
+            >
+              <div class="contact-icon">
+                <app-icon [name]="info.icon" size="24px" class="text-accent"></app-icon>
+              </div>
+              <div class="contact-details">
+                <h3>{{ info.title }}</h3>
+                <p class="contact-description">{{ info.description }}</p>
+                <a 
+                  *ngIf="info.link" 
+                  [href]="info.link"
+                  target="_blank"
+                  rel="noopener"
+                  class="contact-value"
+                >
+                  {{ info.value }}
+                </a>
+                <span *ngIf="!info.link" class="contact-value">
+                  {{ info.value }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+          <h3>Preguntas Frecuentes</h3>
+          
+          <div class="faq-item">
+            <h4>¿Cuánto tiempo toma un proyecto?</h4>
+            <p>Depende del tipo de proyecto. Un landing page toma 1-2 semanas, mientras que una aplicación completa puede tomar 6-12 semanas.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h4>¿Incluyen hosting y dominio?</h4>
+            <p>Sí, la mayoría de nuestros servicios incluyen hosting y dominio por el primer año, además de configuración completa.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h4>¿Ofrecen soporte después del lanzamiento?</h4>
+            <p>Absolutamente. Todos nuestros proyectos incluyen soporte técnico 24/7 y actualizaciones durante el primer año.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h4>¿Trabajen con clientes internacionales?</h4>
+            <p>Sí, trabajamos con clientes de todo el mundo. Nuestro horario es flexible y ofrecemos comunicación en español e inglés.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

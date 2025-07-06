@@ -1,0 +1,77 @@
+<header class="header">
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-content">
+        <!-- Logo -->
+        <div class="logo">
+          <a routerLink="/" class="logo-link">
+            <span class="logo-text">Gargurevich</span>
+            <span class="logo-accent">.Dev</span>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <ul class="nav-menu desktop-menu">
+          <li class="nav-item">
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/services" routerLinkActive="active" class="nav-link">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/cases" routerLinkActive="active" class="nav-link">Casos</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/blog" routerLinkActive="active" class="nav-link">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/team" routerLinkActive="active" class="nav-link">Equipo</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/contact" class="nav-link btn-modern">
+              Contacto
+              <app-icon name="arrow-right" size="16px"></app-icon>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Theme Toggle & Mobile Menu -->
+        <div class="header-actions">
+          <app-theme-toggle></app-theme-toggle>
+          
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <ul class="nav-menu mobile-menu" [class.active]="isMobileMenuOpen">
+        <li class="nav-item">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMobileMenu()">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/services" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/cases" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Casos</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/blog" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/team" routerLinkActive="active" class="nav-link" (click)="closeMobileMenu()">Equipo</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/contact" class="nav-link btn btn-accent" (click)="closeMobileMenu()">Contacto</a>
+        </li>
+        <li class="nav-item mobile-theme-toggle">
+          <app-theme-toggle></app-theme-toggle>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

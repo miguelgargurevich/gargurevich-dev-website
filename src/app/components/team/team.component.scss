@@ -1,0 +1,530 @@
+// Page Header
+.page-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: white;
+  padding: 6rem 0 4rem;
+  
+  .page-header-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
+// Company Story
+.company-story {
+  .story-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+  
+  .story-text {
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--color-text);
+    }
+    
+    .lead {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    p {
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+  }
+  
+  .story-stats {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--color-text);
+      text-align: center;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      
+      .stat-item {
+        text-align: center;
+        
+        .stat-number {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+        
+        .stat-label {
+          font-size: 0.9rem;
+          color: var(--color-text-secondary);
+        }
+      }
+    }
+  }
+}
+
+// Team Members
+.team-members {
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+}
+
+.team-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-accent);
+    
+    .member-image img {
+      transform: scale(1.05);
+    }
+    
+    .member-overlay {
+      opacity: 1;
+    }
+  }
+  
+  [data-theme="dark"] & {
+    &:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.member-image {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .member-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(20, 33, 61, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      
+      .social-link {
+        width: 50px;
+        height: 50px;
+        background: var(--color-accent);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1.25rem;
+        
+        &:hover {
+          transform: scale(1.1);
+          background: white;
+          color: var(--color-accent);
+        }
+      }
+    }
+  }
+}
+
+.member-info {
+  padding: 2rem;
+  
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+  
+  .member-role {
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .member-description {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .member-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    
+    .skill-tag {
+      background: var(--color-background-alt);
+      color: var(--color-text-secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid var(--color-border);
+    }
+  }
+}
+
+// Company Values
+.company-values {
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+}
+
+.value-card {
+  text-align: center;
+  padding: 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-accent);
+  }
+  
+  [data-theme="dark"] & {
+    &:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .value-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+  
+  p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// Timeline
+.timeline-section {
+  .timeline {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-accent);
+      transform: translateX(-50%);
+      
+      @media (max-width: 768px) {
+        left: 30px;
+      }
+    }
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+    
+    &:nth-child(even) {
+      flex-direction: row-reverse;
+      
+      .timeline-content {
+        text-align: right;
+        
+        @media (max-width: 768px) {
+          text-align: left;
+        }
+      }
+    }
+    
+    @media (max-width: 768px) {
+      flex-direction: row !important;
+      
+      .timeline-content {
+        text-align: left !important;
+      }
+    }
+    
+    .timeline-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      
+      @media (max-width: 768px) {
+        left: 30px;
+      }
+      
+      .timeline-year {
+        background: var(--color-accent);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 2rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+    }
+    
+    .timeline-content {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1rem;
+      padding: 2rem;
+      width: calc(50% - 50px);
+      
+      @media (max-width: 768px) {
+        width: calc(100% - 80px);
+        margin-left: 80px;
+      }
+      
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: var(--color-text);
+      }
+      
+      p {
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// Why Choose Us
+.why-choose-us {
+  .why-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+  
+  .why-text {
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--color-text);
+    }
+  }
+  
+  .why-list {
+    .why-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      .why-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+        width: 40px;
+        text-align: center;
+      }
+      
+      .why-details {
+        h3 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          color: var(--color-text);
+        }
+        
+        p {
+          color: var(--color-text-secondary);
+          line-height: 1.6;
+          margin: 0;
+        }
+      }
+    }
+  }
+  
+  .why-visual {
+    display: flex;
+    justify-content: center;
+    
+    .process-visual {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 1.5rem;
+        
+        .process-arrow {
+          transform: rotate(90deg);
+        }
+      }
+      
+      .process-step {
+        text-align: center;
+        
+        .step-number {
+          width: 60px;
+          height: 60px;
+          background: var(--color-accent);
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+        }
+        
+        p {
+          color: var(--color-text);
+          font-weight: 500;
+          margin: 0;
+        }
+      }
+      
+      .process-arrow {
+        font-size: 1.5rem;
+        color: var(--color-accent);
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+// CTA Section
+.cta {
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .page-header {
+    padding: 4rem 0 3rem;
+  }
+  
+  .story-text h2 {
+    font-size: 2rem;
+  }
+  
+  .why-text h2 {
+    font-size: 2rem;
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .story-stats .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

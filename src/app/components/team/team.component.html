@@ -1,0 +1,239 @@
+<!-- Page Header -->
+<section class="page-header section">
+  <div class="container">
+    <div class="page-header-content text-center">
+      <h1>Sobre Nosotros</h1>
+      <p class="page-subtitle">
+        Conoce al equipo detrás de las soluciones digitales que transforman negocios
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Company Story -->
+<section class="company-story section">
+  <div class="container">
+    <div class="story-content">
+      <div class="story-text">
+        <h2>Nuestra Historia</h2>
+        <p class="lead">
+          Gargurevich.Dev nace de la pasión por crear soluciones web que realmente impacten en los negocios. 
+          Desde 2022, hemos ayudado a empresas de todos los tamaños a digitalizar sus procesos y alcanzar 
+          sus objetivos online.
+        </p>
+        <p>
+          Comenzamos como un proyecto personal y hemos crecido hasta convertirnos en un equipo 
+          multidisciplinario de especialistas en desarrollo web, diseño UX/UI y arquitectura de software. 
+          Nuestro enfoque siempre ha sido simple: entender las necesidades reales de nuestros clientes 
+          y crear soluciones que generen resultados tangibles.
+        </p>
+        <p>
+          Creemos en la transparencia, la calidad técnica y la comunicación constante. Cada proyecto 
+          es una oportunidad para innovar y crear algo extraordinario.
+        </p>
+      </div>
+      
+      <div class="story-stats">
+        <h3>Nuestros Números</h3>
+        <div class="stats-grid">
+          <div class="stat-item" *ngFor="let stat of stats">
+            <div class="stat-number text-accent">{{ stat.number }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Members -->
+<section class="team-members section section-dark">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Nuestro Equipo</h2>
+      <p>Profesionales apasionados por la tecnología y comprometidos con tu éxito</p>
+    </div>
+    
+    <div class="team-grid">
+      <div class="team-card" *ngFor="let member of teamMembers">
+        <div class="member-image">
+          <img [src]="member.image" [alt]="member.name" loading="lazy">
+          <div class="member-overlay">
+            <div class="social-links">
+              <a 
+                *ngIf="member.social.linkedin" 
+                [href]="member.social.linkedin" 
+                target="_blank" 
+                rel="noopener"
+                class="social-link"
+                title="LinkedIn"
+              >
+                <i>💼</i>
+              </a>
+              <a 
+                *ngIf="member.social.github" 
+                [href]="member.social.github" 
+                target="_blank" 
+                rel="noopener"
+                class="social-link"
+                title="GitHub"
+              >
+                <app-icon name="code" size="24px"></app-icon>
+              </a>
+              <a 
+                *ngIf="member.social.website" 
+                [href]="member.social.website" 
+                target="_blank" 
+                rel="noopener"
+                class="social-link"
+                title="Website"
+              >
+                <i>🌐</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="member-info">
+          <h3>{{ member.name }}</h3>
+          <p class="member-role">{{ member.role }}</p>
+          <p class="member-description">{{ member.description }}</p>
+          
+          <div class="member-skills">
+            <span class="skill-tag" *ngFor="let skill of member.skills">
+              {{ skill }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company Values -->
+<section class="company-values section">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Nuestros Valores</h2>
+      <p>Los principios que guían cada proyecto y decisión que tomamos</p>
+    </div>
+    
+    <div class="values-grid">
+      <div class="value-card" *ngFor="let value of companyValues">
+        <div class="value-icon">
+          <app-icon [name]="value.icon" size="48px" class="text-accent"></app-icon>
+        </div>
+        <h3>{{ value.title }}</h3>
+        <p>{{ value.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="timeline-section section section-dark">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Nuestro Recorrido</h2>
+      <p>Hitos importantes en nuestro crecimiento y evolución</p>
+    </div>
+    
+    <div class="timeline">
+      <div class="timeline-item" *ngFor="let milestone of milestones; let i = index">
+        <div class="timeline-marker">
+          <div class="timeline-year">{{ milestone.year }}</div>
+        </div>
+        <div class="timeline-content">
+          <h3>{{ milestone.title }}</h3>
+          <p>{{ milestone.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-choose-us section">
+  <div class="container">
+    <div class="why-content">
+      <div class="why-text">
+        <h2>¿Por qué elegirnos?</h2>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-icon">✅</div>
+            <div class="why-details">
+              <h3>Experiencia Comprobada</h3>
+              <p>Más de 50 proyectos exitosos respaldan nuestra experiencia y metodología.</p>
+            </div>
+          </div>
+          
+          <div class="why-item">
+            <div class="why-icon">
+              <app-icon name="rocket" size="32px"></app-icon>
+            </div>
+            <div class="why-details">
+              <h3>Tecnología de Vanguardia</h3>
+              <p>Utilizamos las últimas tecnologías para crear soluciones modernas y escalables.</p>
+            </div>
+          </div>
+          
+          <div class="why-item">
+            <div class="why-icon">
+              <app-icon name="target" size="32px"></app-icon>
+            </div>
+            <div class="why-details">
+              <h3>Enfoque en Resultados</h3>
+              <p>Cada proyecto está diseñado para generar ROI y cumplir objetivos específicos.</p>
+            </div>
+          </div>
+          
+          <div class="why-item">
+            <div class="why-icon">🛠️</div>
+            <div class="why-details">
+              <h3>Soporte Integral</h3>
+              <p>Acompañamiento completo desde la idea inicial hasta el crecimiento sostenido.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="why-visual">
+        <div class="process-visual">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <p>Análisis</p>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <p>Diseño</p>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <p>Desarrollo</p>
+          </div>
+          <div class="process-arrow">→</div>
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <p>Lanzamiento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta section">
+  <div class="container">
+    <div class="cta-content text-center">
+      <h2>¿Listo para trabajar con nosotros?</h2>
+      <p>Contáctanos hoy y comencemos a construir la solución digital que tu negocio necesita</p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary">Iniciar un Proyecto</a>
+        <a routerLink="/cases" class="btn btn-outline">Ver Nuestro Trabajo</a>
+      </div>
+    </div>
+  </div>
+</section>

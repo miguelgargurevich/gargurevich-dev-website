@@ -1,0 +1,240 @@
+<!-- Page Header -->
+<section class="page-header section">
+  <div class="container">
+    <div class="page-header-content text-center">
+      <h1>Nuestros Servicios</h1>
+      <p class="page-subtitle">
+        Soluciones digitales completas para hacer crecer tu negocio
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Category Filter -->
+<section class="category-filter section-sm">
+  <div class="container">
+    <div class="filter-tabs">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category.id"
+        (click)="selectCategory(category.id)"
+        class="filter-tab"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+    
+    <div class="category-info text-center" *ngIf="getSelectedCategoryInfo()">
+      <p class="category-description">{{ getSelectedCategoryInfo()?.description }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<section class="services-grid-section section">
+  <div class="container">
+    <div class="services-grid">
+      <div 
+        class="service-detail-card card" 
+        *ngFor="let service of filteredServices; trackBy: trackByServiceId"
+      >
+        <!-- Service Header -->
+        <div class="service-header">
+          <div class="service-icon-large">
+            <app-icon [name]="service.icon" size="48px" class="text-accent"></app-icon>
+          </div>
+          <div class="service-title-area">
+            <h3 class="service-title">{{ service.title }}</h3>
+            <p class="service-subtitle">{{ service.subtitle }}</p>
+          </div>
+          <div class="service-price">{{ service.price }}</div>
+        </div>
+
+        <!-- Service Description -->
+        <div class="service-description">
+          <p>{{ service.description }}</p>
+        </div>
+
+        <!-- Service Features -->
+        <div class="service-features">
+          <h4>¿Qué incluye?</h4>
+          <ul class="features-list">
+            <li *ngFor="let feature of service.features">
+              <i class="feature-check">✓</i>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Technologies -->
+        <div class="service-technologies">
+          <h4>Tecnologías utilizadas</h4>
+          <div class="tech-tags">
+            <span 
+              class="tech-tag" 
+              *ngFor="let tech of service.technologies"
+            >
+              {{ tech }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Service Info -->
+        <div class="service-info">
+          <div class="info-item">
+            <strong>Duración:</strong> {{ service.duration }}
+          </div>
+          <div class="info-badges">
+            <span class="info-badge" *ngIf="service.includesHosting">
+              <i>🌐</i> Hosting Incluido
+            </span>
+            <span class="info-badge" *ngIf="service.includesSupport">
+              <i>🛠️</i> Soporte 24/7
+            </span>
+          </div>
+        </div>
+
+        <!-- Service Actions -->
+        <div class="service-actions">
+          <a routerLink="/contact" class="btn btn-accent">
+            Solicitar Cotización
+          </a>
+          <a routerLink="/cases" class="btn btn-outline">
+            Ver Ejemplos
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section section section-dark">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Nuestro Proceso de Desarrollo</h2>
+      <p>Metodología probada para garantizar el éxito de tu proyecto</p>
+    </div>
+    
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Análisis y Planificación</h3>
+          <p>Entendemos tus necesidades y objetivos para crear la estrategia perfecta.</p>
+        </div>
+      </div>
+      
+      <div class="process-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Diseño y Prototipo</h3>
+          <p>Creamos diseños únicos y prototipos interactivos para validar la funcionalidad.</p>
+        </div>
+      </div>
+      
+      <div class="process-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Desarrollo y Testing</h3>
+          <p>Desarrollamos con las mejores prácticas y realizamos pruebas exhaustivas.</p>
+        </div>
+      </div>
+      
+      <div class="process-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Lanzamiento y Soporte</h3>
+          <p>Desplegamos tu proyecto y brindamos soporte continuo para su crecimiento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Premium CTA Section -->
+<section class="cta-premium section">
+  <div class="container">
+    <div class="cta-premium-wrapper">
+      <!-- Background Effects -->
+      <div class="cta-background-effects">
+        <div class="cta-bg-gradient"></div>
+        <div class="cta-bg-pattern"></div>
+        <div class="cta-floating-shapes">
+          <div class="floating-shape shape-1"></div>
+          <div class="floating-shape shape-2"></div>
+          <div class="floating-shape shape-3"></div>
+          <div class="floating-shape shape-4"></div>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="cta-premium-content">
+        <div class="cta-premium-header">
+          <div class="cta-icon-premium">
+            <div class="icon-glow"></div>
+            <app-icon name="lightbulb" size="56px"></app-icon>
+            <div class="icon-ring ring-1"></div>
+            <div class="icon-ring ring-2"></div>
+          </div>
+          <div class="cta-badge">
+            <app-icon name="star" size="16px"></app-icon>
+            <span>Consulta Gratuita</span>
+          </div>
+        </div>
+        
+        <div class="cta-premium-text">
+          <h2>¿Tienes una idea revolucionaria?</h2>
+          <h3>Hagámosla realidad juntos</h3>
+          <p>No importa qué tan complejo o único sea tu proyecto. Nuestro equipo de expertos está listo para crear soluciones innovadoras que superen tus expectativas y impulsen tu negocio al siguiente nivel.</p>
+          
+          <div class="cta-features">
+            <div class="feature-item">
+              <app-icon name="check" size="18px"></app-icon>
+              <span>Análisis técnico gratuito</span>
+            </div>
+            <div class="feature-item">
+              <app-icon name="check" size="18px"></app-icon>
+              <span>Propuesta personalizada en 24h</span>
+            </div>
+            <div class="feature-item">
+              <app-icon name="check" size="18px"></app-icon>
+              <span>Soporte continuo garantizado</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="cta-premium-actions">
+          <a routerLink="/contact" class="btn-premium-primary">
+            <span class="btn-content">
+              <app-icon name="rocket" size="20px"></app-icon>
+              <span class="btn-text">Comenzar mi Proyecto</span>
+            </span>
+            <div class="btn-shine"></div>
+          </a>
+          
+          <a href="tel:+51966918363" class="btn-premium-secondary">
+            <span class="btn-content">
+              <app-icon name="phone" size="20px"></app-icon>
+              <span class="btn-text">Hablar con un Experto</span>
+            </span>
+            <div class="btn-glow"></div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Side Graphics -->
+      <div class="cta-side-graphics">
+        <div class="graphic-element element-1">
+          <app-icon name="code" size="32px"></app-icon>
+        </div>
+        <div class="graphic-element element-2">
+          <app-icon name="design" size="28px"></app-icon>
+        </div>
+        <div class="graphic-element element-3">
+          <app-icon name="mobile" size="24px"></app-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

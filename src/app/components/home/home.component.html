@@ -1,0 +1,111 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Transformamos ideas en 
+          <span class="text-accent">soluciones digitales</span> 
+          de alta calidad
+        </h1>
+        <p class="hero-description">
+          Somos especialistas en desarrollo web moderno. Creamos desde landing pages de alta conversión 
+          hasta aplicaciones web empresariales a medida, siempre con las últimas tecnologías.
+        </p>
+        <div class="hero-actions">
+          <a routerLink="/contact" class="btn-modern">
+            Iniciar Proyecto
+            <app-icon name="rocket" size="18px"></app-icon>
+          </a>
+          <a routerLink="/cases" class="btn-outline-modern">
+            Ver Portafolio
+            <app-icon name="external-link" size="16px"></app-icon>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="code-preview">
+          <div class="code-header">
+            <div class="code-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <span class="filename">gargurevich.dev</span>
+          </div>
+          <div class="code-content">
+            <div class="code-line">
+              <span class="code-keyword">const</span> 
+              <span class="code-variable">soluciones</span> = 
+              <span class="code-string">'web de alta calidad'</span>;
+            </div>
+            <div class="code-line">
+              <span class="code-keyword">function</span> 
+              <span class="code-function">desarrollarTuIdea</span>() &#123;
+            </div>
+            <div class="code-line code-indent">
+              <span class="code-keyword">return</span> 
+              <span class="code-string">'éxito garantizado'</span>;
+            </div>
+            <div class="code-line">&#125;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Overview -->
+<section class="services-overview section">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Nuestros Servicios</h2>
+      <p>Soluciones completas para cada necesidad digital</p>
+    </div>
+    
+    <div class="services-grid">
+      <div class="service-card card" *ngFor="let service of services">
+        <div class="service-icon">
+          <app-icon [name]="service.icon" size="48px" class="text-accent"></app-icon>
+        </div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+        <ul class="service-features">
+          <li *ngFor="let feature of service.features">{{ feature }}</li>
+        </ul>
+        <a routerLink="/services" class="service-link">
+          Conocer más 
+          <span class="arrow">
+            <app-icon name="arrow-right" size="16px"></app-icon>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats section section-dark">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item" *ngFor="let stat of stats">
+        <div class="stat-number text-accent">{{ stat.number }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta section">
+  <div class="container">
+    <div class="cta-content text-center">
+      <h2>¿Listo para comenzar tu proyecto?</h2>
+      <p>Conversemos sobre tu idea y descubre cómo podemos ayudarte a hacerla realidad</p>
+      <a routerLink="/contact" class="cta-button">
+        <app-icon name="chat" size="20px"></app-icon>
+        Solicitar Consulta Gratuita
+      </a>
+    </div>
+  </div>
+</section>
