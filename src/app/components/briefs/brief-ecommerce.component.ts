@@ -26,6 +26,7 @@ export class BriefEcommerceComponent {
       company: ['', [Validators.maxLength(60)]],
       business: ['', [Validators.required, Validators.maxLength(200)]],
       goal: ['', [Validators.required, Validators.maxLength(300)]],
+      sections: ['', [Validators.maxLength(200)]],
       products: ['', [Validators.maxLength(200)]],
       platform: ['', [Validators.maxLength(60)]],
       content: ['', [Validators.required]],

@@ -27,6 +27,7 @@ export class BriefCustomAppComponent {
       business: ['', [Validators.required, Validators.maxLength(200)]],
       goal: ['', [Validators.required, Validators.maxLength(300)]],
       features: ['', [Validators.maxLength(300)]],
+      sections: ['', [Validators.maxLength(200)]],
       content: ['', [Validators.required]],
       branding: ['', [Validators.required]],
       contactForm: ['', [Validators.required]],

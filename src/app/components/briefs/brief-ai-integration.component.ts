@@ -27,6 +27,7 @@ export class BriefAiIntegrationComponent {
       business: ['', [Validators.required, Validators.maxLength(200)]],
       goal: ['', [Validators.required, Validators.maxLength(300)]],
       integrationType: ['', [Validators.maxLength(200)]],
+      sections: ['', [Validators.maxLength(200)]],
       content: ['', [Validators.required]],
       branding: ['', [Validators.required]],
       contactForm: ['', [Validators.required]],

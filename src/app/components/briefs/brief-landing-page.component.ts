@@ -27,6 +27,7 @@ export class BriefLandingPageComponent {
       business: ['', [Validators.required, Validators.maxLength(200)]],
       goal: ['', [Validators.required, Validators.maxLength(300)]],
       audience: ['', [Validators.required, Validators.maxLength(200)]],
+      sections: ['', [Validators.maxLength(200)]],
       content: ['', [Validators.required]],
       branding: ['', [Validators.required]],
       contactForm: ['', [Validators.required]],
