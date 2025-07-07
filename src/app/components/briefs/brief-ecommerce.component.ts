@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IconComponent } from '../icon/icon.component';
 import { RouterModule } from '@angular/router';
+import { BriefService } from '../../services/brief.service';
 
 @Component({
   selector: 'app-brief-ecommerce',
@@ -17,7 +18,7 @@ export class BriefEcommerceComponent {
   submitSuccess = false;
   submitError = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private briefService: BriefService) {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(60)]],
       email: ['', [Validators.required, Validators.email]],
@@ -54,12 +55,16 @@ export class BriefEcommerceComponent {
       return;
     }
     if (this.form.valid) {
-      // Aquí puedes enviar los datos a tu backend, WhatsApp, email, etc.
-      // Por ahora solo mostramos el objeto en consola
-      console.log('Brief E-commerce:', this.form.value);
-      this.submitSuccess = true;
-      this.form.reset();
-      this.submitted = false;
+      this.briefService.sendBrief(this.form.value).subscribe({
+        next: () => {
+          this.submitSuccess = true;
+          this.form.reset();
+          this.submitted = false;
+        },
+        error: () => {
+          this.submitError = true;
+        }
+      });
     } else {
       this.submitError = true;
     }

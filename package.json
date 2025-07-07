@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "nodemailer": "^6.9.13",
     "@angular/animations": "^17.3.12",
     "@angular/cdk": "^17.3.10",
     "@angular/common": "^17.0.0",
