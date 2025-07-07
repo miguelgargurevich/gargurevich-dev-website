@@ -1,6 +1,8 @@
 # Robots.txt optimizado para Gargurevich.Dev
 # AI Discovery y SEO Optimizado
 
+Sitemap: https://www.gargurevich.com/sitemap.xml
+
 User-agent: *
 Allow: /
 
