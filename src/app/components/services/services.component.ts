@@ -60,7 +60,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'SCSS', 'TypeScript', 'Google Analytics', 'GTM'],
       category: 'web',
-      price: 'Desde $299',
+      price: 'Cotizar',
       duration: '1-2 semanas',
       includesHosting: true,
       includesSupport: true
@@ -83,7 +83,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'Strapi CMS', 'Node.js', 'PostgreSQL', 'AWS'],
       category: 'web',
-      price: 'Desde $799',
+      price: 'Cotizar',
       duration: '2-4 semanas',
       includesHosting: true,
       includesSupport: true
@@ -106,7 +106,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'Strapi', 'Node.js', 'PostgreSQL', 'Docker', 'AWS'],
       category: 'web',
-      price: 'Desde $1,499',
+      price: 'Cotizar',
       duration: '4-6 semanas',
       includesHosting: true,
       includesSupport: true
@@ -129,7 +129,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'WooCommerce', 'Stripe', 'PayPal', 'MySQL'],
       category: 'ecommerce',
-      price: 'Desde $1,299',
+      price: 'Cotizar',
       duration: '3-5 semanas',
       includesHosting: true,
       includesSupport: true
@@ -152,7 +152,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'Node.js', 'MongoDB', 'Redis', 'Docker', 'Kubernetes'],
       category: 'ecommerce',
-      price: 'Desde $3,999',
+      price: 'Cotizar',
       duration: '6-10 semanas',
       includesHosting: true,
       includesSupport: true
@@ -175,7 +175,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'Node.js', 'PostgreSQL', 'MongoDB', 'Docker', 'AWS'],
       category: 'custom',
-      price: 'Cotización personalizada',
+      price: 'Cotizar',
       duration: '6-12 semanas',
       includesHosting: true,
       includesSupport: true
@@ -198,7 +198,7 @@ export class ServicesComponent {
       ],
       technologies: ['Angular', 'Python', 'TensorFlow', 'OpenAI API', 'AWS AI Services'],
       category: 'advanced',
-      price: 'Desde $2,499',
+      price: 'Cotizar',
       duration: '4-8 semanas',
       includesHosting: true,
       includesSupport: true
@@ -221,7 +221,7 @@ export class ServicesComponent {
       ],
       technologies: ['Docker', 'Kubernetes', 'Jenkins', 'AWS', 'Terraform', 'Prometheus'],
       category: 'advanced',
-      price: 'Desde $1,999',
+      price: 'Cotizar',
       duration: '3-6 semanas',
       includesHosting: false,
       includesSupport: true

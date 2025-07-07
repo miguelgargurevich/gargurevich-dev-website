@@ -47,7 +47,10 @@
             <h3 class="service-title">{{ service.title }}</h3>
             <p class="service-subtitle">{{ service.subtitle }}</p>
           </div>
-          <div class="service-price">{{ service.price }}</div>
+          <div class="service-price">
+            <span *ngIf="service.price === 'Cotizar'" class="cotizar-label">Cotizar</span>
+            <span *ngIf="service.price !== 'Cotizar'">{{ service.price }}</span>
+          </div>
         </div>
 
         <!-- Service Description -->
@@ -96,8 +99,47 @@
 
         <!-- Service Actions -->
         <div class="service-actions">
-          <a routerLink="/contact" class="btn btn-accent">
-            Solicitar Cotización
+          <a
+            *ngIf="service.id === 'landing-page'"
+            routerLink="/brief/landing-page"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'institutional-web'"
+            routerLink="/brief/website"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'scalable-web'"
+            routerLink="/brief/web-scalable"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'ecommerce-basic' || service.id === 'ecommerce-advanced'"
+            routerLink="/brief/ecommerce"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'custom-app'"
+            routerLink="/brief/custom-app"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'ai-integration' || service.id === 'devops-automation'"
+            routerLink="/brief/ai-integration"
+            class="btn btn-accent"
+          >
+            Cotizar
           </a>
           <a routerLink="/cases" class="btn btn-outline">
             Ver Ejemplos

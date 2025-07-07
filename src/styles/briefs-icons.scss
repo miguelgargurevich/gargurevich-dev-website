@@ -1,0 +1,66 @@
+// Iconos SVG embebidos como clases CSS para briefs
+
+.icon-landing {
+  mask: url('/assets/icons/landing.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/landing.svg') no-repeat center/contain;
+  background: #FCA311;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+.icon-website {
+  mask: url('/assets/icons/website.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/website.svg') no-repeat center/contain;
+  background: #14213D;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+.icon-cms {
+  mask: url('/assets/icons/cms.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/cms.svg') no-repeat center/contain;
+  background: #2196F3;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+.icon-ecommerce {
+  mask: url('/assets/icons/ecommerce.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/ecommerce.svg') no-repeat center/contain;
+  background: #27AE60;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+.icon-app {
+  mask: url('/assets/icons/app.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/app.svg') no-repeat center/contain;
+  background: #9B51E0;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+.icon-ai {
+  mask: url('/assets/icons/ai.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/ai.svg') no-repeat center/contain;
+  background: #FCA311;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
+}
+.icon-send {
+  mask: url('/assets/icons/send.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/send.svg') no-repeat center/contain;
+  background: #FCA311;
+  width: 1.3rem;
+  height: 1.3rem;
+  display: inline-block;
+}
+.icon-success {
+  mask: url('/assets/icons/success.svg') no-repeat center/contain;
+  -webkit-mask: url('/assets/icons/success.svg') no-repeat center/contain;
+  background: #219653;
+  width: 1.3rem;
+  height: 1.3rem;
+  display: inline-block;
+}

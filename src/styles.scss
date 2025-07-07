@@ -1,3 +1,6 @@
+// briefs-base.scss eliminado, usar solo estilos globales
+@import 'styles/briefs-icons.scss';
+@import 'styles/briefs-center.scss';
 /* Global styles for Gargurevich.Dev - Enhanced Dark Mode */
 
 // Define the Gargurevich.Dev color palette with dark mode as default
@@ -193,7 +196,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
+h2 {
+  font-size: 2rem;
+  color: var(--heading-primary, var(--color-accent));
+  text-shadow: 0 2px 8px rgba(20,33,61,0.18);
+}
 h3 { font-size: 1.75rem; }
 h4 { font-size: 1.5rem; }
 h5 { font-size: 1.25rem; }
@@ -230,9 +237,17 @@ p {
   color: var(--color-text-muted) !important;
 }
 
-// Ensure all dark text is visible in dark mode
-h1, h2, h3, h4, h5, h6 {
+// Contraste perfecto para títulos en ambos modos
+h1, h3, h4, h5, h6 {
   color: var(--color-text);
+}
+body.dark-theme h2, :root.dark-theme h2 {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(20,33,61,0.18);
+}
+body.light-theme h2, :root.light-theme h2 {
+  color: var(--heading-primary, var(--color-accent));
+  text-shadow: 0 2px 8px rgba(20,33,61,0.18);
 }
 
 p, span, div {
@@ -862,7 +877,7 @@ p, span, div {
 
 // Sections
 .section {
-  padding: 4rem 0;
+  padding: 5.5rem 0 5.5rem 0; // Más espacio arriba y abajo para evitar que los briefs queden pegados al header/footer
   position: relative;
   
   &.section-dark {
@@ -875,7 +890,17 @@ p, span, div {
   }
   
   &.section-reduced {
-    padding: 2rem 0; // Menos padding para mejor proximidad entre filtros y contenido
+    padding: 2.5rem 0; // Un poco más de espacio en modo reducido
+  }
+}
+
+// --- BRIEFS FORMS: Espaciado extra para evitar pegado a header/footer ---
+.briefs-form-wrapper {
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -1208,6 +1233,93 @@ p, span, div {
   [style*="color: #1a1a1a"],
   [style*="color: #333"] {
     color: var(--color-text) !important;
+  }
+
+  // --- BRIEFS FORMS: Mejor contraste para descripciones y labels en modo oscuro ---
+  .briefs-form-description,
+  .briefs-form-label,
+  .form-label,
+  label,
+  .mat-form-field-label {
+    color: var(--color-text-secondary) !important;
+    opacity: 0.95;
+  }
+  .briefs-form-description {
+    font-size: 1rem;
+    color: var(--color-text-muted) !important;
+    opacity: 0.9;
+  }
+  .form-hint,
+  .briefs-form-hint {
+    color: var(--color-text-muted) !important;
+    opacity: 0.8;
+  }
+}
+
+// --- BRIEFS FORMS: Mejoras visuales para controles de lista desplegable (select) ---
+.briefs-form-select,
+select.briefs-form-select,
+select.form-control,
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(20,33,61,0.04);
+  outline: none;
+  position: relative;
+  min-width: 180px;
+  margin-bottom: 1.25rem;
+  cursor: pointer;
+  background-image: url('/assets/icons/arrow-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem 1.25rem;
+}
+
+.briefs-form-select:focus,
+select.briefs-form-select:focus,
+select.form-control:focus,
+select:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.briefs-form-select option,
+select.briefs-form-select option,
+select.form-control option,
+select option {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+// Light theme select override
+.light-theme {
+  .briefs-form-select,
+  select.briefs-form-select,
+  select.form-control,
+  select {
+    background: var(--color-surface-elevated);
+    color: var(--color-text);
+    border: 1.5px solid var(--color-border);
+    background-image: url('/assets/icons/arrow-down.svg');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.25rem 1.25rem;
+  }
+  .briefs-form-select option,
+  select.briefs-form-select option,
+  select.form-control option,
+  select option {
+    background: var(--color-surface);
+    color: var(--color-text);
   }
 }
 

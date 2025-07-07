@@ -1,0 +1,125 @@
+<div class="briefs-center-wrapper">
+  <div class="container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="contact-form elevated-form">
+    <!-- Mensaje de error global -->
+    <div *ngIf="submitted && form.invalid" class="alert alert-error">
+      <div class="alert-icon">❌</div>
+      <div class="alert-content">
+        <h3>No se pudo enviar el formulario</h3>
+        <p>Por favor, completa todos los campos obligatorios e inténtalo nuevamente.</p>
+      </div>
+    </div>
+    <div class="brief-header">
+      <span class="brief-header-icon">
+        <app-icon name="ai-integration" size="40px"></app-icon>
+      </span>
+      <h2>Brief para Integración IA / DevOps</h2>
+      <p class="subtitle">Completa este formulario para recibir una propuesta personalizada. <span class="required">*</span> Campos obligatorios</p>
+    </div>
+  <h3 class="form-section-title">Información Personal</h3>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="name">Nombre y Apellido <span class="required">*</span></label>
+      <input id="name" formControlName="name" type="text" [class.error]="f['name'].invalid && submitted" placeholder="Tu nombre completo" />
+      <div class="error-message" *ngIf="f['name'].invalid && submitted">Este campo es obligatorio.</div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email <span class="required">*</span></label>
+      <input id="email" formControlName="email" type="email" [class.error]="f['email'].invalid && submitted" placeholder="tucorreo@email.com" />
+      <div class="error-message" *ngIf="f['email'].invalid && submitted">Ingresa un email válido.</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="phone">Teléfono</label>
+      <input id="phone" formControlName="phone" type="text" placeholder="Opcional" />
+    </div>
+    <div class="form-group">
+      <label for="company">Empresa</label>
+      <input id="company" formControlName="company" type="text" placeholder="Opcional" />
+    </div>
+  </div>
+  <h3 class="form-section-title">Información del Proyecto</h3>
+  <div class="form-row">
+    <div class="form-group wide">
+      <label for="business">¿A qué se dedica tu empresa o proyecto? <span class="required">*</span></label>
+      <textarea id="business" formControlName="business" [class.error]="f['business'].invalid && submitted" placeholder="Describe brevemente tu actividad"></textarea>
+      <div class="error-message" *ngIf="f['business'].invalid && submitted">Este campo es obligatorio.</div>
+    </div>
+    <div class="form-group wide">
+      <label for="goal">¿Cuál es el objetivo principal de la integración? <span class="required">*</span></label>
+      <textarea id="goal" formControlName="goal" [class.error]="f['goal'].invalid && submitted" placeholder="¿Qué buscas lograr?"></textarea>
+      <div class="error-message" *ngIf="f['goal'].invalid && submitted">Este campo es obligatorio.</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="integrationType">¿Qué tipo de integración buscas?</label>
+      <input id="integrationType" formControlName="integrationType" type="text" placeholder="Ej: Chatbot, Automatización, CI/CD, etc." />
+    </div>
+    <div class="form-group">
+      <label for="content">¿Tienes textos y/o imágenes listos? <span class="required">*</span></label>
+      <select id="content" formControlName="content" [class.error]="f['content'].invalid && submitted">
+        <option value="">Selecciona</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+        <option value="parcial">Parcial</option>
+      </select>
+      <div class="error-message" *ngIf="f['content'].invalid && submitted">Selecciona una opción.</div>
+    </div>
+    <div class="form-group">
+      <label for="branding">¿Tienes logotipo y manual de marca? <span class="required">*</span></label>
+      <select id="branding" formControlName="branding" [class.error]="f['branding'].invalid && submitted">
+        <option value="">Selecciona</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+      <div class="error-message" *ngIf="f['branding'].invalid && submitted">Selecciona una opción.</div>
+    </div>
+    <div class="form-group">
+      <label for="contactForm">¿Necesitas formulario de contacto? <span class="required">*</span></label>
+      <select id="contactForm" formControlName="contactForm" [class.error]="f['contactForm'].invalid && submitted">
+        <option value="">Selecciona</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+      <div class="error-message" *ngIf="f['contactForm'].invalid && submitted">Selecciona una opción.</div>
+    </div>
+  </div>
+  <h3 class="form-section-title">Detalles y Referencias</h3>
+  <div class="form-row">
+    <div class="form-group wide">
+      <label for="integrations">¿Integración con herramientas externas? <span class="hint">(Mailchimp, WhatsApp, CRM, etc.)</span></label>
+      <input id="integrations" formControlName="integrations" type="text" placeholder="Opcional" />
+    </div>
+    <div class="form-group wide">
+      <label for="references">Ejemplos de páginas que te gustan (links)</label>
+      <textarea id="references" formControlName="references" placeholder="Opcional"></textarea>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="deadline">Fecha ideal de entrega</label>
+      <input id="deadline" formControlName="deadline" type="date" />
+    </div>
+    <div class="form-group wide">
+      <label for="comments">Comentarios adicionales</label>
+      <textarea id="comments" formControlName="comments" placeholder="¿Algo más que debamos saber?"></textarea>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button 
+      type="submit"
+      class="btn-modern large"
+    >
+      <app-icon name="send" size="18px"></app-icon>
+      <span>Enviar Brief</span>
+    </button>
+  </div>
+  <div *ngIf="submitted && form.valid" class="success-message">
+    <span class="icon-success"></span> ¡Gracias! Hemos recibido tu brief y te contactaremos pronto.
+  </div>
+    </form>
+  </div>
+</div>
+
