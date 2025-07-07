@@ -31,6 +31,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   isSubmitting = false;
   submitSuccess = false;
   submitError = false;
+  contactFormSubmitted = false;
 
   serviceOptions: ServiceOption[] = [
     { id: 'landing', name: 'Landing Page', description: 'Página de conversión directa' },
@@ -88,8 +89,16 @@ export class ContactComponent implements OnInit, OnDestroy {
       timeline: [''],
       message: ['', [Validators.required, Validators.minLength(10)]],
       newsletter: [false],
-      privacy: [false, Validators.requiredTrue]
+      privacy: [false, Validators.requiredTrue],
+      website: [''], // Honeypot
+      captcha: ['', [Validators.required, this.simpleMathValidator]]
     });
+  }
+
+  // Validador para la pregunta matemática (3 + 4 = 7)
+  simpleMathValidator(control: any) {
+    const value = control.value;
+    return value && value.trim() === '7' ? null : { math: true };
   }
 
   get formControls() {
@@ -121,11 +130,18 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
+    this.contactFormSubmitted = true;
+    if (this.contactForm.value.website) {
+      this.submitError = true;
+      setTimeout(() => {
+        this.submitError = false;
+      }, 4000);
+      return;
+    }
     if (this.contactForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
       this.submitError = false;
       try {
-
         // Armar mensaje para WhatsApp con campos en negrita real
         const form = this.contactForm.value;
         const servicio = this.serviceOptions.find(opt => opt.id === form.service)?.name || form.service;
@@ -148,6 +164,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
         this.submitSuccess = true;
         this.contactForm.reset();
+        this.contactFormSubmitted = false;
 
         setTimeout(() => {
           this.submitSuccess = false;
@@ -174,6 +191,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.contactForm.reset();
     this.submitSuccess = false;
     this.submitError = false;
+    this.contactFormSubmitted = false;
   }
 
   ngOnInit(): void {

@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IconComponent } from '../icon/icon.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-brief-custom-app',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IconComponent],
+  imports: [CommonModule, ReactiveFormsModule, IconComponent, RouterModule],
   templateUrl: './brief-custom-app.component.html',
   styleUrls: ['./brief-custom-app.component.scss']
 })
 export class BriefCustomAppComponent {
   form: FormGroup;
   submitted = false;
+  submitSuccess = false;
+  submitError = false;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -29,20 +32,43 @@ export class BriefCustomAppComponent {
       integrations: [''],
       references: [''],
       deadline: [''],
-      comments: ['']
+      comments: [''],
+      // Honeypot y captcha
+      website: [''], // Honeypot
+      captcha: ['', [Validators.required, this.simpleMathValidator]]
     });
   }
 
   get f() { return this.form.controls; }
 
+  // Validador para la pregunta matemática (3 + 4 = 7)
+  simpleMathValidator(control: any) {
+    const value = control.value;
+    return value && value.trim() === '7' ? null : { math: true };
+  }
+
   onSubmit() {
     this.submitted = true;
+    this.submitError = false;
+    if (this.form.value.website) {
+      return;
+    }
     if (this.form.valid) {
       // Aquí puedes enviar los datos a tu backend, WhatsApp, email, etc.
       // Por ahora solo mostramos el objeto en consola
       console.log('Brief App a Medida:', this.form.value);
+      this.submitSuccess = true;
       this.form.reset();
       this.submitted = false;
+    } else {
+      this.submitError = true;
     }
+  }
+
+  resetForm() {
+    this.form.reset();
+    this.submitted = false;
+    this.submitSuccess = false;
+    this.submitError = false;
   }
 }

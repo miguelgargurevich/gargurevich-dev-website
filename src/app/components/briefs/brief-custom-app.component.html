@@ -1,14 +1,33 @@
 <div class="briefs-center-wrapper">
   <div class="container">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="contact-form elevated-form">
+    <!-- Mensaje de éxito global -->
+    <div *ngIf="submitSuccess" class="alert alert-success no-bg">
+      <div class="alert-icon">✅</div>
+      <div class="alert-content">
+        <h3 class="success-title">¡Solicitud enviada correctamente!</h3>
+        <p class="success-message">
+          Pronto nos pondremos en contacto contigo.<br>
+
+        </p>
+        <button 
+          routerLink="/services" 
+          class="btn-modern large cta-btn mt-3"
+          style="margin-top: 1.5rem;"
+        >
+          <app-icon name="arrow-left" size="18px"></app-icon>
+          <span>Volver a Servicios</span>
+        </button>
+      </div>
+    </div>
     <!-- Mensaje de error global -->
-    <div *ngIf="submitted && form.invalid" class="alert alert-error">
+    <div *ngIf="submitError && !submitSuccess" class="alert alert-error">
       <div class="alert-icon">❌</div>
       <div class="alert-content">
-        <h3>No se pudo enviar el formulario</h3>
+        <h3>No se pudo enviar el mensaje</h3>
         <p>Por favor, completa todos los campos obligatorios e inténtalo nuevamente.</p>
       </div>
     </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="contact-form elevated-form" *ngIf="!submitSuccess">
     <div class="brief-header">
       <span class="brief-header-icon">
         <app-icon name="custom-app" size="40px"></app-icon>
@@ -57,6 +76,14 @@
       <label for="features">¿Qué funcionalidades clave necesitas?</label>
       <textarea id="features" formControlName="features" rows="2" placeholder="Ej: Login, Dashboard, Integraciones, etc."></textarea>
     </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group wide">
+      <label for="sections">¿Qué secciones debe tener la app?</label>
+      <input id="sections" formControlName="sections" type="text" placeholder="Ej: Dashboard, Usuarios, Reportes, etc." />
+    </div>
+  </div>
+  <div class="form-row">
     <div class="form-group">
       <label for="content">¿Tienes textos y/o imágenes listos? <span class="required">*</span></label>
       <select id="content" formControlName="content" [class.error]="f['content'].invalid && submitted">
@@ -76,6 +103,8 @@
       </select>
       <div class="error-message" *ngIf="f['branding'].invalid && submitted">Selecciona una opción.</div>
     </div>
+  </div>
+  <div class="form-row">
     <div class="form-group">
       <label for="contactForm">¿Necesitas formulario de contacto? <span class="required">*</span></label>
       <select id="contactForm" formControlName="contactForm" [class.error]="f['contactForm'].invalid && submitted">
@@ -107,18 +136,30 @@
       <textarea id="comments" formControlName="comments" placeholder="¿Algo más que debamos saber?"></textarea>
     </div>
   </div>
+  <!-- Honeypot y Captcha sencillo -->
+  <div class="form-row">
+    <!-- Honeypot: campo oculto para bots -->
+    <div class="form-group honeypot" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+      <label for="website">No llenar este campo</label>
+      <input id="website" formControlName="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <!-- Captcha sencillo: pregunta matemática -->
+    <div class="form-group captcha-group">
+      <label for="captcha">¿Cuánto es 3 + 4? <span class="required">*</span></label>
+      <input id="captcha" formControlName="captcha" type="text" [class.error]="f['captcha'].invalid && submitted" maxlength="2" inputmode="numeric" pattern="[0-9]*" placeholder="Tu respuesta" />
+      <div class="error-message" *ngIf="f['captcha'].invalid && submitted">Responde correctamente la pregunta.</div>
+    </div>
+  </div>
   <div class="form-actions">
     <button 
       type="submit"
       class="btn-modern large"
     >
       <app-icon name="send" size="18px"></app-icon>
-      <span>Enviar Brief</span>
+      <span>Enviar</span>
     </button>
   </div>
-  <div *ngIf="submitted && form.valid" class="success-message">
-    <span class="icon-success"></span> ¡Gracias! Hemos recibido tu brief y te contactaremos pronto.
-  </div>
+  <!-- Mensaje de éxito inline eliminado, ahora solo se usa el mensaje global -->
     </form>
   </div>
 </div>

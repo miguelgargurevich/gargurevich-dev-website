@@ -180,7 +180,6 @@
                   Quiero recibir newsletter con tips de desarrollo web y ofertas especiales
                 </label>
               </div>
-              
               <div class="form-checkbox">
                 <input 
                   type="checkbox" 
@@ -195,6 +194,20 @@
                   {{ getFieldError('privacy') }}
                 </div>
               </div>
+            </div>
+          </div>
+          <!-- Honeypot y Captcha sencillo -->
+          <div class="form-row">
+            <!-- Honeypot: campo oculto para bots -->
+            <div class="form-group honeypot" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+              <label for="website">No llenar este campo</label>
+              <input id="website" formControlName="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+            <!-- Captcha sencillo: pregunta matemática -->
+            <div class="form-group captcha-group">
+              <label for="captcha">¿Cuánto es 3 + 4? <span class="required">*</span></label>
+              <input id="captcha" formControlName="captcha" type="text" [class.error]="isFieldInvalid('captcha') && contactFormSubmitted" maxlength="2" inputmode="numeric" pattern="[0-9]*" placeholder="Tu respuesta" />
+              <div class="error-message" *ngIf="isFieldInvalid('captcha') && contactFormSubmitted">Responde correctamente la pregunta.</div>
             </div>
           </div>
 
