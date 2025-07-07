@@ -1,0 +1,23 @@
+<div class="whatsapp-float" [class.visible]="isVisible">
+  <a 
+    [href]="whatsappUrl" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    class="whatsapp-button"
+    [attr.aria-label]="'Contactar por WhatsApp - Gargurevich.Dev'"
+    (click)="trackWhatsAppClick()"
+    (mouseenter)="trackTooltipView()"
+  >
+    <app-icon name="whatsapp" size="24" class="whatsapp-icon"></app-icon>
+    <div class="whatsapp-pulse"></div>
+  </a>
+  
+  <!-- Tooltip -->
+  <div class="whatsapp-tooltip">
+    <div class="tooltip-header">
+      <app-icon name="chat" size="16" class="tooltip-icon"></app-icon>
+      <p>¿Necesitas ayuda?</p>
+    </div>
+    <span>Chatea con nosotros</span>
+  </div>
+</div>

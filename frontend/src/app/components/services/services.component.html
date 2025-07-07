@@ -1,0 +1,209 @@
+<!-- Page Header -->
+<section class="page-header section">
+  <div class="container">
+    <div class="page-header-content text-center">
+      <h1>Nuestros Servicios</h1>
+      <p class="page-subtitle">
+        Soluciones digitales completas para hacer crecer tu negocio
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Category Filter -->
+<section class="category-filter section-sm">
+  <div class="container">
+    <div class="filter-tabs">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category.id"
+        (click)="selectCategory(category.id)"
+        class="filter-tab"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+    
+    <div class="category-info text-center" *ngIf="getSelectedCategoryInfo()">
+      <p class="category-description">{{ getSelectedCategoryInfo()?.description }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<section class="services-grid-section section">
+  <div class="container">
+    <div class="services-grid">
+      <div 
+        class="service-detail-card card" 
+        *ngFor="let service of filteredServices; trackBy: trackByServiceId"
+      >
+        <!-- Service Header -->
+        <div class="service-header">
+          <div class="service-icon-large">
+            <app-icon [name]="service.icon" size="48px" class="text-accent"></app-icon>
+          </div>
+          <div class="service-title-area">
+            <h3 class="service-title">{{ service.title }}</h3>
+            <p class="service-subtitle">{{ service.subtitle }}</p>
+          </div>
+          <div class="service-price">
+            <span *ngIf="service.price === 'Cotizar'" class="cotizar-label">Cotizar</span>
+            <span *ngIf="service.price !== 'Cotizar'">{{ service.price }}</span>
+          </div>
+        </div>
+
+        <!-- Service Description -->
+        <div class="service-description">
+          <p>{{ service.description }}</p>
+        </div>
+
+        <!-- Service Features -->
+        <div class="service-features">
+          <h4>¿Qué incluye?</h4>
+          <ul class="features-list">
+            <li *ngFor="let feature of service.features">
+              <i class="feature-check">✓</i>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Technologies -->
+        <div class="service-technologies">
+          <h4>Tecnologías utilizadas</h4>
+          <div class="tech-tags">
+            <span 
+              class="tech-tag" 
+              *ngFor="let tech of service.technologies"
+            >
+              {{ tech }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Service Info -->
+        <div class="service-info">
+          <div class="info-item">
+            <strong>Duración:</strong> {{ service.duration }}
+          </div>
+          <div class="info-badges">
+            <span class="info-badge" *ngIf="service.includesHosting">
+              <app-icon name="cloud" size="16px"></app-icon> Hosting Incluido
+            </span>
+            <span class="info-badge" *ngIf="service.includesSupport">
+              <app-icon name="tools" size="16px"></app-icon> Soporte 24/7
+            </span>
+          </div>
+        </div>
+
+        <!-- Service Actions -->
+        <div class="service-actions">
+          <a
+            *ngIf="service.id === 'landing-page'"
+            routerLink="/brief/landing-page"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'institutional-web'"
+            routerLink="/brief/website"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'scalable-web'"
+            routerLink="/brief/web-scalable"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'ecommerce-basic' || service.id === 'ecommerce-advanced'"
+            routerLink="/brief/ecommerce"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'custom-app'"
+            routerLink="/brief/custom-app"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a
+            *ngIf="service.id === 'ai-integration' || service.id === 'devops-automation'"
+            routerLink="/brief/ai-integration"
+            class="btn btn-accent"
+          >
+            Cotizar
+          </a>
+          <a routerLink="/cases" class="btn btn-outline">
+            Ver Ejemplos
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section section section-dark">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Nuestro Proceso de Desarrollo</h2>
+      <p>Metodología probada para garantizar el éxito de tu proyecto</p>
+    </div>
+    
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Análisis y Planificación</h3>
+          <p>Entendemos tus necesidades y objetivos para crear la estrategia perfecta.</p>
+        </div>
+      </div>
+      
+      <div class="process-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Diseño y Prototipo</h3>
+          <p>Creamos diseños únicos y prototipos interactivos para validar la funcionalidad.</p>
+        </div>
+      </div>
+      
+      <div class="process-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Desarrollo y Testing</h3>
+          <p>Desarrollamos con las mejores prácticas y realizamos pruebas exhaustivas.</p>
+        </div>
+      </div>
+      
+      <div class="process-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Lanzamiento y Soporte</h3>
+          <p>Desplegamos tu proyecto y brindamos soporte continuo para su crecimiento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta section">
+  <div class="container">
+    <div class="cta-content text-center">
+      <h2>¿Tienes una idea revolucionaria?</h2>
+      <p>Conversemos sobre tu proyecto y descubre cómo podemos ayudarte a hacerla realidad</p>
+      <a routerLink="/contact" class="cta-button">
+        <app-icon name="chat" size="20px"></app-icon>
+        Solicitar Consulta Gratuita
+      </a>
+    </div>
+  </div>
+</section>

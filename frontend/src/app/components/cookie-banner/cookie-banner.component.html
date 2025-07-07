@@ -1,0 +1,37 @@
+<div class="cookie-banner" *ngIf="showBanner" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-description">
+  <div class="cookie-content">
+    <div class="cookie-info">
+      <h3 id="cookie-title">🍪 Configuración de Cookies</h3>
+      <p id="cookie-description">
+        Utilizamos cookies para mejorar tu experiencia, analizar el uso del sitio y personalizar el contenido. 
+        Puedes gestionar tus preferencias o aceptar todas las cookies.
+      </p>
+    </div>
+    
+    <div class="cookie-buttons">
+      <button 
+        type="button" 
+        class="btn btn-secondary btn-sm" 
+        (click)="acceptNecessary()"
+        aria-label="Aceptar solo cookies necesarias">
+        Solo Necesarias
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn btn-primary btn-sm" 
+        (click)="acceptAll()"
+        aria-label="Aceptar todas las cookies">
+        Aceptar Todas
+      </button>
+    </div>
+  </div>
+  
+  <button 
+    type="button" 
+    class="cookie-close" 
+    (click)="acceptNecessary()"
+    aria-label="Cerrar banner de cookies">
+    ✕
+  </button>
+</div>

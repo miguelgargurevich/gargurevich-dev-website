@@ -1,0 +1,137 @@
+{
+  "configVersion": 1,
+  "timestamp": 1751924898617,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/chunk-2TVMPDEI.js",
+        "/chunk-7JQLF4NF.js",
+        "/chunk-A3X4S5LF.js",
+        "/chunk-BJHSPPI2.js",
+        "/chunk-CCYK23E2.js",
+        "/chunk-ECACDUCE.js",
+        "/chunk-ECRQOBQW.js",
+        "/chunk-GBLZIYJ7.js",
+        "/chunk-HHTMMQJT.js",
+        "/chunk-I5S7GEPH.js",
+        "/chunk-K2ZBG6P4.js",
+        "/chunk-KBCSVPQF.js",
+        "/chunk-LBCPSMAS.js",
+        "/chunk-M7SGNQTS.js",
+        "/chunk-N7BY3XCW.js",
+        "/chunk-OHSA7CCO.js",
+        "/chunk-RXKUT56D.js",
+        "/chunk-SKXGX643.js",
+        "/chunk-X23FZWPH.js",
+        "/chunk-Y7G6SBQ4.js",
+        "/chunk-Z3P2MD3P.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main-GOKMCX42.js",
+        "/manifest.webmanifest",
+        "/polyfills-EJ46DL77.js",
+        "/styles-ZASD7OCK.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/icons/ai.svg",
+        "/assets/icons/android-chrome-192x192.png",
+        "/assets/icons/android-chrome-512x512.png",
+        "/assets/icons/app.svg",
+        "/assets/icons/apple-touch-icon.png",
+        "/assets/icons/cms.svg",
+        "/assets/icons/ecommerce.svg",
+        "/assets/icons/favicon-16x16.png",
+        "/assets/icons/favicon-32x32.png",
+        "/assets/icons/favicon.ico",
+        "/assets/icons/landing.svg",
+        "/assets/icons/send.svg",
+        "/assets/icons/success.svg",
+        "/assets/icons/website.svg",
+        "/assets/images/team/miguel.jpg",
+        "/assets/images/team/placeholder.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/icons/ai.svg": "3dd25ded0e053b07d62db0d1a51645d3d2d412d7",
+    "/assets/icons/android-chrome-192x192.png": "75f21f417b46862ce8d098b62c8911d8a79cb82b",
+    "/assets/icons/android-chrome-512x512.png": "16e17cb02c86727def0c09e4588e6c876ef04249",
+    "/assets/icons/app.svg": "1a9eac0eb7bf6a9f78202b9c8d6ae7e1cfe159bd",
+    "/assets/icons/apple-touch-icon.png": "bec5aeb9d7d5430a4530f244ab0ebc7275882c0b",
+    "/assets/icons/cms.svg": "dcfabf0c3b0fcaa678235485e173692f1c643cb3",
+    "/assets/icons/ecommerce.svg": "8ba4314d8ecdde8b4fdb18e7a6de398a4c2b6043",
+    "/assets/icons/favicon-16x16.png": "07b009530e3d398f543297b74ebd5bb683b3fbc1",
+    "/assets/icons/favicon-32x32.png": "a19f4eae9a6840d8c90a774a8e464791866cfb88",
+    "/assets/icons/favicon.ico": "57014f781a73c4ff45f188354c8c3de472d1f294",
+    "/assets/icons/landing.svg": "88172b972a3c9081f875acc9e5300002ce221744",
+    "/assets/icons/send.svg": "00a5c47aebe277520672c4273a9b6558cc606ad3",
+    "/assets/icons/success.svg": "0c8ebcdf0008556db0a504af2e4afa1fbaf13b00",
+    "/assets/icons/website.svg": "be518b42b89a0669411829d9ee44e47750d8701f",
+    "/assets/images/team/miguel.jpg": "7fb61b0e7d49585bd346a881ab3ef6d5823824cc",
+    "/assets/images/team/placeholder.svg": "1f92dc4640eaf46df0e0b95f4d8e600927fbc5d3",
+    "/chunk-2TVMPDEI.js": "013953e89cd5a078e0b15930f7bea2a1ff256e66",
+    "/chunk-7JQLF4NF.js": "eab1685e423a6c20e847ed3088a303f367c19bde",
+    "/chunk-A3X4S5LF.js": "a68fdbca58ca76f2fd1a869c468e272e4d072e49",
+    "/chunk-BJHSPPI2.js": "447e78d076a81f38dd65fe514411a4164295381b",
+    "/chunk-CCYK23E2.js": "e26194e6e985684d1af3bb235353f6ec84a3557d",
+    "/chunk-ECACDUCE.js": "66ea7d47ec3350298ef1f2db63c7231b14985964",
+    "/chunk-ECRQOBQW.js": "52fe9d7f99ab967e2b0313abfcd514ff36ed40ef",
+    "/chunk-GBLZIYJ7.js": "53518272682f064d5ce64ac6971399c2a01f06e5",
+    "/chunk-HHTMMQJT.js": "a831d387979bca9213121285b21ece2410ecf60b",
+    "/chunk-I5S7GEPH.js": "0833ba2e610cc219dead0e1f0b454f66f1f6608a",
+    "/chunk-K2ZBG6P4.js": "7bc455fa60b20da6d8d01f2b5c201ec4b17ed349",
+    "/chunk-KBCSVPQF.js": "b7e8d231af0ab2f777459d9b4e1f5b749f08a44a",
+    "/chunk-LBCPSMAS.js": "db78e33ff907d79c4d5e6fb90014ab8a8b9e328e",
+    "/chunk-M7SGNQTS.js": "7917eab886a8b6ab9cc47396f9b98c983a5ccbd4",
+    "/chunk-N7BY3XCW.js": "f3b7bce559e4a3a7134029358fcca79e6229383b",
+    "/chunk-OHSA7CCO.js": "1b001b27e76701b939bd0ca5a91609c2ee911a9b",
+    "/chunk-RXKUT56D.js": "f8ba5f1604965ed402b743bd4ab21bdefbba6b78",
+    "/chunk-SKXGX643.js": "9a61d5ec2d5ae3d5811e4f8d3753ff6d60b48780",
+    "/chunk-X23FZWPH.js": "24ff75ffc17cb8b7895bc79b5976b37c0afbe6f3",
+    "/chunk-Y7G6SBQ4.js": "487898ad465acfb550cfc119d5f91f713434f6ea",
+    "/chunk-Z3P2MD3P.js": "8d919a859b1140538b1c041b7b322f1be25af1e5",
+    "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/index.html": "aeefc1e6f9e715032dcb9cdb54d95f9f66e7aaf4",
+    "/main-GOKMCX42.js": "92071520c7ed7b18e7a2cfea9c19faad80469eed",
+    "/manifest.webmanifest": "5c695428ca5e2ce056231fa2faf6fe71951d1b33",
+    "/polyfills-EJ46DL77.js": "01500e27968fb09f51100a67f46a69297cc263de",
+    "/styles-ZASD7OCK.css": "73714482f1633dfea3e4ed787a6a86e5653d4d2d"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
