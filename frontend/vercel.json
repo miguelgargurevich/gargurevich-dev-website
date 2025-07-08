@@ -56,6 +56,10 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false
-  
+  "trailingSlash": false,
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 30
+    }
+  }
 }
