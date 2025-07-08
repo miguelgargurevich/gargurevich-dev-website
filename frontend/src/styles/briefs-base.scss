@@ -1,0 +1,174 @@
+// SCSS base para formularios de briefs Gargurevich.Dev
+
+// --- DARK MODE & LIGHT MODE para briefs ---
+// --- DARK MODE & LIGHT MODE para briefs ---
+.brief-form.modern-form {
+  background: var(--color-surface) !important;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 32px 0 rgba(20,33,61,0.10);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 900px;
+  margin: 3.5rem auto 2rem auto;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: var(--color-text);
+
+  // Forzar fondo y texto correctos en dark mode
+  // Forzar fondo y texto correctos en dark mode
+  .dark-theme &,
+  :root.dark-theme &,
+  body.dark-theme & {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+  }
+
+  // Forzar fondo y texto correctos en light mode
+  .light-theme &,
+  :root.light-theme &,
+  body.light-theme & {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    box-shadow: 0 4px 32px 0 rgba(20,33,61,0.10);
+  }
+
+  .brief-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    h2 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      text-shadow: 0 2px 8px rgba(20,33,61,0.10);
+      .icon-landing, .icon-website, .icon-cms, .icon-ecommerce, .icon-app, .icon-ai {
+        font-size: 2.2rem;
+        vertical-align: middle;
+      }
+    }
+    .subtitle {
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+    }
+    // Mejor contraste para títulos en dark mode
+    .dark-theme & h2,
+    :root.dark-theme & h2,
+    body.dark-theme & h2 {
+      color: #fff !important;
+      text-shadow: 0 2px 8px rgba(20,33,61,0.18);
+    }
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+    .form-group {
+      flex: 1 1 220px;
+      display: flex;
+      flex-direction: column;
+      label {
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+      }
+      input, select, textarea {
+        border: 1.5px solid var(--color-border);
+        border-radius: 0.5rem;
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+        background: var(--color-surface-elevated);
+        color: var(--color-text);
+        transition: border-color 0.2s, background 0.2s, color 0.2s;
+        margin-bottom: 0.2rem;
+        &:focus {
+          border-color: var(--color-accent);
+          outline: none;
+          background: var(--color-surface-variant);
+        }
+        &.invalid {
+          border-color: var(--color-accent);
+          background: #fffbe6;
+        }
+      }
+      .error {
+        color: var(--color-accent);
+        font-size: 0.95rem;
+        margin-bottom: 0.2rem;
+      }
+      .hint {
+        color: var(--color-text-muted);
+        font-size: 0.95rem;
+        font-style: italic;
+      }
+    }
+    .form-group.wide {
+      flex: 2 1 400px;
+    }
+  }
+
+  .form-actions {
+    text-align: center;
+    margin-top: 1.5rem;
+    .btn {
+      background: var(--color-accent);
+      color: var(--color-primary);
+      font-weight: 700;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(252,163,17,0.10);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background 0.2s;
+      &:hover {
+        background: var(--color-accent-hover);
+      }
+      &:disabled {
+        background: var(--color-border-light);
+        color: var(--color-text-muted);
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .success-message {
+    margin-top: 1.5rem;
+    color: #219653;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    .icon-success {
+      font-size: 1.5rem;
+      color: #219653;
+    }
+  }
+
+  .required {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+}
+
+// Responsive
+@media (max-width: 700px) {
+  .brief-form.modern-form {
+    padding: 1.2rem 0.5rem;
+    .form-row {
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .form-group, .form-group.wide {
+      flex: 1 1 100%;
+    }
+  }
+}
