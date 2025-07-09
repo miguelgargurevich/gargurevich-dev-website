@@ -6,7 +6,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+  // Usa el modelo más reciente disponible según la lista de modelos
+  // Ejemplo recomendado: Gemini 1.5 Pro 002
+  const GEMINI_MODEL = 'gemini-1.5-pro-002';
+  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`;
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
   if (!GEMINI_API_KEY) {

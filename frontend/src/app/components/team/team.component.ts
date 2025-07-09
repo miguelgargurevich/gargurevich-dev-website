@@ -44,9 +44,9 @@ export class TeamComponent {
       image: 'assets/images/team/miguel.jpg',
       skills: ['Angular', 'React', 'TypeScript', 'Node.js', 'Azure', 'AWS', 'Backend', 'DevOps'],
       social: {
-        linkedin: 'https://linkedin.com/in/miguelfernandezgargurevich',
-        github: 'https://github.com/miguelfernandezgargurevich',
-        website: 'https://miguelfernandez.dev'
+        linkedin: 'https://www.linkedin.com/in/miguel-arturo-fernandez-gargurevich/',
+        github: 'https://github.com/miguelgargurevich',
+        website: 'https://miguelgargurevich.com'
       }
     },
     {
