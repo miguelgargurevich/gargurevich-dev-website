@@ -15,12 +15,22 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Filtra mensajes con role: 'system' si existen en el payload
+    let body = req.body;
+    if (body && body.contents && Array.isArray(body.contents)) {
+      body = {
+        ...body,
+        contents: body.contents.filter(
+          c => !c.role || c.role !== 'system'
+        )
+      };
+    }
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(req.body),
+      body: JSON.stringify(body),
     });
     let data;
     try {
