@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AiChatService, ChatMessage } from '../../services/ai-chat.service';
@@ -25,7 +25,9 @@ export class AiChatComponent {
   errorMsg = '';
   show = false;
 
-  constructor(private fb: FormBuilder, private ai: AiChatService) {
+  @ViewChild('scrollMe') scrollMe?: ElementRef<HTMLDivElement>;
+
+  constructor(private fb: FormBuilder, private ai: AiChatService, private ngZone: NgZone) {
     this.chatForm = this.fb.group({ message: [''] });
   }
 
@@ -47,14 +49,26 @@ export class AiChatComponent {
         this.messages.push({ role: 'assistant', content: res });
         this.loading = false;
         this.chatForm.get('message')?.enable();
+        this.ngZone.runOutsideAngular(() => {
+          setTimeout(() => this.scrollToBottom(), 50);
+        });
       },
       error: (err) => {
         this.messages.push({ role: 'assistant', content: typeof err === 'string' ? err : 'Ocurrió un error inesperado.' });
         this.loading = false;
         this.errorMsg = typeof err === 'string' ? err : 'Ocurrió un error inesperado.';
         this.chatForm.get('message')?.enable();
+        this.ngZone.runOutsideAngular(() => {
+          setTimeout(() => this.scrollToBottom(), 50);
+        });
       }
     });
+  }
+
+  private scrollToBottom() {
+    if (this.scrollMe && this.scrollMe.nativeElement) {
+      this.scrollMe.nativeElement.scrollTop = this.scrollMe.nativeElement.scrollHeight;
+    }
   }
 
   trackByIdx(i: number) { return i; }
