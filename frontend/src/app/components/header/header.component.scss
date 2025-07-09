@@ -176,15 +176,22 @@
 }
 
 // Utilidades para mostrar/ocultar según tamaño de pantalla
-.desktop-only {
+
+// Toggle SIEMPRE visible (desktop y mobile)
+.always-visible-toggle {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  // Tamaño y espaciado responsive
   @media (max-width: 768px) {
-    display: none !important;
-  }
-}
-.mobile-only {
-  display: none;
-  @media (max-width: 768px) {
-    display: inline-flex !important;
+    margin-left: 0;
+    margin-right: 0.5rem;
+    // Opcional: aumentar tamaño del botón en mobile
+    .theme-toggle {
+      font-size: 1.5rem;
+      min-width: 44px;
+      min-height: 44px;
+    }
   }
 }

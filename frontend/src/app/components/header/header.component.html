@@ -37,8 +37,8 @@
 
         <!-- Theme Toggle & Mobile Menu -->
         <div class="header-actions">
-          <!-- Mostrar toggle solo en desktop -->
-          <app-theme-toggle class="desktop-only"></app-theme-toggle>
+          <!-- Toggle SIEMPRE visible: desktop y mobile -->
+          <app-theme-toggle class="always-visible-toggle"></app-theme-toggle>
           <!-- Mobile Menu Toggle -->
           <button class="mobile-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
             <span class="hamburger"></span>
@@ -68,10 +68,7 @@
         <li class="nav-item">
           <a routerLink="/contact" class="nav-link btn btn-accent" (click)="closeMobileMenu()">Contacto</a>
         </li>
-        <li class="nav-item mobile-theme-toggle">
-          <!-- Mostrar toggle solo en mobile -->
-          <app-theme-toggle class="mobile-only"></app-theme-toggle>
-        </li>
+        <!-- Eliminado: toggle dentro del menú mobile, ahora siempre visible arriba -->
       </ul>
     </div>
   </nav>
