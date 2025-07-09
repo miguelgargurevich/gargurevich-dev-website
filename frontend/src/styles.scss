@@ -109,6 +109,14 @@
   --color-surface: #F8FAFC;
   --color-surface-elevated: #F1F5F9;
   --color-surface-variant: #E2E8F0;
+
+// Refuerzo para cabecera del chat IA: texto blanco en modo claro, aunque haya herencia de --color-text
+.light-theme .ai-chat-header,
+.light-theme .ai-chat-window .ai-chat-header,
+.light-theme .ai-chat-header *,
+.light-theme .ai-chat-window .ai-chat-header * {
+  color: #fff !important;
+}
   
   // Text colors with improved hierarchy
   --color-text: #1E293B;
