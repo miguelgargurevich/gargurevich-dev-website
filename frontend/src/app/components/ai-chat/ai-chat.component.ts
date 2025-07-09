@@ -39,14 +39,16 @@ export class AiChatComponent {
   send() {
     const msg = this.chatForm.value.message?.trim();
     if (!msg) return;
-    this.messages.push({ role: 'user', content: msg });
+    // Clonar el array para disparar ChangeDetection con OnPush
+    this.messages = [...this.messages, { role: 'user', content: msg }];
     this.loading = true;
     this.errorMsg = '';
     this.chatForm.reset();
     this.chatForm.get('message')?.disable();
     this.ai.sendMessage(this.messages, msg).subscribe({
       next: (res) => {
-        this.messages.push({ role: 'assistant', content: res });
+        // Clonar el array para disparar ChangeDetection con OnPush
+        this.messages = [...this.messages, { role: 'assistant', content: res }];
         this.loading = false;
         this.chatForm.get('message')?.enable();
         this.ngZone.runOutsideAngular(() => {
@@ -54,7 +56,7 @@ export class AiChatComponent {
         });
       },
       error: (err) => {
-        this.messages.push({ role: 'assistant', content: typeof err === 'string' ? err : 'Ocurrió un error inesperado.' });
+        this.messages = [...this.messages, { role: 'assistant', content: typeof err === 'string' ? err : 'Ocurrió un error inesperado.' }];
         this.loading = false;
         this.errorMsg = typeof err === 'string' ? err : 'Ocurrió un error inesperado.';
         this.chatForm.get('message')?.enable();
