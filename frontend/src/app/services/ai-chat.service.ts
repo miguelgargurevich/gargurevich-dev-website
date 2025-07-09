@@ -41,52 +41,47 @@ export class AiChatService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Envía un mensaje al backend de Gemini, asegurando que el prompt esté cargado.
+   * Envía un mensaje al backend de Gemini, asegurando que el prompt esté cargado solo una vez.
+   * El prompt de sistema solo se agrega si no está ya presente en el historial.
    */
   sendMessage(history: ChatMessage[], userMessage: string): Observable<string> {
     return new Observable<string>(observer => {
-      this.loadPrompt().subscribe({
-        next: (prompt) => {
-          const messages = [
-            { role: 'system', content: prompt },
-            ...history.filter(m => m.role !== 'system'),
-            { role: 'user', content: userMessage }
-          ];
-          const body = {
-            contents: messages.map(m => ({ role: m.role, parts: [{ text: m.content }] }))
-          };
-          const url = LOCAL_API_URL;
-          const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-          this.http.post<any>(url, body, { headers }).pipe(
-            map(res => {
-              if (res && res.candidates && res.candidates[0]?.content?.parts[0]?.text) {
-                return res.candidates[0].content.parts[0].text.trim();
-              }
-              return 'Lo siento, no pude generar una respuesta en este momento.';
-            }),
-            catchError(err => {
-              // Error 429 explícito o encapsulado desde el backend
-              if (err.status === 429 || (err.error && (err.error.error?.code === 429))) {
-                return throwError(() => 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.');
-              }
-              // Mensaje de cuota de Gemini (por si cambia el formato)
-              if (err.error && (err.error.error?.message?.includes('quota') || err.error.error?.message?.includes('saturada'))) {
-                return throwError(() => 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.');
-              }
-              return throwError(() => 'Ocurrió un error al conectar con el asistente. Intenta nuevamente más tarde.');
-            })
-          ).subscribe({
-            next: (response) => {
-              observer.next(response);
-              observer.complete();
-            },
-            error: (err) => {
-              observer.error(err);
-            }
-          });
+      // El backend ahora espera { message, context, ... }
+      // Unimos el historial y el mensaje del usuario en un solo string (contexto)
+      const context = history
+        .filter(m => m.role !== 'system')
+        .map(m => `${m.role === 'user' ? 'Usuario' : 'Asistente'}: ${m.content}`)
+        .join('\n');
+      const body: any = {
+        message: userMessage,
+        context
+      };
+      // Si quieres pasar más datos (sentiment, sessionId, etc), agrégalos aquí
+      const url = LOCAL_API_URL;
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      this.http.post<any>(url, body, { headers }).pipe(
+        map(res => {
+          if (res && res.response) {
+            return res.response.trim();
+          }
+          return 'Lo siento, no pude generar una respuesta en este momento.';
+        }),
+        catchError(err => {
+          if (err.status === 429 || (err.error && (err.error.error?.code === 429))) {
+            return throwError(() => 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.');
+          }
+          if (err.error && (err.error.error?.message?.includes('quota') || err.error.error?.message?.includes('saturada'))) {
+            return throwError(() => 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.');
+          }
+          return throwError(() => 'Ocurrió un error al conectar con el asistente. Intenta nuevamente más tarde.');
+        })
+      ).subscribe({
+        next: (response) => {
+          observer.next(response);
+          observer.complete();
         },
         error: (err) => {
-          observer.error('No se pudo cargar el contexto del asistente. Intenta nuevamente más tarde.');
+          observer.error(err);
         }
       });
     });
