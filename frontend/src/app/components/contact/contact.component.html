@@ -23,11 +23,21 @@
         </div>
 
         <!-- Success Message -->
-        <div *ngIf="submitSuccess" class="alert alert-success">
+        <div *ngIf="submitSuccess" class="alert alert-success no-bg">
           <div class="alert-icon">✅</div>
           <div class="alert-content">
-            <h3>¡Mensaje enviado correctamente!</h3>
-            <p>Gracias por contactarnos. Responderemos a tu consulta muy pronto.</p>
+            <h3 class="success-title">¡Mensaje enviado correctamente!</h3>
+            <p class="success-message">
+              Gracias por contactarnos. Responderemos a tu consulta muy pronto.
+            </p>
+            <button 
+              routerLink="/" 
+              class="btn-modern large cta-btn mt-3"
+              style="margin-top: 1.5rem;"
+            >
+              <app-icon name="arrow-left" size="18px"></app-icon>
+              <span>Volver al Inicio</span>
+            </button>
           </div>
         </div>
 
