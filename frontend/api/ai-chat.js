@@ -6,9 +6,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  // Usa el modelo más reciente disponible según la lista de modelos
-  // Ejemplo recomendado: Gemini 1.5 Pro 002
-  const GEMINI_MODEL = 'gemini-1.5-pro-002';
+  // Usa el modelo Gemini 1.5 Flash (rápido y con buena cuota)
+  const GEMINI_MODEL = 'models/gemini-1.5-flash';
   const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`;
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
