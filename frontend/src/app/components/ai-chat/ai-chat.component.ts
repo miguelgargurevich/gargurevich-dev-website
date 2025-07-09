@@ -49,7 +49,7 @@ export class AiChatComponent {
         this.chatForm.get('message')?.enable();
       },
       error: (err) => {
-        // Solo mostrar el error en errorMsg, no agregarlo al historial
+        this.messages.push({ role: 'assistant', content: typeof err === 'string' ? err : 'Ocurrió un error inesperado.' });
         this.loading = false;
         this.errorMsg = typeof err === 'string' ? err : 'Ocurrió un error inesperado.';
         this.chatForm.get('message')?.enable();
