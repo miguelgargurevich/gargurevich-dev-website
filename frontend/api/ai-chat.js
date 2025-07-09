@@ -5,10 +5,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
- // prueba
-  // Usa el modelo Gemini 2.0 Flash (v1beta, recomendado por Google para features nuevas)
-  const GEMINI_MODEL = 'models/gemini-2.0-flash';
-  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+  // Usa el modelo Gemini 2.0 Flash (v1, recomendado para features nuevas)
+  const GEMINI_MODEL = 'gemini-2.0-flash';
+  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`;
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
   if (!GEMINI_API_KEY) {
@@ -16,11 +15,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(GEMINI_API_URL, {
+    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-goog-api-key': GEMINI_API_KEY
       },
       body: JSON.stringify(req.body),
     });
