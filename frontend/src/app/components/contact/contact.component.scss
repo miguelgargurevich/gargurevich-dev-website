@@ -247,6 +247,14 @@
       .error-message {
         margin-top: 0.25rem;
         margin-left: 1.75rem;
+        color: var(--alert-error-text);
+        font-size: 0.95rem;
+        font-weight: 500;
+        background: rgba(var(--alert-error-border-rgb,255,0,0),0.07);
+        border-radius: 4px;
+        padding: 2px 10px;
+        display: inline-block;
+        line-height: 1.5;
       }
     }
   }

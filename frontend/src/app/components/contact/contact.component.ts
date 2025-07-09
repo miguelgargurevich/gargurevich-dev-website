@@ -142,36 +142,37 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.isSubmitting = true;
       this.submitError = false;
       try {
-        // Armar mensaje para WhatsApp con campos en negrita real
+        // Enviar datos a la API serverless para email
         const form = this.contactForm.value;
-        const servicio = this.serviceOptions.find(opt => opt.id === form.service)?.name || form.service;
-        let mensaje = `¡Hola! Me gustaría información sobre:\n\n`;
-        mensaje += `*Nombre*: ${form.name}\n`;
-        mensaje += `*Email*: ${form.email}\n`;
-        if (form.phone) mensaje += `*Teléfono*: ${form.phone}\n`;
-        if (form.company) mensaje += `*Empresa*: ${form.company}\n`;
-        mensaje += `*Servicio*: ${servicio}\n`;
-        if (form.budget) mensaje += `*Presupuesto*: ${form.budget}\n`;
-        if (form.timeline) mensaje += `*Plazo*: ${form.timeline}\n`;
-        mensaje += `*Mensaje*: ${form.message}\n`;
-        if (form.newsletter) mensaje += `Deseo recibir newsletter.\n`;
-        mensaje += `\nEnviado desde el formulario web.`;
-
-        // WhatsApp: usar _blank en desktop, _self en mobile para mejor UX
-        const url = `https://wa.me/51966918363?text=${encodeURIComponent(mensaje)}`;
-        const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
-        window.open(url, isMobile ? '_self' : '_blank');
-
+        // Eliminar campos que no van al email
+        const payload = {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          company: form.company,
+          service: form.service,
+          budget: form.budget,
+          timeline: form.timeline,
+          message: form.message,
+          newsletter: form.newsletter
+        };
+        const response = await fetch('/api/send-contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+          throw new Error('No se pudo enviar el mensaje');
+        }
         this.submitSuccess = true;
         this.contactForm.reset();
         this.contactFormSubmitted = false;
-
         setTimeout(() => {
           this.submitSuccess = false;
         }, 5000);
       } catch (error) {
         this.submitError = true;
-        console.error('Error al armar mensaje de WhatsApp:', error);
+        console.error('Error al enviar mensaje de contacto:', error);
       } finally {
         this.isSubmitting = false;
       }
