@@ -45,7 +45,18 @@ export default async function handler(req, res) {
           message: 'No se pudo conectar con el servicio de IA. Por favor, revisa tu conexión o intenta más tarde.'
         }});
       }
-      return res.status(response.status).json({ error: data.error || 'Error en Gemini API' });
+      // Si Gemini devuelve un mensaje de error detallado, muéstralo
+      if (data && data.error && data.error.message) {
+        return res.status(response.status).json({ error: {
+          code: response.status,
+          message: `Error de Gemini: ${data.error.message}`
+        }});
+      }
+      // Si no hay detalle, muestra un mensaje amigable y sugiere contactar soporte
+      return res.status(response.status).json({ error: {
+        code: response.status,
+        message: 'No se pudo procesar la solicitud de IA. Por favor, intenta nuevamente más tarde o contáctanos si el problema persiste.'
+      }});
     }
     return res.status(200).json(data);
   } catch (error) {
