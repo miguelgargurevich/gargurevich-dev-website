@@ -65,8 +65,13 @@ export class AiChatService {
               return 'Lo siento, no pude generar una respuesta en este momento.';
             }),
             catchError(err => {
-              if (err.status === 429 || (err.error && (err.error.error?.message?.includes('quota') || err.error.error?.code === 429))) {
-                return throwError(() => 'La cuota gratuita de la IA ha sido superada. Por favor, intenta más tarde o contáctanos directamente.');
+              // Error 429 explícito o encapsulado desde el backend
+              if (err.status === 429 || (err.error && (err.error.error?.code === 429))) {
+                return throwError(() => 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.');
+              }
+              // Mensaje de cuota de Gemini (por si cambia el formato)
+              if (err.error && (err.error.error?.message?.includes('quota') || err.error.error?.message?.includes('saturada'))) {
+                return throwError(() => 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.');
               }
               return throwError(() => 'Ocurrió un error al conectar con el asistente. Intenta nuevamente más tarde.');
             })

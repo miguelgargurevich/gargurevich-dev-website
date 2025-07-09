@@ -6,9 +6,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  // Usa el modelo más reciente disponible según la lista de modelos
-  // Ejemplo recomendado: Gemini 1.5 Pro 002
-  const GEMINI_MODEL = 'gemini-1.5-pro-002';
+  // Usa el modelo Gemini 2.5 Flash (alta cuota y velocidad, soporta generateContent)
+  // Modelo: models/gemini-2.5-flash
+  const GEMINI_MODEL = 'models/gemini-2.5-flash';
   const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`;
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -24,12 +24,35 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify(req.body),
     });
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonErr) {
+      data = {};
+    }
     if (!response.ok) {
+      // Encapsula el error 429 (cuota o rate limit) con un mensaje amigable
+      if (response.status === 429) {
+        return res.status(429).json({ error: {
+          code: 429,
+          message: 'La IA está temporalmente saturada o se ha superado la cuota gratuita. Por favor, intenta nuevamente en unos minutos o contáctanos si el problema persiste.'
+        }});
+      }
+      // Encapsula cualquier error de red o fetch fallido
+      if (response.status === 0 || !response.status) {
+        return res.status(503).json({ error: {
+          code: 503,
+          message: 'No se pudo conectar con el servicio de IA. Por favor, revisa tu conexión o intenta más tarde.'
+        }});
+      }
       return res.status(response.status).json({ error: data.error || 'Error en Gemini API' });
     }
     return res.status(200).json(data);
   } catch (error) {
-    return res.status(500).json({ error: 'Error interno en el proxy de IA' });
+    // Error de red/fetch (por ejemplo, ECONNREFUSED, timeout, etc)
+    return res.status(503).json({ error: {
+      code: 503,
+      message: 'No se pudo conectar con el servicio de IA. Por favor, revisa tu conexión o intenta más tarde.'
+    }});
   }
 }
