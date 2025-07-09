@@ -6,9 +6,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  // Usa el modelo Gemini 1.5 Flash (rápido y con buena cuota)
-  const GEMINI_MODEL = 'models/gemini-1.5-flash';
-  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI_MODEL}:generateContent`;
+  // Usa el modelo Gemini 2.0 Flash (v1beta, recomendado por Google para features nuevas)
+  const GEMINI_MODEL = 'models/gemini-2.0-flash';
+  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
   if (!GEMINI_API_KEY) {
@@ -16,10 +16,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(GEMINI_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-goog-api-key': GEMINI_API_KEY
       },
       body: JSON.stringify(req.body),
     });
@@ -44,11 +45,11 @@ export default async function handler(req, res) {
           message: 'No se pudo conectar con el servicio de IA. Por favor, revisa tu conexión o intenta más tarde.'
         }});
       }
-      // Si Gemini devuelve un mensaje de error detallado, muéstralo
+      // Si Gemini devuelve un mensaje de error, muéstralo tal cual en el chat IA
       if (data && data.error && data.error.message) {
         return res.status(response.status).json({ error: {
           code: response.status,
-          message: `Error de Gemini: ${data.error.message}`
+          message: data.error.message
         }});
       }
       // Si no hay detalle, muestra un mensaje amigable y sugiere contactar soporte
