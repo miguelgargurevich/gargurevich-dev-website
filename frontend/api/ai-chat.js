@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
-
+ // prueba
   // Usa el modelo Gemini 2.0 Flash (v1beta, recomendado por Google para features nuevas)
   const GEMINI_MODEL = 'models/gemini-2.0-flash';
   const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
