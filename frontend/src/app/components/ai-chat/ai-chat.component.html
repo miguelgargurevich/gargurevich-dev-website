@@ -1,29 +1,32 @@
-<div class="ai-chat-fab" (click)="toggleChat()" *ngIf="!show">
+
+<div class="ai-chat-fab" (click)="toggleChat()" *ngIf="!show" aria-label="Abrir chat IA" tabindex="0" role="button">
   <app-icon name="chat" size="28px"></app-icon>
 </div>
-<div class="ai-chat-window" *ngIf="show">
+<div class="ai-chat-window" *ngIf="show" role="dialog" aria-modal="true" aria-label="Chat con asistente IA">
   <div class="ai-chat-header">
     <span>🤖 Asistente Gargurevich.Dev</span>
-    <button class="close-btn" (click)="toggleChat()" title="Cerrar">×</button>
+    <button class="close-btn" (click)="toggleChat()" title="Cerrar" aria-label="Cerrar chat">×</button>
   </div>
-  <div class="ai-chat-messages" #scrollMe>
-    <div *ngFor="let msg of messages; trackBy: trackByIdx" [ngClass]="msg.role">
-      <div class="msg-bubble">
-        <span *ngIf="msg.role==='assistant'">🤖</span>
-        <span *ngIf="msg.role==='user'">🧑‍💻</span>
-        <span [innerHTML]="msg.content | linebreaks"></span>
+  <div class="ai-chat-messages" #scrollMe aria-live="polite" aria-atomic="false">
+    <ng-container *ngIf="messages$ | async as messages">
+      <div *ngFor="let msg of messages; trackBy: trackByIdx" [ngClass]="msg.role" class="msg-row">
+        <div class="msg-bubble" [attr.aria-label]="msg.role === 'assistant' ? 'Respuesta de la IA' : 'Mensaje de usuario'">
+          <span *ngIf="msg.role==='assistant'" class="msg-avatar">🤖</span>
+          <span *ngIf="msg.role==='user'" class="msg-avatar">🧑‍💻</span>
+          <span [innerHTML]="msg.content | linebreaks"></span>
+        </div>
       </div>
-    </div>
-    <div *ngIf="loading" class="msg-bubble assistant loading">
+    </ng-container>
+    <div *ngIf="loading" class="msg-bubble assistant loading" aria-live="assertive">
       <span>🤖</span> <span class="dots">Pensando...</span>
     </div>
-    <div *ngIf="errorMsg" class="msg-bubble assistant error">
+    <div *ngIf="errorMsg" class="msg-bubble assistant error" aria-live="assertive">
       <span>⚠️ {{errorMsg}}</span>
     </div>
   </div>
-  <form [formGroup]="chatForm" (ngSubmit)="send()" class="ai-chat-input">
-    <input type="text" formControlName="message" placeholder="Escribe tu consulta...">
-    <button type="submit" [disabled]="loading || !chatForm.value.message?.trim()">
+  <form [formGroup]="chatForm" (ngSubmit)="send()" class="ai-chat-input" autocomplete="off" aria-label="Enviar mensaje al asistente IA">
+    <input type="text" formControlName="message" placeholder="Escribe tu consulta..." autocomplete="off" aria-label="Mensaje" [disabled]="loading">
+    <button type="submit" [disabled]="loading || !chatForm.value.message?.trim()" aria-label="Enviar">
       <app-icon name="send" size="18px"></app-icon>
     </button>
   </form>

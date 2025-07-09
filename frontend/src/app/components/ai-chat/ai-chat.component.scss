@@ -250,13 +250,44 @@
   border-top: 1.5px solid #223;
   letter-spacing: 0.01em;
 }
-@media (max-width: 600px) {
-  .ai-chat-window, .ai-chat-fab {
-    right: 1rem;
-    bottom: 1rem;
+
+// Animación de entrada para los mensajes
+.msg-row {
+  animation: fadeInMsg 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes fadeInMsg {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
   }
-  .ai-chat-window {
-    width: 98vw;
-    max-width: 98vw;
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.msg-avatar {
+  font-size: 1.2em;
+  margin-right: 0.5em;
+  flex-shrink: 0;
+}
+
+// Mejora de focus para accesibilidad
+.ai-chat-input input:focus,
+.ai-chat-input button:focus {
+  outline: 2px solid #FCA311;
+  outline-offset: 2px;
+}
+
+// Mobile: mayor padding y tamaño de input
+@media (max-width: 600px) {
+  .ai-chat-input input {
+    font-size: 1.1rem;
+    padding: 1rem 1.2rem;
+  }
+  .ai-chat-header {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
   }
 }

@@ -1,11 +1,12 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, NgZone } from '@angular/core';
+
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AiChatService, ChatMessage } from '../../services/ai-chat.service';
 import { LinebreaksPipe } from '../../pipes/linebreaks.pipe';
 import { IconComponent } from '../icon/icon.component';
-
 import { ViewEncapsulation } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-ai-chat',
@@ -16,11 +17,12 @@ import { ViewEncapsulation } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class AiChatComponent {
+
+export class AiChatComponent implements AfterViewInit {
   chatForm: FormGroup;
-  messages: ChatMessage[] = [
+  messages$ = new BehaviorSubject<ChatMessage[]>([
     { role: 'assistant', content: '¡Hola! ¿En qué puedo ayudarte hoy?' }
-  ];
+  ]);
   loading = false;
   errorMsg = '';
   show = false;
@@ -31,24 +33,36 @@ export class AiChatComponent {
     this.chatForm = this.fb.group({ message: [''] });
   }
 
+  ngAfterViewInit() {
+    // Scroll al abrir el chat
+    if (this.show) this.scrollToBottom();
+  }
+
   toggleChat() {
     this.show = !this.show;
     this.errorMsg = '';
+    setTimeout(() => this.scrollToBottom(), 100);
   }
 
   send() {
     const msg = this.chatForm.value.message?.trim();
     if (!msg) return;
-    // Clonar el array para disparar ChangeDetection con OnPush
-    this.messages = [...this.messages, { role: 'user', content: msg }];
+    const current = [
+      ...this.messages$.value,
+      { role: 'user' as const, content: msg }
+    ];
+    this.messages$.next(current);
     this.loading = true;
     this.errorMsg = '';
     this.chatForm.reset();
     this.chatForm.get('message')?.disable();
-    this.ai.sendMessage(this.messages, msg).subscribe({
+    this.ai.sendMessage(current, msg).subscribe({
       next: (res) => {
-        // Clonar el array para disparar ChangeDetection con OnPush
-        this.messages = [...this.messages, { role: 'assistant', content: res }];
+        const updated = [
+          ...this.messages$.value,
+          { role: 'assistant' as const, content: res }
+        ];
+        this.messages$.next(updated);
         this.loading = false;
         this.chatForm.get('message')?.enable();
         this.ngZone.runOutsideAngular(() => {
@@ -56,7 +70,11 @@ export class AiChatComponent {
         });
       },
       error: (err) => {
-        this.messages = [...this.messages, { role: 'assistant', content: typeof err === 'string' ? err : 'Ocurrió un error inesperado.' }];
+        const updated = [
+          ...this.messages$.value,
+          { role: 'assistant' as const, content: typeof err === 'string' ? err : 'Ocurrió un error inesperado.' }
+        ];
+        this.messages$.next(updated);
         this.loading = false;
         this.errorMsg = typeof err === 'string' ? err : 'Ocurrió un error inesperado.';
         this.chatForm.get('message')?.enable();
