@@ -16,28 +16,29 @@ export default async function handler(req, res) {
 
   try {
     // Construir prompt enriquecido (sin traducciones)
-    const { message, locale = 'es', context, sentiment, sessionId, conversationContext, userSentiment } = req.body;
+    const { message, context, sentiment, sessionId, conversationContext, userSentiment } = req.body;
     if (!message) return res.status(400).json({ error: 'Message is required' });
 
-    // Prompt base profesional (ajusta aquí tu prompt largo)
-    let systemPrompt = 'Eres un asistente profesional de Gargurevich Dev, Desarrolladores Web & Especialistas en Soluciones Digitales.\n\nEXPERTISE:\n- Desarrollo Web (HTML, CSS, JavaScript, React, Next.js, Angular)\n- Soluciones de E-commerce\n- Landing Pages\n- Aplicaciones Móviles\n- Sistemas a Medida\n\nINSTRUCCIONES CRÍTICAS:\n- Responde en español de manera profesional y técnica\n- OBLIGATORIO: TODAS las estimaciones de precios deben estar SIEMPRE en Dólares Estadounidenses (USD)\n- OBLIGATORIO: Sigue SIEMPRE el formato específico con preguntas rápidas, tabla de estimaciones y opciones económicas\n- Usa formato en negrita para precios usando **$X,XXX USD**\n- Mantén un tono consultivo y experto';
 
-    let enhancedPrompt = `${systemPrompt}\n\nEstimado usuario,\n\n`;
-    if (conversationContext) enhancedPrompt += `CONTEXTO DE LA CONVERSACIÓN:\n${conversationContext}\n\n`;
-    else if (context) enhancedPrompt += `CONTEXTO DE CONVERSACIÓN PREVIA:\n${context}\n\n`;
+    // --- FLUJO CONVERSACIONAL DINÁMICO ---
+    let systemPrompt = `Eres un asistente profesional de Gargurevich.Dev, expertos en desarrollo web y soluciones digitales.\n\nEXPERTISE:\n- Desarrollo Web (Angular, Next.js, React, TypeScript)\n- E-commerce\n- Landing Pages\n- Apps a medida\n- Integración IA y DevOps\n\nINSTRUCCIONES:\n- Responde SIEMPRE en español, tono profesional, claro y consultivo.\n- Si es el primer mensaje, SOLO haz 2-3 preguntas clave para entender el proyecto (no muestres precios ni tablas aún).\n- Si ya tienes respuestas a las preguntas clave, sugiere el siguiente paso o haz una recomendación concreta.\n- SOLO muestra la tabla de precios si el usuario ya dio detalles claros de su proyecto.\n- Si el usuario pide presupuesto sin detalles, explica que necesitas más información.\n- Si el usuario responde a una pregunta, avanza a la siguiente.\n- Si el usuario está indeciso, sugiere ejemplos o casos de éxito.\n- Usa formato markdown solo para listas o tablas si es relevante.\n- No repitas siempre el mismo saludo.\n- Si el usuario ya respondió todo, ofrece agendar una llamada o enviar propuesta.\n- Si el usuario pregunta por tecnologías, explica brevemente el stack.\n- Si el usuario pregunta por tiempos, da rangos realistas según el tipo de proyecto.\n- Si el usuario pregunta por ejemplos, sugiere visitar el portafolio.\n- Si el usuario tiene bajo presupuesto, sugiere MVP o plantillas.\n- Si el usuario parece perdido, guía con preguntas simples.\n- Si el usuario ya está decidido, ofrece siguiente paso concreto.\n- NUNCA inventes precios si no tienes contexto suficiente.\n- SIEMPRE responde de forma breve y avanza paso a paso.\n`;
+
+    let enhancedPrompt = `${systemPrompt}\n`;
+    if (conversationContext) enhancedPrompt += `CONTEXTO DE LA CONVERSACIÓN:\n${conversationContext}\n`;
+    else if (context) enhancedPrompt += `CONVERSACIÓN PREVIA:\n${context}\n`;
 
     const sentimentData = userSentiment || sentiment;
     if (sentimentData) {
       enhancedPrompt += `ANÁLISIS DE SENTIMIENTO DEL CLIENTE:\n- Sentimiento: ${sentimentData.label} (puntuación: ${sentimentData.score})\n`;
       if (sentimentData.label && sentimentData.label.includes('negative')) {
-        enhancedPrompt += `- INSTRUCCIÓN ESPECIAL: El cliente muestra sentimiento negativo. Usa un tono empático.\n`;
+        enhancedPrompt += `- INSTRUCCIÓN: El cliente muestra sentimiento negativo. Usa un tono empático.\n`;
       } else if (sentimentData.label && sentimentData.label.includes('positive')) {
-        enhancedPrompt += `- INSTRUCCIÓN ESPECIAL: El cliente muestra sentimiento positivo. Mantén el entusiasmo.\n`;
+        enhancedPrompt += `- INSTRUCCIÓN: El cliente muestra entusiasmo. Mantén el tono positivo.\n`;
       }
       enhancedPrompt += `\n`;
     }
-    if (sessionId) enhancedPrompt += `ID de Sesión: ${sessionId}\n\n`;
-    enhancedPrompt += `Consulta del cliente: ${message}`;
+    if (sessionId) enhancedPrompt += `ID de Sesión: ${sessionId}\n`;
+    enhancedPrompt += `\nMENSAJE DEL USUARIO:\n${message}\n`;
 
     // Construir body para Gemini
     const body = {
