@@ -44,16 +44,15 @@ export default async function handler(req, res) {
   doc.rect(0, 0, doc.page.width, doc.page.height).fill(blanco);
 
 
-  // Ruta absoluta al logo
-  const logoPath = path.join(__dirname, '../assets/logo-gargurevich.png');
+
 
   if (tipo === 'cotizacion') {
     const pageWidth = doc.page.width;
 
-    // Header visual
-    doc.image(logoPath, 60, 40, { width: 120 });
+    // Header visual (solo texto, sin imagen)
     doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
-    doc.fillColor('white').fontSize(24).text('Propuesta de Servicios', 200, 50, { align: 'right' });
+    doc.fillColor('white').fontSize(32).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 40, { align: 'left' });
+    doc.fillColor('white').fontSize(24).font('Helvetica').text('Propuesta de Servicios', 200, 50, { align: 'right' });
 
   doc.moveDown(4);
 
@@ -107,10 +106,10 @@ export default async function handler(req, res) {
 else {
   const pageWidth = doc.page.width;
 
-  // Header visual
-  doc.image(logoPath, 60, 40, { width: 120 });
+  // Header visual (solo texto, sin imagen)
   doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
-  doc.fillColor('white').fontSize(24).text('Consulta de Contacto', 200, 50, { align: 'right' });
+  doc.fillColor('white').fontSize(32).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 40, { align: 'left' });
+  doc.fillColor('white').fontSize(24).font('Helvetica').text('Consulta de Contacto', 200, 50, { align: 'right' });
 
   doc.moveDown(4);
 
