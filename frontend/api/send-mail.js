@@ -63,9 +63,12 @@ export default async function handler(req, res) {
     // --- Header ---
     doc.save();
     doc.rect(0, 0, pageWidth, headerHeight).fill(azul);
-    doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, 26, { continued: true });
-    doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, 26);
-    doc.fillColor(gris).fontSize(13).font('Helvetica').text(tipo === 'cotizacion' ? 'Propuesta de Servicios' : 'Consulta de Contacto', 60, 54, { align: 'left' });
+    // Bajamos el texto de la cabecera para mayor separación del borde superior
+    const headerTextOffset = 44; // antes 26
+    const headerSubTextOffset = headerTextOffset + 28; // antes 54
+    doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, headerTextOffset, { continued: true });
+    doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, headerTextOffset);
+    doc.fillColor(gris).fontSize(13).font('Helvetica').text(tipo === 'cotizacion' ? 'Propuesta de Servicios' : 'Consulta de Contacto', 60, headerSubTextOffset, { align: 'left' });
     doc.restore();
 
     // Espaciado extra para separar del header
@@ -137,15 +140,28 @@ export default async function handler(req, res) {
     doc.save();
     // El fondo del footer ahora cubre desde el inicio del footer hasta el final de la página
     doc.rect(0, footerY, pageWidth, doc.page.height - footerY).fill(azul);
-    doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerY + 10, { continued: true });
-    doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerY + 10);
-    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerY + 28, { width: 400 });
-    doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerY + 50, { continued: true });
-    doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerY + 50);
-    doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Empresa:', 320, footerY + 50, { continued: true });
-    doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Nuestro Equipo, Portafolio, Blog Técnico, Contacto', undefined, footerY + 50);
-    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerY + 62);
-    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados. | Términos de Servicio | Política de Privacidad', 60, footerY + 74);
+    // Ajuste: bajamos los textos del footer para mayor separación visual respecto al borde superior
+    const footerTextOffset = 28;
+    // Definimos líneas con saltos (espacios en blanco) para separar visualmente los bloques
+    const footerLine1 = footerY + footerTextOffset; // Gargurevich.Dev
+    const footerLine2 = footerLine1 + 18; // espacio después del logo
+    const footerLineSpace1 = footerLine2 + 10; // línea en blanco
+    const footerLine3 = footerLineSpace1 + 10; // Servicios
+    const footerLine4 = footerLine3 + 12; // Empresa y contacto
+    const footerLineSpace2 = footerLine4 + 10; // línea en blanco
+    const footerLine5 = footerLineSpace2 + 10; // Derechos reservados
+
+    doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerLine1, { continued: true });
+    doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerLine1);
+    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerLine2, { width: 400 });
+    // Línea en blanco (footerLineSpace1)
+    // Bloque de servicios
+    doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerLine3, { continued: true });
+    doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerLine3);
+    // Bloque de contacto
+    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerLine4);
+    // Línea en blanco (footerLineSpace2)
+    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados. | Términos de Servicio | Política de Privacidad', 60, footerLine5);
     doc.restore();
 
     doc.end();
