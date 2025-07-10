@@ -1,6 +1,8 @@
 
+
 import nodemailer from 'nodemailer';
 import PDFDocument from 'pdfkit';
+import path from 'path';
 
 export default async function handler(req, res) {
   // Log de depuración para ver el body recibido
@@ -41,13 +43,17 @@ export default async function handler(req, res) {
   // Fondo blanco
   doc.rect(0, 0, doc.page.width, doc.page.height).fill(blanco);
 
-  if (tipo === 'cotizacion') {
-  const pageWidth = doc.page.width;
 
-  // Header visual
-  doc.image('./assets/logo-gargurevich.png', 60, 40, { width: 120 });
-  doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
-  doc.fillColor('white').fontSize(24).text('Propuesta de Servicios', 200, 50, { align: 'right' });
+  // Ruta absoluta al logo
+  const logoPath = path.join(__dirname, '../assets/logo-gargurevich.png');
+
+  if (tipo === 'cotizacion') {
+    const pageWidth = doc.page.width;
+
+    // Header visual
+    doc.image(logoPath, 60, 40, { width: 120 });
+    doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
+    doc.fillColor('white').fontSize(24).text('Propuesta de Servicios', 200, 50, { align: 'right' });
 
   doc.moveDown(4);
 
@@ -97,11 +103,12 @@ export default async function handler(req, res) {
 
   doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados.', 60, doc.page.height - 20);
 }
+
 else {
   const pageWidth = doc.page.width;
 
   // Header visual
-  doc.image('./assets/logo-gargurevich.png', 60, 40, { width: 120 });
+  doc.image(logoPath, 60, 40, { width: 120 });
   doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
   doc.fillColor('white').fontSize(24).text('Consulta de Contacto', 200, 50, { align: 'right' });
 
