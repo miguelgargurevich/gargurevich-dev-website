@@ -45,14 +45,24 @@ export default async function handler(req, res) {
 
   const pageWidth = doc.page.width;
 
+  // --- Constantes globales para layout PDF ---
+  const headerHeight = 70;
+  const footerHeight = 80;
+  const footerOffset = 30;
+  const minBodySpace = 60; // espacio mínimo visual entre cuerpo y footer
+  const maxBodyY = doc.page.height - footerHeight - footerOffset - minBodySpace;
+
   if (tipo === 'cotizacion') {
     // Header visual (solo texto, sin imagen, tamaño más pequeño)
-    doc.rect(0, 0, pageWidth, 70).fill(naranja); // Franja superior
+    doc.rect(0, 0, pageWidth, headerHeight).fill(naranja); // Franja superior
     doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('GargurevichDev', 60, 28, { align: 'left' });
     doc.fillColor('white').fontSize(14).font('Helvetica').text('Propuesta de Servicios', 200, 32, { align: 'right' });
 
-    // Espaciado extra para separar del header
-    doc.moveDown(4);
+    // Espaciado extra para separar del header (ajustado para evitar solapamiento con footer)
+    doc.moveDown(5);
+    if (doc.y > maxBodyY) {
+      doc.y = maxBodyY;
+    }
 
     // Datos del cliente y proyecto
     doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
@@ -85,12 +95,15 @@ export default async function handler(req, res) {
   }
   else {
     // Header visual igual que cotización
-    doc.rect(0, 0, pageWidth, 70).fill(naranja); // Franja superior
+    doc.rect(0, 0, pageWidth, headerHeight).fill(naranja); // Franja superior
     doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('GargurevichDev', 60, 28, { align: 'left' });
     doc.fillColor('white').fontSize(14).font('Helvetica').text('Consulta de Contacto', 200, 32, { align: 'right' });
 
-    // Espaciado extra para separar del header
-    doc.moveDown(4);
+    // Espaciado extra para separar del header (ajustado para evitar solapamiento con footer)
+    doc.moveDown(5);
+    if (doc.y > maxBodyY) {
+      doc.y = maxBodyY;
+    }
 
     // Datos del contacto (labels azul, valores negro)
     doc.fontSize(11).fillColor(azul).text('Nombre: ', { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
@@ -116,23 +129,21 @@ export default async function handler(req, res) {
 
   // --- Footer igual que cotización ---
   const currentY = doc.y;
-  const footerHeight = 80;
-  // Forzar el cursor a una posición segura antes del footer para evitar salto de página
-  const safeFooterY = doc.page.height - footerHeight - 5;
+  // Footer único para ambos flujos
+  const footerY = doc.page.height - footerHeight - footerOffset;
+  const safeFooterY = footerY - 5;
   if (currentY > safeFooterY) {
     doc.y = safeFooterY;
   }
-  // Si por alguna razón ya se creó una nueva página, volver a la anterior
   while (doc.page && doc._pageBuffer && doc._pageBuffer.length > 1) {
     doc.removePage(doc._pageBuffer.length - 1);
   }
-  // Footer con fondo blanco y textos en azul y gris para máxima legibilidad y coherencia visual
-  doc.rect(0, doc.page.height - footerHeight, pageWidth, footerHeight).fill(blanco);
+  doc.rect(0, footerY, pageWidth, footerHeight).fill(blanco);
   doc.fillColor(azul).fontSize(10);
-  doc.text('GargurevichDev', 60, doc.page.height - 70);
-  doc.text('Transformamos ideas en soluciones digitales', 60, doc.page.height - 55);
-  doc.text('Lima, Perú    contacto@gargurevich.dev    +51 966 918 363', 60, doc.page.height - 40);
-  doc.fillColor(gris).fontSize(8).text('© 2025 GargurevichDev. Todos los derechos reservados.', 60, doc.page.height - 20);
+  doc.text('GargurevichDev', 60, footerY + 10);
+  doc.text('Transformamos ideas en soluciones digitales', 60, footerY + 25);
+  doc.text('Lima, Perú    contacto@gargurevich.dev    +51 966 918 363', 60, footerY + 40);
+  doc.fillColor(gris).fontSize(8).text('© 2025 GargurevichDev. Todos los derechos reservados.', 60, footerY + 60);
 }
 
   doc.end();
