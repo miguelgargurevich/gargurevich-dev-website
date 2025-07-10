@@ -33,7 +33,7 @@ export class BriefCustomAppComponent {
       contactForm: ['', [Validators.required]],
       integrations: [''],
       references: [''],
-      deadline: [''],
+      timeline: [''],
       comments: [''],
       // Honeypot y captcha
       website: [''], // Honeypot
@@ -71,7 +71,7 @@ export class BriefCustomAppComponent {
           `Formulario de contacto: ${form.contactForm || '-'}\n` +
           `Integraciones: ${form.integrations || '-'}\n` +
           `Referencias: ${form.references || '-'}\n` +
-          `Deadline: ${form.deadline || '-'}\n` +
+          `Plazo de entrega: ${form.timeline || '-'}\n` +
           `Comentarios: ${form.comments || '-'}\n` +
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),

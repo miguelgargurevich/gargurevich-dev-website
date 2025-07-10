@@ -1,32 +1,32 @@
 <div class="briefs-center-wrapper">
   <div class="container">
-    <!-- Mensaje de éxito global -->
-    <div *ngIf="submitSuccess" class="alert alert-success no-bg">
-      <div class="alert-icon">✅</div>
-      <div class="alert-content">
-        <h3 class="success-title">¡Solicitud enviada correctamente!</h3>
-        <p class="success-message">
-          Pronto nos pondremos en contacto contigo.<br>
+    <!-- Success Message -->
+        <div *ngIf="submitSuccess" class="alert alert-success no-bg">
+          <div class="alert-icon">✅</div>
+          <div class="alert-content">
+            <h3 class="success-title">¡Mensaje enviado correctamente!</h3>
+            <p class="success-message">
+              Gracias por contactarnos. Responderemos a tu consulta muy pronto.
+            </p>
+            <button 
+              routerLink="/" 
+              class="btn-modern large cta-btn mt-3"
+              style="margin-top: 1.5rem;"
+            >
+              <app-icon name="arrow-left" size="18px"></app-icon>
+              <span>Volver al Inicio</span>
+            </button>
+          </div>
+        </div>
 
-        </p>
-        <button 
-          routerLink="/services" 
-          class="btn-modern large cta-btn mt-3"
-          style="margin-top: 1.5rem;"
-        >
-          <app-icon name="arrow-left" size="18px"></app-icon>
-          <span>Volver a Servicios</span>
-        </button>
-      </div>
-    </div>
-    <!-- Mensaje de error global -->
-    <div *ngIf="submitError && !submitSuccess" class="alert alert-error">
-      <div class="alert-icon">❌</div>
-      <div class="alert-content">
-        <h3>No se pudo enviar el mensaje</h3>
-        <p>Por favor, completa todos los campos obligatorios e inténtalo nuevamente.</p>
-      </div>
-    </div>
+        <!-- Error Message -->
+        <div *ngIf="submitError" class="alert alert-error">
+          <div class="alert-icon">❌</div>
+          <div class="alert-content">
+            <h3>No se pudo enviar el mensaje</h3>
+            <p>Por favor, completa todos los campos obligatorios e inténtalo nuevamente.</p>
+          </div>
+        </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="contact-form elevated-form" *ngIf="!submitSuccess">
     <div class="brief-header">
       <span class="brief-header-icon">
@@ -128,8 +128,14 @@
   </div>
   <div class="form-row">
     <div class="form-group">
-      <label for="deadline">Fecha ideal de entrega</label>
-      <input id="deadline" formControlName="deadline" type="date" />
+      <label for="timeline">Plazo de Entrega</label>
+      <select id="timeline" formControlName="timeline">
+        <option value="">Selecciona un plazo</option>
+        <option value="urgent">Urgente (1-2 semanas)</option>
+        <option value="normal">Normal (3-4 semanas)</option>
+        <option value="flexible">Flexible (1-2 meses)</option>
+        <option value="planning">Solo estoy planificando</option>
+      </select>
     </div>
     <div class="form-group wide">
       <label for="comments">Comentarios adicionales</label>

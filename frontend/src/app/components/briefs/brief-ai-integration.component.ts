@@ -33,7 +33,7 @@ export class BriefAiIntegrationComponent {
       contactForm: ['', [Validators.required]],
       integrations: [''],
       references: [''],
-      deadline: [''],
+      timeline: [''],
       comments: [''],
       website: [''], // Honeypot
       captcha: ['', [Validators.required, this.simpleMathValidator]]
@@ -70,7 +70,7 @@ export class BriefAiIntegrationComponent {
           `Formulario de contacto: ${form.contactForm || '-'}\n` +
           `Integraciones: ${form.integrations || '-'}\n` +
           `Referencias: ${form.references || '-'}\n` +
-          `Deadline: ${form.deadline || '-'}\n` +
+          `Plazo de entrega: ${form.timeline || '-'}\n` +
           `Comentarios: ${form.comments || '-'}\n` +
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
