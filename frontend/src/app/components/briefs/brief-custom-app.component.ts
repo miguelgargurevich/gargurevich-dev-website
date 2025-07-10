@@ -75,7 +75,8 @@ export class BriefCustomAppComponent {
           `Comentarios: ${form.comments || '-'}\n` +
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
-        tipo: 'cotizacion'
+        tipo: 'cotizacion',
+        service: 'App a Medida'
       };
       this.briefService.sendBrief(payload).subscribe({
         next: () => {

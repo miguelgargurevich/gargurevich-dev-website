@@ -1,1 +1,0 @@
-import{Kb as c,T as e,Y as n,a as o,b as r}from"./chunk-IJLPYDKJ.js";var f=(()=>{class t{constructor(i){this.http=i}sendBrief(i){return this.http.post("/api/send-mail",r(o({},i),{tipo:"cotizacion"}))}static{this.\u0275fac=function(a){return new(a||t)(n(c))}}static{this.\u0275prov=e({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{f as a};

@@ -53,10 +53,13 @@ export default async function handler(req, res) {
   const maxBodyY = doc.page.height - footerHeight - footerOffset - minBodySpace;
 
   if (tipo === 'cotizacion') {
-    // Header visual (solo texto, sin imagen, tamaño más pequeño)
-    doc.rect(0, 0, pageWidth, headerHeight).fill(naranja); // Franja superior
-    doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('GargurevichDev', 60, 28, { align: 'left' });
-    doc.fillColor('white').fontSize(14).font('Helvetica').text('Propuesta de Servicios', 200, 32, { align: 'right' });
+    // Header visual dark mode Gargurevich.Dev
+    doc.save();
+    doc.rect(0, 0, pageWidth, headerHeight).fill(azul); // Franja superior azul oscuro
+    doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, 26, { continued: true });
+    doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, 26);
+    doc.fillColor(gris).fontSize(13).font('Helvetica').text('Propuesta de Servicios', 60, 54, { align: 'left' });
+    doc.restore();
 
     // Espaciado extra para separar del header (ajustado para evitar solapamiento con footer)
     doc.moveDown(5);
@@ -67,10 +70,10 @@ export default async function handler(req, res) {
     // Datos del cliente y proyecto
     doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
     doc.fontSize(11).fillColor(azul).text(`Email: `, { continued: true }).fillColor(negro).text(email || '-', { continued: false });
-    if (phone) doc.fontSize(11).fillColor(azul).text(`Teléfono: `, { continued: true }).fillColor(negro).text(phone, { continued: false });
-    if (company) doc.fontSize(11).fillColor(azul).text(`Empresa: `, { continued: true }).fillColor(negro).text(company, { continued: false });
-    if (timeline) doc.fontSize(11).fillColor(azul).text(`Plazo de entrega: `, { continued: true }).fillColor(negro).text(timeline, { continued: false });
     doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
+    if (phone) { doc.fontSize(11).fillColor(azul).text(`Teléfono: `, { continued: true }).fillColor(negro).text(phone, { continued: false }); }
+    if (company) { doc.fontSize(11).fillColor(azul).text(`Empresa: `, { continued: true }).fillColor(negro).text(company, { continued: false }); }
+    if (timeline) { doc.fontSize(11).fillColor(azul).text(`Plazo de entrega: `, { continued: true }).fillColor(negro).text(timeline, { continued: false }); }
 
     // Comentarios adicionales
     if (detalles) {
@@ -80,7 +83,6 @@ export default async function handler(req, res) {
     }
 
     doc.moveDown(1);
-
     // Servicio solicitado destacado
     doc.moveDown(1);
     doc.fontSize(12).fillColor(naranja).text('Servicio solicitado:', { underline: false });
@@ -94,10 +96,13 @@ export default async function handler(req, res) {
     doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
   }
   else {
-    // Header visual igual que cotización
-    doc.rect(0, 0, pageWidth, headerHeight).fill(naranja); // Franja superior
-    doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('GargurevichDev', 60, 28, { align: 'left' });
-    doc.fillColor('white').fontSize(14).font('Helvetica').text('Consulta de Contacto', 200, 32, { align: 'right' });
+    // Header visual dark mode Gargurevich.Dev
+    doc.save();
+    doc.rect(0, 0, pageWidth, headerHeight).fill(azul); // Franja superior azul oscuro
+    doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, 26, { continued: true });
+    doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, 26);
+    doc.fillColor(gris).fontSize(13).font('Helvetica').text('Consulta de Contacto', 60, 54, { align: 'left' });
+    doc.restore();
 
     // Espaciado extra para separar del header (ajustado para evitar solapamiento con footer)
     doc.moveDown(5);
@@ -108,10 +113,11 @@ export default async function handler(req, res) {
     // Datos del contacto (labels azul, valores negro)
     doc.fontSize(11).fillColor(azul).text('Nombre: ', { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
     doc.fontSize(11).fillColor(azul).text('Email: ', { continued: true }).fillColor(negro).text(email || '-', { continued: false });
-    if (phone) doc.fontSize(11).fillColor(azul).text('Teléfono: ', { continued: true }).fillColor(negro).text(phone, { continued: false });
-    if (company) doc.fontSize(11).fillColor(azul).text('Empresa: ', { continued: true }).fillColor(negro).text(company, { continued: false });
-    if (budget) doc.fontSize(11).fillColor(azul).text('Presupuesto estimado: ', { continued: true }).fillColor(negro).text(budget, { continued: false });
-    if (timeline) doc.fontSize(11).fillColor(azul).text('Plazo estimado: ', { continued: true }).fillColor(negro).text(timeline, { continued: false });
+    doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
+    if (phone) { doc.fontSize(11).fillColor(azul).text('Teléfono: ', { continued: true }).fillColor(negro).text(phone, { continued: false }); }
+    if (company) { doc.fontSize(11).fillColor(azul).text('Empresa: ', { continued: true }).fillColor(negro).text(company, { continued: false }); }
+    if (budget) { doc.fontSize(11).fillColor(azul).text('Presupuesto estimado: ', { continued: true }).fillColor(negro).text(budget, { continued: false }); }
+    if (timeline) { doc.fontSize(11).fillColor(azul).text('Plazo estimado: ', { continued: true }).fillColor(negro).text(timeline, { continued: false }); }
     doc.fontSize(11).fillColor(azul).text('Desea newsletter: ', { continued: true }).fillColor(negro).text(newsletter ? 'Sí' : 'No', { continued: false });
 
     // Servicio de interés destacado
@@ -127,9 +133,8 @@ export default async function handler(req, res) {
       doc.fontSize(11).fillColor(negro).text(detalles || brief);
     }
 
-  // --- Footer igual que cotización ---
+  // --- Footer dark mode Gargurevich.Dev ---
   const currentY = doc.y;
-  // Footer único para ambos flujos
   const footerY = doc.page.height - footerHeight - footerOffset;
   const safeFooterY = footerY - 5;
   if (currentY > safeFooterY) {
@@ -138,12 +143,24 @@ export default async function handler(req, res) {
   while (doc.page && doc._pageBuffer && doc._pageBuffer.length > 1) {
     doc.removePage(doc._pageBuffer.length - 1);
   }
-  doc.rect(0, footerY, pageWidth, footerHeight).fill(blanco);
-  doc.fillColor(azul).fontSize(10);
-  doc.text('GargurevichDev', 60, footerY + 10);
-  doc.text('Transformamos ideas en soluciones digitales', 60, footerY + 25);
-  doc.text('Lima, Perú    contacto@gargurevich.dev    +51 966 918 363', 60, footerY + 40);
-  doc.fillColor(gris).fontSize(8).text('© 2025 GargurevichDev. Todos los derechos reservados.', 60, footerY + 60);
+  doc.save();
+  doc.rect(0, footerY, pageWidth, footerHeight).fill(azul); // Fondo azul oscuro
+  // Logo textual
+  doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerY + 10, { continued: true });
+  doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerY + 10);
+  // Descripción
+  doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerY + 28, { width: 400 });
+  // Servicios
+  doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerY + 50, { continued: true });
+  doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerY + 50);
+  // Empresa
+  doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Empresa:', 320, footerY + 50, { continued: true });
+  doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Nuestro Equipo, Portafolio, Blog Técnico, Contacto', undefined, footerY + 50);
+  // Contacto
+  doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerY + 62);
+  // Legal
+  doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados. | Términos de Servicio | Política de Privacidad', 60, footerY + 74);
+  doc.restore();
 }
 
   doc.end();

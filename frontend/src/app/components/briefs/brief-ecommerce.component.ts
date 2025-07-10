@@ -64,9 +64,9 @@ export class BriefEcommerceComponent {
           `Empresa: ${form.company || '-'}\n` +
           `Rubro: ${form.business || '-'}\n` +
           `Objetivo: ${form.goal || '-'}\n` +
+          `Secciones: ${form.sections || '-'}\n` +
           `Productos: ${form.products || '-'}\n` +
           `Plataforma: ${form.platform || '-'}\n` +
-          `Secciones: ${form.sections || '-'}\n` +
           `Contenido: ${form.content || '-'}\n` +
           `Branding: ${form.branding || '-'}\n` +
           `Formulario de contacto: ${form.contactForm || '-'}\n` +
@@ -76,7 +76,8 @@ export class BriefEcommerceComponent {
           `Comentarios: ${form.comments || '-'}\n` +
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
-        tipo: 'cotizacion'
+        tipo: 'cotizacion',
+        service: 'E-commerce'
       };
       this.briefService.sendBrief(payload).subscribe({
         next: () => {

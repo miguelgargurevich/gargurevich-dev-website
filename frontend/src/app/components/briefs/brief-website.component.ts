@@ -73,7 +73,8 @@ export class BriefWebsiteComponent {
           `Comentarios: ${form.comments || '-'}\n` +
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
-        tipo: 'cotizacion'
+        tipo: 'cotizacion',
+        service: 'Sitio Web Institucional'
       };
       this.briefService.sendBrief(payload).subscribe({
         next: () => {
