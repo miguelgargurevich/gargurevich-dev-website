@@ -51,7 +51,7 @@ export default async function handler(req, res) {
 
     // Header visual (solo texto, sin imagen, tamaño más pequeño)
     doc.rect(0, 0, pageWidth, 70).fill(naranja); // Franja superior
-    doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 28, { align: 'left' });
+    doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('GargurevichDev', 60, 28, { align: 'left' });
     doc.fillColor('white').fontSize(14).font('Helvetica').text('Propuesta de Servicios', 200, 32, { align: 'right' });
 
     // Espaciado extra para separar del header
@@ -84,23 +84,24 @@ export default async function handler(req, res) {
     doc.moveDown(2);
     doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
     doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
-    doc.fontSize(10).fillColor(azul).text('Gerente Técnico - Gargurevich.Dev');
+    doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
 
     // --- Footer siempre al final de la página, sin crear páginas extra ---
     // Guardar posición actual
     const currentY = doc.y;
     const footerHeight = 80;
+    const footerOffset = 100; // Subir el footer 20px más respecto al fondo
     // Si el contenido se acerca al footer, mover el cursor para dejar espacio
-    if (currentY > doc.page.height - footerHeight - 40) {
-      doc.y = doc.page.height - footerHeight - 40;
+    if (currentY > doc.page.height - footerHeight - footerOffset) {
+      doc.y = doc.page.height - footerHeight - footerOffset;
     }
     // Footer visual
-    doc.rect(0, doc.page.height - footerHeight, pageWidth, footerHeight).fill(azul);
+    doc.rect(0, doc.page.height - footerHeight - 20, pageWidth, footerHeight).fill(azul);
     doc.fillColor('white').fontSize(10);
-    doc.text('Gargurevich.Dev', 60, doc.page.height - 70);
-    doc.text('Transformamos ideas en soluciones digitales', 60, doc.page.height - 55);
-    doc.text('📍 Lima, Perú    📧 contacto@gargurevich.dev    📞 +51 966 918 363', 60, doc.page.height - 40);
-    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados.', 60, doc.page.height - 20);
+    doc.text('GargurevichDev', 60, doc.page.height - 70 - 20);
+    doc.text('Transformamos ideas en soluciones digitales', 60, doc.page.height - 55 - 20);
+    doc.text('📍 Lima, Perú    📧 contacto@gargurevich.dev    📞 +51 966 918 363', 60, doc.page.height - 40 - 20);
+    doc.fillColor(gris).fontSize(8).text('© 2025 GargurevichDev. Todos los derechos reservados.', 60, doc.page.height - 20 - 20);
     // Nunca crear páginas extra
     while (doc.page && doc._pageBuffer && doc._pageBuffer.length > 1) {
       doc.removePage(doc._pageBuffer.length - 1);
@@ -112,7 +113,7 @@ else {
 
   // Header visual igual que cotización
   doc.rect(0, 0, pageWidth, 70).fill(naranja); // Franja superior
-  doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 28, { align: 'left' });
+  doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('GargurevichDev', 60, 28, { align: 'left' });
   doc.fillColor('white').fontSize(14).font('Helvetica').text('Consulta de Contacto', 200, 32, { align: 'right' });
 
   // Espaciado extra para separar del header
@@ -138,15 +139,16 @@ else {
   // --- Footer igual que cotización ---
   const currentY = doc.y;
   const footerHeight = 80;
-  if (currentY > doc.page.height - footerHeight - 40) {
-    doc.y = doc.page.height - footerHeight - 40;
+  const footerOffset = 100;
+  if (currentY > doc.page.height - footerHeight - footerOffset) {
+    doc.y = doc.page.height - footerHeight - footerOffset;
   }
-  doc.rect(0, doc.page.height - footerHeight, pageWidth, footerHeight).fill(azul);
+  doc.rect(0, doc.page.height - footerHeight - 20, pageWidth, footerHeight).fill(azul);
   doc.fillColor('white').fontSize(10);
-  doc.text('Gargurevich.Dev', 60, doc.page.height - 70);
-  doc.text('Transformamos ideas en soluciones digitales', 60, doc.page.height - 55);
-  doc.text('📍 Lima, Perú    📧 contacto@gargurevich.dev    📞 +51 966 918 363', 60, doc.page.height - 40);
-  doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados.', 60, doc.page.height - 20);
+  doc.text('GargurevichDev', 60, doc.page.height - 70 - 20);
+  doc.text('Transformamos ideas en soluciones digitales', 60, doc.page.height - 55 - 20);
+  doc.text('📍 Lima, Perú    📧 contacto@gargurevich.dev    📞 +51 966 918 363', 60, doc.page.height - 40 - 20);
+  doc.fillColor(gris).fontSize(8).text('© 2025 GargurevichDev. Todos los derechos reservados.', 60, doc.page.height - 20 - 20);
   while (doc.page && doc._pageBuffer && doc._pageBuffer.length > 1) {
     doc.removePage(doc._pageBuffer.length - 1);
   }
@@ -179,58 +181,32 @@ else {
   const toList = tipo === 'cotizacion'
     ? [email, 'ventas@gargurevich.dev']
     : [email, 'contacto@gargurevich.dev'];
-
-  // Mensaje personalizado para usuario y copia interna
+  // Mensaje breve, sin repetir datos (todo está en el PDF adjunto)
   let textMsg = '';
   if (tipo === 'cotizacion') {
-    // Correo en HTML y texto plano mejorado
     textMsg = `Hola${nombre ? ' ' + nombre : ''},\n\n` +
-      '¡Gracias por solicitar una cotización con Gargurevich.Dev!\n' +
-      'A continuación, el resumen de tu requerimiento:\n' +
-      '---------------------------------------------\n' +
-      `Nombre: ${nombre || '-'}\n` +
-      `Email: ${email || '-'}\n` +
-      (phone ? `Teléfono: ${phone}\n` : '') +
-      (company ? `Empresa: ${company}\n` : '') +
-      (timeline ? `Plazo de entrega: ${timeline}\n` : '') +
-      (service ? `Servicio solicitado: ${service}\n` : '') +
-      (detalles ? `Comentarios: ${detalles}\n` : '') +
-      '---------------------------------------------\n' +
-      '\n' +
+      '¡Gracias por solicitar una cotización con GargurevichDev!\n' +
       'Adjuntamos un PDF con el resumen de tu requerimiento.\n' +
-      '\n' +
-      'Un especialista revisará tu solicitud y te contactaremos para validar detalles y enviarte una propuesta personalizada.\n' +
-      'Si tienes dudas, puedes responder a este correo o escribirnos por WhatsApp.\n' +
+      'Un especialista revisará tu solicitud y te contactaremos pronto.\n' +
       '\n¡Gracias por confiar en nosotros!\n' +
-      'Equipo Gargurevich.Dev\n';
+      'Equipo GargurevichDev\n\n\n';
   } else {
-    // Correo de contacto en formato claro y ordenado
     textMsg = `Hola${nombre ? ' ' + nombre : ''},\n\n` +
       '¡Gracias por contactarnos!\n' +
-      'A continuación, el resumen de tu consulta:\n' +
-      '---------------------------------------------\n' +
-      `Nombre: ${nombre || '-'}\n` +
-      `Email: ${email || '-'}\n` +
-      (phone ? `Teléfono: ${phone}\n` : '') +
-      (company ? `Empresa: ${company}\n` : '') +
-      (service ? `Servicio de interés: ${service}\n` : '') +
-      (budget ? `Presupuesto estimado: ${budget}\n` : '') +
-      (timeline ? `Plazo de entrega: ${timeline}\n` : '') +
-      `Newsletter: ${newsletter ? 'Sí' : 'No'}\n` +
-      (detalles || brief ? `Mensaje: ${detalles || brief}\n` : '') +
-      '---------------------------------------------\n' +
-      '\n' +
       'Adjuntamos un PDF con el resumen de tu consulta.\n' +
-      '\n' +
       'Un miembro de nuestro equipo te responderá a la brevedad.\n' +
-      'Si tu mensaje es urgente, puedes escribirnos por WhatsApp o llamarnos directamente.\n' +
-      '\n¡Gracias por tu interés en Gargurevich.Dev!\n';
+      '\n¡Gracias por tu interés en GargurevichDev!\n\n\n';
   }
+  
 
+  const subjectService = service ? ` - ${service}` : '';
   const mailOptions = {
-    from: `Gargurevich.Dev Team<${smtpUser}>`,
+    from: `GargurevichDev Team<${smtpUser}>`,
     to: toList,
-    subject: tipo === 'cotizacion' ? 'Tu cotización Gargurevich.Dev' : 'Nueva consulta de contacto',
+    subject:
+      tipo === 'cotizacion'
+        ? `Tu cotización GargurevichDev${subjectService}`
+        : `Nueva consulta de contacto${subjectService}`,
     text: textMsg,
     attachments: [
       {
