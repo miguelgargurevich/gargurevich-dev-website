@@ -47,8 +47,14 @@ export default async function handler(req, res) {
         negro: '#14213D',
       }
     };
-    // Normalizamos el valor de theme para evitar falsos negativos
-    const themeKey = (typeof theme === 'string' && theme.toLowerCase() === 'light') ? 'light' : 'dark';
+    
+    // Normalizamos el valor de theme para evitar falsos negativos, pero por defecto siempre será 'dark' salvo que explícitamente sea 'light'
+    let themeKey = 'dark';
+    if (typeof theme === 'string' && theme.trim().toLowerCase() === 'light') {
+      themeKey = 'light';
+    }
+    // Log de depuración para rastrear el valor recibido y el key usado
+    console.log('PDF Theme recibido:', theme, '| ThemeKey aplicado:', themeKey);
     const { azul, naranja, gris, blanco, negro } = palettes[themeKey];
 
     // Fondo principal
