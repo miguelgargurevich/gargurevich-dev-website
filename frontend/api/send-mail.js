@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 import PDFDocument from 'pdfkit';
-import path from 'path';
 
 export default async function handler(req, res) {
   // Log de depuración para ver el body recibido
@@ -106,6 +105,9 @@ export default async function handler(req, res) {
       doc.fontSize(12).fillColor(naranja).text('Servicio solicitado:', { underline: false });
       doc.moveDown(0.3);
       doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
+      // Firma y mensaje de contacto
+      doc.moveDown(1);
+      doc.fontSize(11).fillColor(azul).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
       doc.moveDown(2);
       doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
       doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
@@ -128,6 +130,13 @@ export default async function handler(req, res) {
         doc.fontSize(11).fillColor(azul).text('Mensaje:', { underline: false });
         doc.fontSize(11).fillColor(negro).text(detalles || brief);
       }
+      // Firma y mensaje de contacto
+      doc.moveDown(1);
+      doc.fontSize(11).fillColor(azul).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
+      doc.moveDown(2);
+      doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
+      doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
+      doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
     }
     contentEndY = doc.y;
 
