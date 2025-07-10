@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1752119628331,
+  "timestamp": 1752122161648,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -90,7 +90,7 @@
     "/assets/images/team/miguel.jpg": "7fb61b0e7d49585bd346a881ab3ef6d5823824cc",
     "/assets/images/team/placeholder.svg": "1f92dc4640eaf46df0e0b95f4d8e600927fbc5d3",
     "/assets/prompts/BLUEPRINTS-TECNICOS.md": "f6903f2a0ac54ef6d9e3fc38a608dfe90315d82f",
-    "/assets/prompts/PROMPT-INICIAL.md": "89046124bc56ca9121a2c7f46d519375d817fe2a",
+    "/assets/prompts/PROMPT-INICIAL.md": "bc41378d76a32f392a476f52690c80c2a4f61cf5",
     "/chunk-42LKGL5O.js": "d8606c71d2ec87af9f6e859ade7e7df9b1284e15",
     "/chunk-4MPPMJBM.js": "5b6b012c9ca97df8c15b7d4baeb18e1f2411ad9f",
     "/chunk-4VCVTQT3.js": "b40de27de0b690c3ae8b8f9cac98b7c7f6ad8b50",

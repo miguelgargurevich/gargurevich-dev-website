@@ -29,7 +29,6 @@
     "nodemailer": "^6.10.1",
     "parse5-html-rewriting-stream": "^7.1.0",
     "pdfkit": "^0.17.1",
-    "resend": "^4.6.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

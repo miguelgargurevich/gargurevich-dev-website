@@ -116,7 +116,7 @@ export default async function handler(req, res) {
   }
 
   const mailOptions = {
-    from: `Gargurevich.Dev <${smtpUser}>`,
+    from: `Gargurevich.Dev Team<${smtpUser}>`,
     to: toList,
     subject: tipo === 'cotizacion' ? 'Tu cotización Gargurevich.Dev' : 'Nueva consulta de contacto',
     text: textMsg,

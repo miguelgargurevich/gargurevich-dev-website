@@ -102,5 +102,5 @@ Aquí tienes dos opciones más accesibles para comenzar:
 
 💬 **"Agendemos una videollamada sin costo para analizar tu proyecto"**
 
-📧 Escríbeme a [miguel@gargurevich.com]  
+📧 Escríbeme a [contacto@gargurevich.dev]  
 📱 O envíame un mensaje al WhatsApp: [+51966918363]
