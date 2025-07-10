@@ -48,7 +48,9 @@ export default async function handler(req, res) {
         negro: '#14213D',
       }
     };
-    const { azul, naranja, gris, blanco, negro } = palettes[theme] || palettes.dark;
+    // Normalizamos el valor de theme para evitar falsos negativos
+    const themeKey = (typeof theme === 'string' && theme.toLowerCase() === 'light') ? 'light' : 'dark';
+    const { azul, naranja, gris, blanco, negro } = palettes[themeKey];
 
     // Fondo principal
     doc.rect(0, 0, doc.page.width, doc.page.height).fill(blanco);
@@ -158,8 +160,7 @@ export default async function handler(req, res) {
     const footerLineSpace1b = footerLineSpace1 + 10; // salto de línea extra solicitado
     const footerLine3 = footerLineSpace1b + 10; // Servicios
     const footerLine4 = footerLine3 + 12; // Empresa y contacto
-    const footerLineSpace2 = footerLine4 + 10; // línea en blanco
-    const footerLine5 = footerLineSpace2 + 10; // Derechos reservados
+    const footerLine5 = footerLine4 + 10; // Derechos reservados
 
     doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerLine1, { continued: true });
     doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerLine1);
@@ -171,8 +172,8 @@ export default async function handler(req, res) {
     doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerLine3);
     // Bloque de contacto
     doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerLine4);
-    // Línea en blanco (footerLineSpace2)
-    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados. | Términos de Servicio | Política de Privacidad', 60, footerLine5);
+    // Derechos reservados
+    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados.', 60, footerLine5);
     doc.restore();
 
     doc.end();
