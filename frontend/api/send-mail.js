@@ -1,5 +1,3 @@
-
-
 import nodemailer from 'nodemailer';
 import PDFDocument from 'pdfkit';
 import path from 'path';
@@ -9,7 +7,7 @@ export default async function handler(req, res) {
   console.log('BODY RECIBIDO:', req.body);
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido' });
 
-  const { nombre, email, detalles, brief, tipo, timeline, phone, company, service, budget, newsletter } = req.body;
+  const { nombre, email, detalles, brief, tipo, timeline, phone, company, service, budget, newsletter, theme } = req.body;
   // tipo: 'cotizacion' o 'contacto'
 
   // Validación de campos obligatorios (debe ir aquí, después de obtener req.body)
@@ -27,152 +25,142 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'No se encontró la variable de entorno ZOHO_SMTP_PASS para el password SMTP.' });
   }
 
-  // 1. Inicializar PDFKit y buffers correctamente
-  const buffers = [];
-  const doc = new PDFDocument({ size: 'A4', margin: 40 });
-  doc.on('data', (data) => buffers.push(data));
+  // --- Generación unificada de PDF ---
+  async function generarPDF({ nombre, email, detalles, brief, tipo, timeline, phone, company, service, budget, newsletter, theme = 'dark' }) {
+    const buffers = [];
+    const doc = new PDFDocument({ size: 'A4', margin: 40 });
+    doc.on('data', (data) => buffers.push(data));
 
-  // Paleta
-  const azul = '#14213D';
-  const naranja = '#FCA311';
-  const gris = '#E5E5E5';
-  const blanco = '#FFFFFF';
-  const negro = '#000000';
+    // Paletas por tema
+    const palettes = {
+      dark: {
+        azul: '#14213D',
+        naranja: '#FCA311',
+        gris: '#E5E5E5',
+        blanco: '#FFFFFF',
+        negro: '#000000',
+      },
+      light: {
+        azul: '#F5F5F5', // fondo header/footer
+        naranja: '#FCA311',
+        gris: '#14213D', // textos secundarios
+        blanco: '#FFFFFF',
+        negro: '#14213D',
+      }
+    };
+    const { azul, naranja, gris, blanco, negro } = palettes[theme] || palettes.dark;
 
+    // Fondo principal
+    doc.rect(0, 0, doc.page.width, doc.page.height).fill(blanco);
+    const pageWidth = doc.page.width;
+    // Layout
+    const headerHeight = 120;
+    const footerHeight = 120;
+    const footerOffset = 30;
+    const minBodySpace = 60;
+    const maxBodyY = doc.page.height - footerHeight - footerOffset - minBodySpace;
 
-  // Fondo blanco
-  doc.rect(0, 0, doc.page.width, doc.page.height).fill(blanco);
-
-  const pageWidth = doc.page.width;
-
-  // --- Constantes globales para layout PDF ---
-  const headerHeight = 70;
-  const footerHeight = 80;
-  const footerOffset = 30;
-  const minBodySpace = 60; // espacio mínimo visual entre cuerpo y footer
-  const maxBodyY = doc.page.height - footerHeight - footerOffset - minBodySpace;
-
-  if (tipo === 'cotizacion') {
-    // Header visual dark mode Gargurevich.Dev
+    // --- Header ---
     doc.save();
-    doc.rect(0, 0, pageWidth, headerHeight).fill(azul); // Franja superior azul oscuro
+    doc.rect(0, 0, pageWidth, headerHeight).fill(azul);
     doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, 26, { continued: true });
     doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, 26);
-    doc.fillColor(gris).fontSize(13).font('Helvetica').text('Propuesta de Servicios', 60, 54, { align: 'left' });
+    doc.fillColor(gris).fontSize(13).font('Helvetica').text(tipo === 'cotizacion' ? 'Propuesta de Servicios' : 'Consulta de Contacto', 60, 54, { align: 'left' });
     doc.restore();
 
-    // Espaciado extra para separar del header (ajustado para evitar solapamiento con footer)
+    // Espaciado extra para separar del header
     doc.moveDown(5);
-    if (doc.y > maxBodyY) {
-      doc.y = maxBodyY;
+    if (doc.y > maxBodyY) doc.y = maxBodyY;
+
+    // --- Datos principales ---
+    let contentStartY = doc.y;
+    let contentEndY = 0;
+    if (tipo === 'cotizacion') {
+      doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
+      doc.fontSize(11).fillColor(azul).text(`Email: `, { continued: true }).fillColor(negro).text(email || '-', { continued: false });
+      doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
+      if (phone) doc.fontSize(11).fillColor(azul).text(`Teléfono: `, { continued: true }).fillColor(negro).text(phone, { continued: false });
+      if (company) doc.fontSize(11).fillColor(azul).text(`Empresa: `, { continued: true }).fillColor(negro).text(company, { continued: false });
+      if (timeline) doc.fontSize(11).fillColor(azul).text(`Plazo de entrega: `, { continued: true }).fillColor(negro).text(timeline, { continued: false });
+      if (detalles) {
+        doc.moveDown(0.5);
+        doc.fontSize(11).fillColor(azul).text('Comentarios adicionales:', { underline: false });
+        doc.fontSize(11).fillColor(negro).text(detalles);
+      }
+      doc.moveDown(1);
+      doc.moveDown(1);
+      doc.fontSize(12).fillColor(naranja).text('Servicio solicitado:', { underline: false });
+      doc.moveDown(0.3);
+      doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
+      doc.moveDown(2);
+      doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
+      doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
+      doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
+    } else {
+      doc.fontSize(11).fillColor(azul).text('Nombre: ', { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
+      doc.fontSize(11).fillColor(azul).text('Email: ', { continued: true }).fillColor(negro).text(email || '-', { continued: false });
+      doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
+      if (phone) doc.fontSize(11).fillColor(azul).text('Teléfono: ', { continued: true }).fillColor(negro).text(phone, { continued: false });
+      if (company) doc.fontSize(11).fillColor(azul).text('Empresa: ', { continued: true }).fillColor(negro).text(company, { continued: false });
+      if (budget) doc.fontSize(11).fillColor(azul).text('Presupuesto estimado: ', { continued: true }).fillColor(negro).text(budget, { continued: false });
+      if (timeline) doc.fontSize(11).fillColor(azul).text('Plazo estimado: ', { continued: true }).fillColor(negro).text(timeline, { continued: false });
+      doc.fontSize(11).fillColor(azul).text('Desea newsletter: ', { continued: true }).fillColor(negro).text(newsletter ? 'Sí' : 'No', { continued: false });
+      doc.moveDown(1);
+      doc.fontSize(12).fillColor(naranja).text('Servicio de interés:', { underline: false });
+      doc.moveDown(0.3);
+      doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
+      if (detalles || brief) {
+        doc.moveDown(0.5);
+        doc.fontSize(11).fillColor(azul).text('Mensaje:', { underline: false });
+        doc.fontSize(11).fillColor(negro).text(detalles || brief);
+      }
     }
+    contentEndY = doc.y;
 
-    // Datos del cliente y proyecto
-    doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
-    doc.fontSize(11).fillColor(azul).text(`Email: `, { continued: true }).fillColor(negro).text(email || '-', { continued: false });
-    doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
-    if (phone) { doc.fontSize(11).fillColor(azul).text(`Teléfono: `, { continued: true }).fillColor(negro).text(phone, { continued: false }); }
-    if (company) { doc.fontSize(11).fillColor(azul).text(`Empresa: `, { continued: true }).fillColor(negro).text(company, { continued: false }); }
-    if (timeline) { doc.fontSize(11).fillColor(azul).text(`Plazo de entrega: `, { continued: true }).fillColor(negro).text(timeline, { continued: false }); }
+    // --- Footer ---
+    // Si el contenido se extiende demasiado, recortamos para que el footer nunca pase a la segunda página
+    const footerY = doc.page.height - footerHeight - footerOffset;
+    const safeFooterY = footerY - 5;
 
-    // Comentarios adicionales
-    if (detalles) {
-      doc.moveDown(0.5);
-      doc.fontSize(11).fillColor(azul).text('Comentarios adicionales:', { underline: false });
-      doc.fontSize(11).fillColor(negro).text(detalles);
+    // Si el contenido invade el área del footer, recortamos el contenido y agregamos un aviso
+    if (contentEndY > safeFooterY) {
+      // Borramos la página y reescribimos solo lo que cabe
+      doc._pageBuffer = [doc._pageBuffer[0]];
+      doc.page = doc._pageBuffer[0];
+      doc.y = contentStartY;
+      doc.fillColor(naranja).fontSize(11).text('El contenido ha sido recortado para mantener el diseño compacto del PDF.', 60, safeFooterY - 30, { width: pageWidth - 120, align: 'center' });
     }
-
-    doc.moveDown(1);
-    // Servicio solicitado destacado
-    doc.moveDown(1);
-    doc.fontSize(12).fillColor(naranja).text('Servicio solicitado:', { underline: false });
-    doc.moveDown(0.3);
-    doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
-
-    // Firma (opcional)
-    doc.moveDown(2);
-    doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
-    doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
-    doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
-  }
-  else {
-    // Header visual dark mode Gargurevich.Dev
+    // Eliminar cualquier página extra (solo 1 página)
+    while (doc.page && doc._pageBuffer && doc._pageBuffer.length > 1) {
+      doc.removePage(doc._pageBuffer.length - 1);
+    }
     doc.save();
-    doc.rect(0, 0, pageWidth, headerHeight).fill(azul); // Franja superior azul oscuro
-    doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, 26, { continued: true });
-    doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, 26);
-    doc.fillColor(gris).fontSize(13).font('Helvetica').text('Consulta de Contacto', 60, 54, { align: 'left' });
+    // El fondo del footer ahora cubre desde el inicio del footer hasta el final de la página
+    doc.rect(0, footerY, pageWidth, doc.page.height - footerY).fill(azul);
+    doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerY + 10, { continued: true });
+    doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerY + 10);
+    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerY + 28, { width: 400 });
+    doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerY + 50, { continued: true });
+    doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerY + 50);
+    doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Empresa:', 320, footerY + 50, { continued: true });
+    doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Nuestro Equipo, Portafolio, Blog Técnico, Contacto', undefined, footerY + 50);
+    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerY + 62);
+    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados. | Términos de Servicio | Política de Privacidad', 60, footerY + 74);
     doc.restore();
 
-    // Espaciado extra para separar del header (ajustado para evitar solapamiento con footer)
-    doc.moveDown(5);
-    if (doc.y > maxBodyY) {
-      doc.y = maxBodyY;
-    }
-
-    // Datos del contacto (labels azul, valores negro)
-    doc.fontSize(11).fillColor(azul).text('Nombre: ', { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
-    doc.fontSize(11).fillColor(azul).text('Email: ', { continued: true }).fillColor(negro).text(email || '-', { continued: false });
-    doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
-    if (phone) { doc.fontSize(11).fillColor(azul).text('Teléfono: ', { continued: true }).fillColor(negro).text(phone, { continued: false }); }
-    if (company) { doc.fontSize(11).fillColor(azul).text('Empresa: ', { continued: true }).fillColor(negro).text(company, { continued: false }); }
-    if (budget) { doc.fontSize(11).fillColor(azul).text('Presupuesto estimado: ', { continued: true }).fillColor(negro).text(budget, { continued: false }); }
-    if (timeline) { doc.fontSize(11).fillColor(azul).text('Plazo estimado: ', { continued: true }).fillColor(negro).text(timeline, { continued: false }); }
-    doc.fontSize(11).fillColor(azul).text('Desea newsletter: ', { continued: true }).fillColor(negro).text(newsletter ? 'Sí' : 'No', { continued: false });
-
-    // Servicio de interés destacado
-    doc.moveDown(1);
-    doc.fontSize(12).fillColor(naranja).text('Servicio de interés:', { underline: false });
-    doc.moveDown(0.3);
-    doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
-
-    // Mensaje
-    if (detalles || brief) {
-      doc.moveDown(0.5);
-      doc.fontSize(11).fillColor(azul).text('Mensaje:', { underline: false });
-      doc.fontSize(11).fillColor(negro).text(detalles || brief);
-    }
-
-  // --- Footer dark mode Gargurevich.Dev ---
-  const currentY = doc.y;
-  const footerY = doc.page.height - footerHeight - footerOffset;
-  const safeFooterY = footerY - 5;
-  if (currentY > safeFooterY) {
-    doc.y = safeFooterY;
-  }
-  while (doc.page && doc._pageBuffer && doc._pageBuffer.length > 1) {
-    doc.removePage(doc._pageBuffer.length - 1);
-  }
-  doc.save();
-  doc.rect(0, footerY, pageWidth, footerHeight).fill(azul); // Fondo azul oscuro
-  // Logo textual
-  doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerY + 10, { continued: true });
-  doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerY + 10);
-  // Descripción
-  doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerY + 28, { width: 400 });
-  // Servicios
-  doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerY + 50, { continued: true });
-  doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerY + 50);
-  // Empresa
-  doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Empresa:', 320, footerY + 50, { continued: true });
-  doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Nuestro Equipo, Portafolio, Blog Técnico, Contacto', undefined, footerY + 50);
-  // Contacto
-  doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerY + 62);
-  // Legal
-  doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados. | Términos de Servicio | Política de Privacidad', 60, footerY + 74);
-  doc.restore();
-}
-
-  doc.end();
-
-  const pdfBuffer = await new Promise((resolve, reject) => {
-    doc.on('end', () => {
-      resolve(Buffer.concat(buffers));
+    doc.end();
+    return await new Promise((resolve, reject) => {
+      doc.on('end', () => {
+        resolve(Buffer.concat(buffers));
+      });
+      doc.on('error', (err) => {
+        reject(err);
+      });
     });
-    doc.on('error', (err) => {
-      reject(err);
-    });
-  });
+  }
+
+  // Generar el PDF según los datos recibidos y el tema
+  const pdfBuffer = await generarPDF({ nombre, email, detalles, brief, tipo, timeline, phone, company, service, budget, newsletter, theme });
 
   // 2. Configurar transporter
   const transporter = nodemailer.createTransport({
