@@ -49,42 +49,51 @@ export default async function handler(req, res) {
   if (tipo === 'cotizacion') {
     const pageWidth = doc.page.width;
 
-    // Header visual (solo texto, sin imagen)
-    doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
-    doc.fillColor('white').fontSize(32).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 40, { align: 'left' });
-    doc.fillColor('white').fontSize(24).font('Helvetica').text('Propuesta de Servicios', 200, 50, { align: 'right' });
 
-  doc.moveDown(4);
+    // Header visual (solo texto, sin imagen, tamaño más pequeño)
+    doc.rect(0, 0, pageWidth, 70).fill(naranja); // Franja superior
+    doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 28, { align: 'left' });
+    doc.fillColor('white').fontSize(14).font('Helvetica').text('Propuesta de Servicios', 200, 32, { align: 'right' });
 
-  // Cliente, Email, Plazo y Fecha
-  doc.fontSize(12).fillColor(negro).text(`Cliente: `, { continued: true }).fillColor(azul).text(nombre || '-', { continued: false });
-  doc.fontSize(12).fillColor(negro).text(`Email: `, { continued: true }).fillColor(azul).text(email || '-', { continued: false });
-  if (timeline) doc.fontSize(12).fillColor(negro).text(`Plazo de entrega: `, { continued: true }).fillColor(azul).text(timeline, { continued: false });
-  doc.fontSize(12).fillColor(negro).text(`Fecha: `, { continued: true }).fillColor(azul).text(new Date().toLocaleDateString('es-PE'));
+    // Datos del cliente y proyecto
+    doc.moveDown(2);
+    doc.fontSize(11).fillColor(negro).text(`Cliente: `, { continued: true }).fillColor(azul).text(nombre || '-', { continued: false });
+    doc.fontSize(11).fillColor(negro).text(`Email: `, { continued: true }).fillColor(azul).text(email || '-', { continued: false });
+    if (phone) doc.fontSize(11).fillColor(negro).text(`Teléfono: `, { continued: true }).fillColor(azul).text(phone, { continued: false });
+    if (company) doc.fontSize(11).fillColor(negro).text(`Empresa: `, { continued: true }).fillColor(azul).text(company, { continued: false });
+    if (timeline) doc.fontSize(11).fillColor(negro).text(`Plazo de entrega: `, { continued: true }).fillColor(azul).text(timeline, { continued: false });
+    doc.fontSize(11).fillColor(negro).text(`Fecha: `, { continued: true }).fillColor(azul).text(new Date().toLocaleDateString('es-PE'));
 
-  doc.moveDown(1);
+    // Comentarios adicionales
+    if (detalles) {
+      doc.moveDown(0.5);
+      doc.fontSize(11).fillColor(negro).text('Comentarios adicionales:', { underline: false });
+      doc.fontSize(11).fillColor(gris).text(detalles);
+    }
 
-  // Título de sección
-  doc.fontSize(14).fillColor(naranja).text('Servicios propuestos:', { underline: false });
-  doc.moveDown(0.5);
-
-  // Tabla simple: nombre + descripción + precio
-  if (Array.isArray(servicios) && servicios.length > 0) {
-    servicios.forEach((servicio, i) => {
-      doc.fontSize(12).fillColor(negro).text(`${i + 1}. ${servicio.nombre || 'Servicio sin nombre'}`, { continued: false });
-      doc.fontSize(10).fillColor(gris).text(servicio.descripcion || 'Sin descripción');
-      doc.fontSize(12).fillColor(azul).text(`Precio: $${servicio.precio || '0.00'}`, { align: 'right' });
-      doc.moveDown(0.8);
-    });
-    // Total
     doc.moveDown(1);
-    const total = servicios.reduce((sum, s) => sum + (parseFloat(s.precio) || 0), 0);
-    doc.fontSize(14).fillColor(negro).text(`Total: $${total.toFixed(2)}`, { align: 'right' });
-  } else {
-    doc.fontSize(12).fillColor(gris).text('No se detallaron servicios en esta solicitud.', { align: 'left' });
-    doc.moveDown(1);
-    doc.fontSize(14).fillColor(negro).text('Total: $0.00', { align: 'right' });
-  }
+    // Título de sección
+    doc.fontSize(12).fillColor(naranja).text('Servicios propuestos:', { underline: false });
+    doc.moveDown(0.3);
+
+    // Tabla simple: nombre + descripción + precio
+    if (Array.isArray(servicios) && servicios.length > 0) {
+      let total = 0;
+      servicios.forEach((servicio, i) => {
+        doc.fontSize(11).fillColor(negro).text(`${i + 1}. ${servicio.nombre || 'Servicio sin nombre'}`, { continued: false });
+        if (servicio.descripcion) doc.fontSize(10).fillColor(gris).text(servicio.descripcion);
+        if (servicio.precio) doc.fontSize(11).fillColor(azul).text(`Precio: $${servicio.precio}`, { align: 'right' });
+        total += parseFloat(servicio.precio) || 0;
+        doc.moveDown(0.3);
+      });
+      // Total
+      doc.moveDown(0.5);
+      doc.fontSize(12).fillColor(negro).text(`Total: $${total.toFixed(2)}`, { align: 'right' });
+    } else {
+      doc.fontSize(11).fillColor(gris).text('No se detallaron servicios en esta solicitud.', { align: 'left' });
+      doc.moveDown(0.5);
+      doc.fontSize(12).fillColor(negro).text('Total: $0.00', { align: 'right' });
+    }
 
   // Firma (opcional)
   doc.moveDown(2);
@@ -106,32 +115,32 @@ export default async function handler(req, res) {
 else {
   const pageWidth = doc.page.width;
 
-  // Header visual (solo texto, sin imagen)
-  doc.rect(0, 0, pageWidth, 100).fill(naranja); // Franja superior
-  doc.fillColor('white').fontSize(32).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 40, { align: 'left' });
-  doc.fillColor('white').fontSize(24).font('Helvetica').text('Consulta de Contacto', 200, 50, { align: 'right' });
 
-  doc.moveDown(4);
+  // Header visual (solo texto, sin imagen, tamaño más pequeño)
+  doc.rect(0, 0, pageWidth, 70).fill(naranja); // Franja superior
+  doc.fillColor('white').fontSize(20).font('Helvetica-Bold').text('Gargurevich.Dev', 60, 28, { align: 'left' });
+  doc.fillColor('white').fontSize(14).font('Helvetica').text('Consulta de Contacto', 200, 32, { align: 'right' });
 
   // Datos del contacto
-  doc.fontSize(12).fillColor(negro).text(`Nombre: `, { continued: true }).fillColor(azul).text(nombre || '-');
-  doc.fontSize(12).fillColor(negro).text(`Email: `, { continued: true }).fillColor(azul).text(email || '-');
-  if (phone) doc.fontSize(12).fillColor(negro).text(`Teléfono: `, { continued: true }).fillColor(azul).text(phone);
-  if (company) doc.fontSize(12).fillColor(negro).text(`Empresa: `, { continued: true }).fillColor(azul).text(company);
-  if (service) doc.fontSize(12).fillColor(negro).text(`Servicio de interés: `, { continued: true }).fillColor(azul).text(service);
-  if (budget) doc.fontSize(12).fillColor(negro).text(`Presupuesto estimado: `, { continued: true }).fillColor(azul).text(budget);
-  if (timeline) doc.fontSize(12).fillColor(negro).text(`Plazo estimado: `, { continued: true }).fillColor(azul).text(timeline);
-  doc.fontSize(12).fillColor(negro).text(`Desea newsletter: `, { continued: true }).fillColor(azul).text(newsletter ? 'Sí' : 'No');
-
-  doc.moveDown(1);
+  doc.moveDown(2);
+  doc.fontSize(11).fillColor(negro).text(`Nombre: `, { continued: true }).fillColor(azul).text(nombre || '-', { continued: false });
+  doc.fontSize(11).fillColor(negro).text(`Email: `, { continued: true }).fillColor(azul).text(email || '-', { continued: false });
+  if (phone) doc.fontSize(11).fillColor(negro).text(`Teléfono: `, { continued: true }).fillColor(azul).text(phone, { continued: false });
+  if (company) doc.fontSize(11).fillColor(negro).text(`Empresa: `, { continued: true }).fillColor(azul).text(company, { continued: false });
+  if (service) doc.fontSize(11).fillColor(negro).text(`Servicio de interés: `, { continued: true }).fillColor(azul).text(service, { continued: false });
+  if (budget) doc.fontSize(11).fillColor(negro).text(`Presupuesto estimado: `, { continued: true }).fillColor(azul).text(budget, { continued: false });
+  if (timeline) doc.fontSize(11).fillColor(negro).text(`Plazo estimado: `, { continued: true }).fillColor(azul).text(timeline, { continued: false });
+  doc.fontSize(11).fillColor(negro).text(`Desea newsletter: `, { continued: true }).fillColor(azul).text(newsletter ? 'Sí' : 'No', { continued: false });
 
   // Mensaje
-  doc.fontSize(14).fillColor(naranja).text('Mensaje:', { underline: false });
-  doc.moveDown(0.3);
-  doc.fontSize(12).fillColor(negro).text(detalles || brief || 'Sin mensaje', { align: 'left' });
+  if (detalles || brief) {
+    doc.moveDown(0.5);
+    doc.fontSize(11).fillColor(negro).text('Mensaje:', { underline: false });
+    doc.fontSize(11).fillColor(gris).text(detalles || brief);
+  }
 
   // Footer
-  doc.rect(0, doc.page.height - 80, pageWidth, 80).fill(azulOscuro);
+  doc.rect(0, doc.page.height - 80, pageWidth, 80).fill(azul);
   doc.fillColor('white').fontSize(10);
   doc.text('Gargurevich.Dev', 60, doc.page.height - 70);
   doc.text('Consultas digitales con visión técnica y humana', 60, doc.page.height - 55);
@@ -171,10 +180,30 @@ else {
   // Mensaje personalizado para usuario y copia interna
   let textMsg = '';
   if (tipo === 'cotizacion') {
-    textMsg = `Hola${nombre ? ' ' + nombre : ''},\n\n¡Gracias por solicitar una cotización con Gargurevich.Dev!\n\nAdjuntamos un PDF con el resumen de tu requerimiento.\n\nPlazo de entrega: ${timeline || '-'}\n\nUn especialista revisará tu solicitud y te contactaremos para validar detalles y enviarte una propuesta personalizada.\n\nSi tienes dudas, puedes responder a este correo o escribirnos por WhatsApp.\n\n¡Gracias por confiar en nosotros!\n\nEquipo Gargurevich.Dev`;
+    // Correo en HTML y texto plano mejorado
+    textMsg = `Hola${nombre ? ' ' + nombre : ''},\n\n` +
+      '¡Gracias por solicitar una cotización con Gargurevich.Dev!\n' +
+      'A continuación, el resumen de tu requerimiento:\n' +
+      '---------------------------------------------\n' +
+      `Nombre: ${nombre || '-'}\n` +
+      `Email: ${email || '-'}\n` +
+      (phone ? `Teléfono: ${phone}\n` : '') +
+      (company ? `Empresa: ${company}\n` : '') +
+      (timeline ? `Plazo de entrega: ${timeline}\n` : '') +
+      (Array.isArray(servicios) && servicios.length > 0 ? `Servicios solicitados:\n${servicios.map((s,i)=>`  ${i+1}. ${s.nombre || '-'}${s.descripcion ? ' - ' + s.descripcion : ''}${s.precio ? ' ($' + s.precio + ')' : ''}`).join('\n')}\n` : '') +
+      (detalles ? `Comentarios: ${detalles}\n` : '') +
+      '---------------------------------------------\n' +
+      '\nAdjuntamos un PDF con el resumen de tu requerimiento.\n(Ver archivo adjunto más abajo)\n' +
+      '\nUn especialista revisará tu solicitud y te contactaremos para validar detalles y enviarte una propuesta personalizada.\n' +
+      'Si tienes dudas, puedes responder a este correo o escribirnos por WhatsApp.\n' +
+      '\n¡Gracias por confiar en nosotros!\n' +
+      'Equipo Gargurevich.Dev';
   } else {
-    // Texto con todos los campos relevantes
-    textMsg = `Hola${nombre ? ' ' + nombre : ''},\n\n¡Gracias por contactarnos!\n\nResumen de tu consulta:\n` +
+    // Correo de contacto en formato claro y ordenado
+    textMsg = `Hola${nombre ? ' ' + nombre : ''},\n\n` +
+      '¡Gracias por contactarnos!\n' +
+      'A continuación, el resumen de tu consulta:\n' +
+      '---------------------------------------------\n' +
       `Nombre: ${nombre || '-'}\n` +
       `Email: ${email || '-'}\n` +
       (phone ? `Teléfono: ${phone}\n` : '') +
@@ -183,8 +212,12 @@ else {
       (budget ? `Presupuesto estimado: ${budget}\n` : '') +
       (timeline ? `Plazo de entrega: ${timeline}\n` : '') +
       `Newsletter: ${newsletter ? 'Sí' : 'No'}\n` +
-      `\nMensaje:\n${detalles || brief || 'Sin detalles'}\n` +
-      `\nUn miembro de nuestro equipo te responderá a la brevedad.\n\nSi tu mensaje es urgente, puedes escribirnos por WhatsApp o llamarnos directamente.\n\n¡Gracias por tu interés en Gargurevich.Dev!`;
+      (detalles || brief ? `Mensaje: ${detalles || brief}\n` : '') +
+      '---------------------------------------------\n' +
+      '\nAdjuntamos un PDF con el resumen de tu consulta.\n(Ver archivo adjunto más abajo)\n' +
+      '\nUn miembro de nuestro equipo te responderá a la brevedad.\n' +
+      'Si tu mensaje es urgente, puedes escribirnos por WhatsApp o llamarnos directamente.\n' +
+      '\n¡Gracias por tu interés en Gargurevich.Dev!';
   }
 
   const mailOptions = {
