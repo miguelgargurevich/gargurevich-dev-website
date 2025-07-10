@@ -74,8 +74,11 @@ export class BriefAiIntegrationComponent {
           `Comentarios: ${form.comments || '-'}\n` +
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
-        tipo: 'cotizacion'
+        tipo: 'cotizacion',
+        theme: this.getPreferredTheme()
       };
+
+
       this.briefService.sendBrief(payload).subscribe({
         next: () => {
           this.submitSuccess = true;
@@ -91,6 +94,14 @@ export class BriefAiIntegrationComponent {
     }
   }
 
+    // Detecta el modo de color preferido del usuario (dark/light)
+  getPreferredTheme(): 'dark' | 'light' {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
+  }
+  
   resetForm() {
     this.form.reset();
     this.submitted = false;

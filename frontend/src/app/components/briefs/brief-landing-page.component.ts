@@ -48,6 +48,14 @@ export class BriefLandingPageComponent {
     return value && value.trim() === '7' ? null : { math: true };
   }
 
+  // Detecta el modo de color preferido del usuario (dark/light)
+  getPreferredTheme(): 'dark' | 'light' {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
+  }
+
   onSubmit() {
     this.submitted = true;
     this.submitError = false;
@@ -75,8 +83,10 @@ export class BriefLandingPageComponent {
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
         tipo: 'cotizacion',
-        service: 'Landing Page'
+        service: 'Landing Page',
+        theme: this.getPreferredTheme()
       };
+      
       this.briefService.sendBrief(payload).subscribe({
         next: () => {
           this.submitSuccess = true;

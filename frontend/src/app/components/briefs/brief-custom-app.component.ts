@@ -76,8 +76,11 @@ export class BriefCustomAppComponent {
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
         tipo: 'cotizacion',
-        service: 'App a Medida'
+        service: 'App a Medida',
+        theme: this.getPreferredTheme()
       };
+
+  
       this.briefService.sendBrief(payload).subscribe({
         next: () => {
           this.submitSuccess = true;
@@ -93,6 +96,14 @@ export class BriefCustomAppComponent {
     }
   }
 
+  // Detecta el modo de color preferido del usuario (dark/light)
+  getPreferredTheme(): 'dark' | 'light' {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
+  }
+  
   resetForm() {
     this.form.reset();
     this.submitted = false;

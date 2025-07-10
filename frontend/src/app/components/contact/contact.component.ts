@@ -149,13 +149,13 @@ export class ContactComponent implements OnInit, OnDestroy {
           email: form.email,
           detalles: form.message,
           tipo: 'contacto',
-          // Puedes agregar otros campos si los quieres recibir en el correo
           phone: form.phone,
           company: form.company,
           service: form.service,
           budget: form.budget,
           timeline: form.timeline,
-          newsletter: form.newsletter
+          newsletter: form.newsletter,
+          theme: this.getPreferredTheme()
         };
         const response = await fetch('/api/send-mail', {
           method: 'POST',
@@ -178,6 +178,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.isSubmitting = false;
       }
     } else if (!this.contactForm.valid) {
+  
       // Log visual si el formulario no es válido
       this.submitError = true;
       setTimeout(() => {
@@ -187,6 +188,14 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.contactForm.get(key)?.markAsTouched();
       });
     }
+  }
+
+  // Detecta el modo de color preferido del usuario (dark/light)
+  getPreferredTheme(): 'dark' | 'light' {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
   }
 
   resetForm() {
@@ -199,7 +208,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // SEO optimizado para la página de contacto
     this.seoService.updateSEO({
-      title: 'Contacto - Gargurevich.Dev | Desarrollo Web Profesional',
+      title: 'Contacto - GargurevichDev | Desarrollo Web Profesional',
       description: 'Contáctanos para tu proyecto de desarrollo web. Ofrecemos landing pages, e-commerce, aplicaciones web y más. Respuesta garantizada en 24 horas.',
       keywords: 'contacto desarrollo web, presupuesto web, proyecto digital, gargurevich dev',
       url: 'https://gargurevich.dev/contact',

@@ -77,8 +77,10 @@ export class BriefEcommerceComponent {
           `Teléfono: ${form.phone || '-'}`
         ].join('\n'),
         tipo: 'cotizacion',
-        service: 'E-commerce'
+        service: 'E-commerce',
+        theme: this.getPreferredTheme()
       };
+      
       this.briefService.sendBrief(payload).subscribe({
         next: () => {
           this.submitSuccess = true;
@@ -92,6 +94,14 @@ export class BriefEcommerceComponent {
     } else {
       this.submitError = true;
     }
+  }
+
+  // Detecta el modo de color preferido del usuario (dark/light)
+  getPreferredTheme(): 'dark' | 'light' {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'dark';
   }
 
   resetForm() {
