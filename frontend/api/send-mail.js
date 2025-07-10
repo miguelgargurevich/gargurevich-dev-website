@@ -49,7 +49,6 @@ export default async function handler(req, res) {
     };
     
     // Normalizamos el valor de theme para evitar falsos negativos, pero por defecto siempre será 'dark' salvo que explícitamente sea 'light'
-    let themeKey = 'dark';
     if (typeof theme === 'string' && theme.trim().toLowerCase() === 'light') {
       themeKey = 'light';
     }

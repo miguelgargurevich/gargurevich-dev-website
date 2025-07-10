@@ -80,7 +80,7 @@ export class BriefEcommerceComponent {
         service: 'E-commerce',
         theme: this.getPreferredTheme()
       };
-      
+
       this.briefService.sendBrief(payload).subscribe({
         next: () => {
           this.submitSuccess = true;
@@ -98,8 +98,15 @@ export class BriefEcommerceComponent {
 
   // Detecta el modo de color preferido del usuario (dark/light)
   getPreferredTheme(): 'dark' | 'light' {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme as 'dark' | 'light';
+      }
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
     }
     return 'dark';
   }
