@@ -42,13 +42,14 @@ export default async function handler(req, res) {
       light: {
         azul: '#F5F5F5', // fondo header/footer
         naranja: '#FCA311',
-        gris: '#14213D', // textos secundarios
+        gris: '#E5E5E5', // textos secundarios
         blanco: '#FFFFFF',
         negro: '#14213D',
       }
     };
     
     // Normalizamos el valor de theme para evitar falsos negativos, pero por defecto siempre será 'dark' salvo que explícitamente sea 'light'
+    let themeKey = 'dark';
     if (typeof theme === 'string' && theme.trim().toLowerCase() === 'light') {
       themeKey = 'light';
     }
