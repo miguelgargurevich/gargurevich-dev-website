@@ -56,7 +56,29 @@ export class BriefEcommerceComponent {
       return;
     }
     if (this.form.valid) {
-      this.briefService.sendBrief(this.form.value).subscribe({
+      const form = this.form.value;
+      const payload = {
+        nombre: form.name,
+        email: form.email,
+        detalles: [
+          `Empresa: ${form.company || '-'}\n` +
+          `Rubro: ${form.business || '-'}\n` +
+          `Objetivo: ${form.goal || '-'}\n` +
+          `Productos: ${form.products || '-'}\n` +
+          `Plataforma: ${form.platform || '-'}\n` +
+          `Secciones: ${form.sections || '-'}\n` +
+          `Contenido: ${form.content || '-'}\n` +
+          `Branding: ${form.branding || '-'}\n` +
+          `Formulario de contacto: ${form.contactForm || '-'}\n` +
+          `Integraciones: ${form.integrations || '-'}\n` +
+          `Referencias: ${form.references || '-'}\n` +
+          `Deadline: ${form.deadline || '-'}\n` +
+          `Comentarios: ${form.comments || '-'}\n` +
+          `Teléfono: ${form.phone || '-'}`
+        ].join('\n'),
+        tipo: 'cotizacion'
+      };
+      this.briefService.sendBrief(payload).subscribe({
         next: () => {
           this.submitSuccess = true;
           this.form.reset();

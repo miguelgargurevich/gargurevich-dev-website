@@ -142,21 +142,22 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.isSubmitting = true;
       this.submitError = false;
       try {
-        // Enviar datos a la API serverless para email
+        // Enviar datos a la API serverless para email (mapeo correcto para backend)
         const form = this.contactForm.value;
-        // Eliminar campos que no van al email
         const payload = {
-          name: form.name,
+          nombre: form.name,
           email: form.email,
+          detalles: form.message,
+          tipo: 'contacto',
+          // Puedes agregar otros campos si los quieres recibir en el correo
           phone: form.phone,
           company: form.company,
           service: form.service,
           budget: form.budget,
           timeline: form.timeline,
-          message: form.message,
           newsletter: form.newsletter
         };
-        const response = await fetch('/api/send-contact', {
+        const response = await fetch('/api/send-mail', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
