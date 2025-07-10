@@ -78,6 +78,15 @@ export default async function handler(req, res) {
     // --- Datos principales ---
     let contentStartY = doc.y;
     let contentEndY = 0;
+    // Texto inicial amigable
+    doc.moveDown(1);
+    doc.fontSize(13).fillColor(naranja).text(
+      tipo === 'cotizacion'
+        ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
+        : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
+      { align: 'left' }
+    );
+    doc.moveDown(1);
     if (tipo === 'cotizacion') {
       doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
       doc.fontSize(11).fillColor(azul).text(`Email: `, { continued: true }).fillColor(negro).text(email || '-', { continued: false });
@@ -146,7 +155,8 @@ export default async function handler(req, res) {
     const footerLine1 = footerY + footerTextOffset; // Gargurevich.Dev
     const footerLine2 = footerLine1 + 18; // espacio después del logo
     const footerLineSpace1 = footerLine2 + 10; // línea en blanco
-    const footerLine3 = footerLineSpace1 + 10; // Servicios
+    const footerLineSpace1b = footerLineSpace1 + 10; // salto de línea extra solicitado
+    const footerLine3 = footerLineSpace1b + 10; // Servicios
     const footerLine4 = footerLine3 + 12; // Empresa y contacto
     const footerLineSpace2 = footerLine4 + 10; // línea en blanco
     const footerLine5 = footerLineSpace2 + 10; // Derechos reservados
@@ -155,6 +165,7 @@ export default async function handler(req, res) {
     doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerLine1);
     doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerLine2, { width: 400 });
     // Línea en blanco (footerLineSpace1)
+    // Línea en blanco extra (footerLineSpace1b)
     // Bloque de servicios
     doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerLine3, { continued: true });
     doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerLine3);
