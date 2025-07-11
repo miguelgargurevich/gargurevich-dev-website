@@ -42,7 +42,7 @@ export default async function handler(req, res) {
       light: {
         azul: '#F5F5F5', // fondo header/footer
         naranja: '#FCA311',
-        gris: '#E5E5E5', // textos secundarios
+        gris: '#4FC3F7', // textos secundarios (azul celeste de botones)
         blanco: '#FFFFFF',
         negro: '#14213D',
       }
@@ -87,12 +87,24 @@ export default async function handler(req, res) {
     let contentEndY = 0;
     // Texto inicial amigable
     doc.moveDown(1);
-    doc.fontSize(13).fillColor(naranja).text(
-      tipo === 'cotizacion'
-        ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
-        : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
-      { align: 'left' }
-    );
+    // Mostramos el nombre destacado, más grande y con color predominante
+    if (nombre) {
+      doc.fontSize(18).fillColor(themeKey === 'light' ? gris : naranja).text(`Hola ${nombre},`, { align: 'left' });
+      doc.moveDown(0.5);
+      doc.fontSize(13).fillColor(themeKey === 'light' ? gris : naranja).text(
+        tipo === 'cotizacion'
+          ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
+          : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
+        { align: 'left' }
+      );
+    } else {
+      doc.fontSize(13).fillColor(themeKey === 'light' ? gris : naranja).text(
+        tipo === 'cotizacion'
+          ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
+          : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
+        { align: 'left' }
+      );
+    }
     doc.moveDown(1);
     if (tipo === 'cotizacion') {
       doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
