@@ -41,11 +41,11 @@ export default async function handler(req, res) {
         primaryText: '#000000',    // Negro: textos principales
       },
       light: {
-        primaryBg: '#4FC3F7',      // Azul muy claro: fondo header/footer
-        accent: '#FCA311',         // Naranja: acentos y CTAs
-        secondaryText: '#E5E5E5',  // Azul celeste: textos secundarios y botones
+        primaryBg: '#14213D',      // Azul oscuro: fondo header/footer
+        accent: '#14213D',         // Azul oscuro: acentos y CTAs.  ///#4FC3F7  Azul celeste
+        secondaryText: '#E5E5E5',  // Gris claro: textos secundarios
         surface: '#FFFFFF',        // Blanco: fondo principal
-        primaryText: '#14213D',    // Azul oscuro: textos principales
+        primaryText: '#000000',    // Negro: textos principales
       }
     };
     
@@ -96,16 +96,16 @@ export default async function handler(req, res) {
     doc.moveDown(1);
     // Mostramos el nombre destacado, más grande y con color predominante
     if (nombre) {
-      doc.fontSize(18).fillColor(themeKey === 'light' ? secondaryText : accent).text(`Hola ${nombre},`, { align: 'left' });
+      doc.fontSize(18).fillColor(accent).text(`Hola ${nombre},`, { align: 'left' });
       doc.moveDown(0.5);
-      doc.fontSize(13).fillColor(themeKey === 'light' ? secondaryText : accent).text(
+      doc.fontSize(13).fillColor(accent).text(
         tipo === 'cotizacion'
           ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
           : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
         { align: 'left' }
       );
     } else {
-      doc.fontSize(13).fillColor(themeKey === 'light' ? secondaryText : accent).text(
+      doc.fontSize(13).fillColor(accent).text(
         tipo === 'cotizacion'
           ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
           : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
@@ -132,7 +132,7 @@ export default async function handler(req, res) {
       doc.fontSize(11).fillColor(primaryBg).text(service, { align: 'left' });
       // Firma y mensaje de contacto
       doc.moveDown(1);
-      doc.fontSize(11).fillColor(primaryBg).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
+      doc.fontSize(11).fillColor(primaryBg).text('Recibimos su solicitud, nos pondremos en contacto a la brevedad.', { align: 'left' });
       doc.moveDown(2);
       doc.fontSize(10).fillColor(primaryBg).text('Atentamente,', { align: 'left' });
       doc.fontSize(12).fillColor(primaryText).text('Miguel Gargurevich', { align: 'left' });
@@ -155,13 +155,13 @@ export default async function handler(req, res) {
         doc.fontSize(11).fillColor(primaryBg).text('Mensaje:', { underline: false });
         doc.fontSize(11).fillColor(primaryText).text(detalles || brief);
       }
-      // Firma y mensaje de contacto
-      doc.moveDown(1);
-      doc.fontSize(11).fillColor(primaryBg).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
-      doc.moveDown(2);
-      doc.fontSize(10).fillColor(primaryBg).text('Atentamente,', { align: 'left' });
-      doc.fontSize(12).fillColor(primaryText).text('Miguel Gargurevich', { align: 'left' });
-      doc.fontSize(10).fillColor(primaryBg).text('Gerente Técnico - GargurevichDev');
+    //   // Firma y mensaje de contacto
+    //   doc.moveDown(1);
+    //   doc.fontSize(11).fillColor(primaryBg).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
+    //   doc.moveDown(2);
+    //   doc.fontSize(10).fillColor(primaryBg).text('Atentamente,', { align: 'left' });
+    //   doc.fontSize(12).fillColor(primaryText).text('Miguel Gargurevich', { align: 'left' });
+    //   doc.fontSize(10).fillColor(primaryBg).text('Gerente Técnico - GargurevichDev');
     }
     contentEndY = doc.y;
 
