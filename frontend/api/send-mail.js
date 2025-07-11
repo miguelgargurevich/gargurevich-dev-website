@@ -31,20 +31,21 @@ export default async function handler(req, res) {
     doc.on('data', (data) => buffers.push(data));
 
     // Paletas por tema
-    const palettes = {
+    // Paleta de colores para PDF según tema visual
+    const colorPalettes = {
       dark: {
-        azul: '#14213D',
-        naranja: '#FCA311',
-        gris: '#E5E5E5',
-        blanco: '#FFFFFF',
-        negro: '#000000',
+        primaryBg: '#14213D',      // Azul oscuro: fondo header/footer
+        accent: '#FCA311',         // Naranja: acentos y CTAs
+        secondaryText: '#E5E5E5',  // Gris claro: textos secundarios
+        surface: '#FFFFFF',        // Blanco: fondo principal
+        primaryText: '#000000',    // Negro: textos principales
       },
       light: {
-        azul: '#F5F5F5', // fondo header/footer
-        naranja: '#FCA311',
-        gris: '#4FC3F7', // textos secundarios (azul celeste de botones)
-        blanco: '#FFFFFF',
-        negro: '#14213D',
+        primaryBg: '#4FC3F7',      // Azul muy claro: fondo header/footer
+        accent: '#FCA311',         // Naranja: acentos y CTAs
+        secondaryText: '#E5E5E5',  // Azul celeste: textos secundarios y botones
+        surface: '#FFFFFF',        // Blanco: fondo principal
+        primaryText: '#14213D',    // Azul oscuro: textos principales
       }
     };
     
@@ -55,10 +56,16 @@ export default async function handler(req, res) {
     }
     // Log de depuración para rastrear el valor recibido y el key usado
     console.log('PDF Theme recibido:', theme, '| ThemeKey aplicado:', themeKey);
-    const { azul, naranja, gris, blanco, negro } = palettes[themeKey];
+    const {
+      primaryBg,
+      accent,
+      secondaryText,
+      surface,
+      primaryText
+    } = colorPalettes[themeKey];
 
     // Fondo principal
-    doc.rect(0, 0, doc.page.width, doc.page.height).fill(blanco);
+    doc.rect(0, 0, doc.page.width, doc.page.height).fill(surface);
     const pageWidth = doc.page.width;
     // Layout
     const headerHeight = 120;
@@ -69,13 +76,13 @@ export default async function handler(req, res) {
 
     // --- Header ---
     doc.save();
-    doc.rect(0, 0, pageWidth, headerHeight).fill(azul);
+    doc.rect(0, 0, pageWidth, headerHeight).fill(primaryBg);
     // Bajamos el texto de la cabecera para mayor separación del borde superior
     const headerTextOffset = 44; // antes 26
     const headerSubTextOffset = headerTextOffset + 28; // antes 54
-    doc.fillColor(naranja).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, headerTextOffset, { continued: true });
-    doc.fillColor(blanco).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, headerTextOffset);
-    doc.fillColor(gris).fontSize(13).font('Helvetica').text(tipo === 'cotizacion' ? 'Propuesta de Servicios' : 'Consulta de Contacto', 60, headerSubTextOffset, { align: 'left' });
+    doc.fillColor(accent).fontSize(24).font('Helvetica-Bold').text('Gargurevich', 60, headerTextOffset, { continued: true });
+    doc.fillColor(surface).fontSize(24).font('Helvetica-Bold').text('.Dev', undefined, headerTextOffset);
+    doc.fillColor(secondaryText).fontSize(13).font('Helvetica').text(tipo === 'cotizacion' ? 'Propuesta de Servicios' : 'Consulta de Contacto', 60, headerSubTextOffset, { align: 'left' });
     doc.restore();
 
     // Espaciado extra para separar del header
@@ -89,16 +96,16 @@ export default async function handler(req, res) {
     doc.moveDown(1);
     // Mostramos el nombre destacado, más grande y con color predominante
     if (nombre) {
-      doc.fontSize(18).fillColor(themeKey === 'light' ? gris : naranja).text(`Hola ${nombre},`, { align: 'left' });
+      doc.fontSize(18).fillColor(themeKey === 'light' ? secondaryText : accent).text(`Hola ${nombre},`, { align: 'left' });
       doc.moveDown(0.5);
-      doc.fontSize(13).fillColor(themeKey === 'light' ? gris : naranja).text(
+      doc.fontSize(13).fillColor(themeKey === 'light' ? secondaryText : accent).text(
         tipo === 'cotizacion'
           ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
           : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
         { align: 'left' }
       );
     } else {
-      doc.fontSize(13).fillColor(themeKey === 'light' ? gris : naranja).text(
+      doc.fontSize(13).fillColor(themeKey === 'light' ? secondaryText : accent).text(
         tipo === 'cotizacion'
           ? '¡Gracias por tu interés! A continuación, el resumen de tu solicitud:'
           : '¡Gracias por contactarnos! Aquí tienes el resumen de tu consulta:',
@@ -107,54 +114,54 @@ export default async function handler(req, res) {
     }
     doc.moveDown(1);
     if (tipo === 'cotizacion') {
-      doc.fontSize(11).fillColor(azul).text(`Cliente: `, { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
-      doc.fontSize(11).fillColor(azul).text(`Email: `, { continued: true }).fillColor(negro).text(email || '-', { continued: false });
-      doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
-      if (phone) doc.fontSize(11).fillColor(azul).text(`Teléfono: `, { continued: true }).fillColor(negro).text(phone, { continued: false });
-      if (company) doc.fontSize(11).fillColor(azul).text(`Empresa: `, { continued: true }).fillColor(negro).text(company, { continued: false });
-      if (timeline) doc.fontSize(11).fillColor(azul).text(`Plazo de entrega: `, { continued: true }).fillColor(negro).text(timeline, { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text(`Cliente: `, { continued: true }).fillColor(primaryText).text(nombre || '-', { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text(`Email: `, { continued: true }).fillColor(primaryText).text(email || '-', { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text(`Fecha: `, { continued: true }).fillColor(primaryText).text(new Date().toLocaleDateString('es-PE'));
+      if (phone) doc.fontSize(11).fillColor(primaryBg).text(`Teléfono: `, { continued: true }).fillColor(primaryText).text(phone, { continued: false });
+      if (company) doc.fontSize(11).fillColor(primaryBg).text(`Empresa: `, { continued: true }).fillColor(primaryText).text(company, { continued: false });
+      if (timeline) doc.fontSize(11).fillColor(primaryBg).text(`Plazo de entrega: `, { continued: true }).fillColor(primaryText).text(timeline, { continued: false });
       if (detalles) {
         doc.moveDown(0.5);
-        doc.fontSize(11).fillColor(azul).text('Comentarios adicionales:', { underline: false });
-        doc.fontSize(11).fillColor(negro).text(detalles);
+        doc.fontSize(11).fillColor(primaryBg).text('Comentarios adicionales:', { underline: false });
+        doc.fontSize(11).fillColor(primaryText).text(detalles);
       }
       doc.moveDown(1);
       doc.moveDown(1);
-      doc.fontSize(12).fillColor(naranja).text('Servicio solicitado:', { underline: false });
+      doc.fontSize(12).fillColor(accent).text('Servicio solicitado:', { underline: false });
       doc.moveDown(0.3);
-      doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
+      doc.fontSize(11).fillColor(primaryBg).text(service, { align: 'left' });
       // Firma y mensaje de contacto
       doc.moveDown(1);
-      doc.fontSize(11).fillColor(azul).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
+      doc.fontSize(11).fillColor(primaryBg).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
       doc.moveDown(2);
-      doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
-      doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
-      doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
+      doc.fontSize(10).fillColor(primaryBg).text('Atentamente,', { align: 'left' });
+      doc.fontSize(12).fillColor(primaryText).text('Miguel Gargurevich', { align: 'left' });
+      doc.fontSize(10).fillColor(primaryBg).text('Gerente Técnico - GargurevichDev');
     } else {
-      doc.fontSize(11).fillColor(azul).text('Nombre: ', { continued: true }).fillColor(negro).text(nombre || '-', { continued: false });
-      doc.fontSize(11).fillColor(azul).text('Email: ', { continued: true }).fillColor(negro).text(email || '-', { continued: false });
-      doc.fontSize(11).fillColor(azul).text(`Fecha: `, { continued: true }).fillColor(negro).text(new Date().toLocaleDateString('es-PE'));
-      if (phone) doc.fontSize(11).fillColor(azul).text('Teléfono: ', { continued: true }).fillColor(negro).text(phone, { continued: false });
-      if (company) doc.fontSize(11).fillColor(azul).text('Empresa: ', { continued: true }).fillColor(negro).text(company, { continued: false });
-      if (budget) doc.fontSize(11).fillColor(azul).text('Presupuesto estimado: ', { continued: true }).fillColor(negro).text(budget, { continued: false });
-      if (timeline) doc.fontSize(11).fillColor(azul).text('Plazo estimado: ', { continued: true }).fillColor(negro).text(timeline, { continued: false });
-      doc.fontSize(11).fillColor(azul).text('Desea newsletter: ', { continued: true }).fillColor(negro).text(newsletter ? 'Sí' : 'No', { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text('Nombre: ', { continued: true }).fillColor(primaryText).text(nombre || '-', { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text('Email: ', { continued: true }).fillColor(primaryText).text(email || '-', { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text(`Fecha: `, { continued: true }).fillColor(primaryText).text(new Date().toLocaleDateString('es-PE'));
+      if (phone) doc.fontSize(11).fillColor(primaryBg).text('Teléfono: ', { continued: true }).fillColor(primaryText).text(phone, { continued: false });
+      if (company) doc.fontSize(11).fillColor(primaryBg).text('Empresa: ', { continued: true }).fillColor(primaryText).text(company, { continued: false });
+      if (budget) doc.fontSize(11).fillColor(primaryBg).text('Presupuesto estimado: ', { continued: true }).fillColor(primaryText).text(budget, { continued: false });
+      if (timeline) doc.fontSize(11).fillColor(primaryBg).text('Plazo estimado: ', { continued: true }).fillColor(primaryText).text(timeline, { continued: false });
+      doc.fontSize(11).fillColor(primaryBg).text('Desea newsletter: ', { continued: true }).fillColor(primaryText).text(newsletter ? 'Sí' : 'No', { continued: false });
       doc.moveDown(1);
-      doc.fontSize(12).fillColor(naranja).text('Servicio de interés:', { underline: false });
+      doc.fontSize(12).fillColor(accent).text('Servicio de interés:', { underline: false });
       doc.moveDown(0.3);
-      doc.fontSize(11).fillColor(azul).text(service, { align: 'left' });
+      doc.fontSize(11).fillColor(primaryBg).text(service, { align: 'left' });
       if (detalles || brief) {
         doc.moveDown(0.5);
-        doc.fontSize(11).fillColor(azul).text('Mensaje:', { underline: false });
-        doc.fontSize(11).fillColor(negro).text(detalles || brief);
+        doc.fontSize(11).fillColor(primaryBg).text('Mensaje:', { underline: false });
+        doc.fontSize(11).fillColor(primaryText).text(detalles || brief);
       }
       // Firma y mensaje de contacto
       doc.moveDown(1);
-      doc.fontSize(11).fillColor(azul).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
+      doc.fontSize(11).fillColor(primaryBg).text('Nos pondremos en contacto a la brevedad.', { align: 'left' });
       doc.moveDown(2);
-      doc.fontSize(10).fillColor(azul).text('Atentamente,', { align: 'left' });
-      doc.fontSize(12).fillColor(negro).text('Miguel Gargurevich', { align: 'left' });
-      doc.fontSize(10).fillColor(azul).text('Gerente Técnico - GargurevichDev');
+      doc.fontSize(10).fillColor(primaryBg).text('Atentamente,', { align: 'left' });
+      doc.fontSize(12).fillColor(primaryText).text('Miguel Gargurevich', { align: 'left' });
+      doc.fontSize(10).fillColor(primaryBg).text('Gerente Técnico - GargurevichDev');
     }
     contentEndY = doc.y;
 
@@ -177,7 +184,7 @@ export default async function handler(req, res) {
     }
     doc.save();
     // El fondo del footer ahora cubre desde el inicio del footer hasta el final de la página
-    doc.rect(0, footerY, pageWidth, doc.page.height - footerY).fill(azul);
+    doc.rect(0, footerY, pageWidth, doc.page.height - footerY).fill(primaryBg);
     // Ajuste: bajamos los textos del footer para mayor separación visual respecto al borde superior
     const footerTextOffset = 28;
     // Definimos líneas con saltos (espacios en blanco) para separar visualmente los bloques
@@ -189,18 +196,18 @@ export default async function handler(req, res) {
     const footerLine4 = footerLine3 + 12; // Empresa y contacto
     const footerLine5 = footerLine4 + 10; // Derechos reservados
 
-    doc.fillColor(naranja).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerLine1, { continued: true });
-    doc.fillColor(blanco).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerLine1);
-    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerLine2, { width: 400 });
+    doc.fillColor(accent).fontSize(16).font('Helvetica-Bold').text('Gargurevich', 60, footerLine1, { continued: true });
+    doc.fillColor(surface).fontSize(16).font('Helvetica-Bold').text('.Dev', undefined, footerLine1);
+    doc.fillColor(secondaryText).fontSize(9).font('Helvetica').text('Transformamos ideas en soluciones digitales de alta calidad con tecnología moderna y diseño innovador.', 60, footerLine2, { width: 400 });
     // Línea en blanco (footerLineSpace1)
     // Línea en blanco extra (footerLineSpace1b)
     // Bloque de servicios
-    doc.fillColor(naranja).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerLine3, { continued: true });
-    doc.fillColor(blanco).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerLine3);
+    doc.fillColor(accent).fontSize(9).font('Helvetica-Bold').text('Servicios:', 60, footerLine3, { continued: true });
+    doc.fillColor(surface).fontSize(9).font('Helvetica').text(' Landing Pages, Sitios Web Institucionales, E-commerce, Aplicaciones Web, Integración IA', undefined, footerLine3);
     // Bloque de contacto
-    doc.fillColor(gris).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerLine4);
+    doc.fillColor(secondaryText).fontSize(9).font('Helvetica').text('Lima, Perú | contacto@gargurevich.dev | +51 966 918 363', 60, footerLine4);
     // Derechos reservados
-    doc.fillColor(gris).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados.', 60, footerLine5);
+    doc.fillColor(secondaryText).fontSize(8).text('© 2025 Gargurevich.Dev. Todos los derechos reservados.', 60, footerLine5);
     doc.restore();
 
     doc.end();
