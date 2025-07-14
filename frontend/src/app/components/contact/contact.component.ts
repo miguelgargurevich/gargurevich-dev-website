@@ -1,3 +1,5 @@
+// ...existing code...
+// ...existing code...
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,51 +15,20 @@ interface ContactInfo {
   link?: string;
 }
 
-interface ServiceOption {
-  id: string;
-  name: string;
-  description: string;
-}
-
 @Component({
   selector: 'app-contact',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, IconComponent],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss'
+  styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit, OnDestroy {
   contactForm: FormGroup;
+  contactFormSubmitted = false;
   isSubmitting = false;
   submitSuccess = false;
   submitError = false;
-  contactFormSubmitted = false;
-
-  serviceOptions: ServiceOption[] = [
-    { id: 'landing', name: 'Landing Page', description: 'Página de conversión directa' },
-    { id: 'institutional', name: 'Sitio Web Institucional', description: 'Presencia digital profesional' },
-    { id: 'ecommerce', name: 'Tienda Online', description: 'E-commerce completo' },
-    { id: 'webapp', name: 'Aplicación Web', description: 'Solución a medida' },
-    { id: 'advanced', name: 'Proyecto Avanzado', description: 'IA, DevOps, integración' },
-    { id: 'consultation', name: 'Consultoría', description: 'Asesoramiento técnico' },
-    { id: 'other', name: 'Otro', description: 'Cuéntanos tu idea' }
-  ];
-
   contactInfo: ContactInfo[] = [
-    {
-      icon: 'mail',
-      title: 'Email',
-      description: 'Envíanos un mensaje',
-      value: 'hola@gargurevich.dev',
-      link: 'mailto:hola@gargurevich.dev'
-    },
-    {
-      icon: 'whatsapp',
-      title: 'WhatsApp',
-      description: 'Mensaje directo',
-      value: '+51 966 918 363',
-      link: 'https://wa.me/51966918363'
-    },
     {
       icon: 'phone',
       title: 'Teléfono',
@@ -72,6 +43,16 @@ export class ContactComponent implements OnInit, OnDestroy {
       value: 'Remoto y presencial',
       link: 'https://maps.google.com'
     }
+  ];
+
+  // Opciones de servicios para el select
+  serviceOptions = [
+    { id: 'landing', name: 'Landing Page', description: 'Página de conversión optimizada' },
+    { id: 'web', name: 'Sitio Web Institucional', description: 'Presencia profesional online' },
+    { id: 'ecommerce', name: 'E-commerce', description: 'Tienda online con pagos' },
+    { id: 'app', name: 'Aplicación Web', description: 'Solución a medida' },
+    { id: 'cms', name: 'Web con CMS', description: 'Gestión de contenido fácil' },
+    { id: 'ia', name: 'Integración IA', description: 'Automatización y chatbots' }
   ];
 
   constructor(
@@ -91,15 +72,11 @@ export class ContactComponent implements OnInit, OnDestroy {
       newsletter: [false],
       privacy: [false, Validators.requiredTrue],
       website: [''], // Honeypot
-      captcha: ['', [Validators.required, this.simpleMathValidator]]
+      // captcha eliminado
     });
   }
 
-  // Validador para la pregunta matemática (3 + 4 = 7)
-  simpleMathValidator(control: any) {
-    const value = control.value;
-    return value && value.trim() === '7' ? null : { math: true };
-  }
+  // Validador captcha eliminado
 
   get formControls() {
     return this.contactForm.controls;
@@ -142,24 +119,53 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.isSubmitting = true;
       this.submitError = false;
       try {
-        // Enviar datos a la API serverless para email (mapeo correcto para backend)
         const form = this.contactForm.value;
-        const payload = {
-          nombre: form.name,
-          email: form.email,
-          detalles: form.message,
-          tipo: 'contacto',
-          phone: form.phone,
-          company: form.company,
-          service: form.service,
-          budget: form.budget,
-          timeline: form.timeline,
-          newsletter: form.newsletter,
-          theme: this.getPreferredTheme()
+        // HTML optimizado para compatibilidad máxima en clientes de correo
+        const html = `
+        <table width="100%" bgcolor="#f5f5f5" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;padding:0;margin:0;">
+          <tr>
+            <td align="center">
+              <table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:24px auto;border-radius:8px;box-shadow:0 2px 8px #0001;overflow:hidden;">
+                <tr>
+                  <td style="padding:32px 24px 16px 24px;">
+                    <h2 style="color:#14213D;font-size:22px;margin:0 0 8px 0;">Nueva consulta de contacto</h2>
+                    <p style="margin:0 0 18px 0;font-size:16px;color:#222;">Has recibido una nueva consulta desde el formulario de <b>Gargurevich.Dev</b>:</p>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="font-size:15px;border-collapse:collapse;">
+                      <tr><td style="font-weight:bold;padding:6px 0;width:140px;color:#14213D;">Nombre:</td><td>${form.name}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Email:</td><td>${form.email}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Teléfono:</td><td>${form.phone || '-'}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Empresa:</td><td>${form.company || '-'}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Servicio:</td><td>${form.service}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Presupuesto:</td><td>${form.budget || '-'}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Plazo:</td><td>${form.timeline || '-'}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;vertical-align:top;color:#14213D;">Mensaje:</td><td>${form.message.replace(/\n/g,'<br>')}</td></tr>
+                      <tr><td style="font-weight:bold;padding:6px 0;color:#14213D;">Newsletter:</td><td>${form.newsletter ? 'Sí' : 'No'}</td></tr>
+                    </table>
+                    <p style="margin-top:24px;font-size:13px;color:#888;">Enviado desde <a href='https://gargurevich.dev' style='color:#FCA311;text-decoration:none;">gargurevich.dev</a></p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        `;
+        // Cambia este email por el tuyo de FormSubmit
+        const formSubmitUrl = 'https://formsubmit.co/ajax/contacto@gargurevich.dev';
+        const payload: Record<string, any> = {
+          _subject: `Nueva consulta de contacto de ${form.name}`,
+          _template: 'box',
+          _replyto: form.email,
+          _cc: form.email,
+          message: 'Consulta de contacto',
+          html: html
         };
-        const response = await fetch('/api/send-mail', {
+        // Agrega los campos del formulario plano para respaldo
+        Object.entries(form).forEach(([key, value]) => {
+          if (typeof value !== 'object') (payload as Record<string, any>)[key] = value;
+        });
+        const response = await fetch(formSubmitUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
         });
         if (!response.ok) {
@@ -178,8 +184,6 @@ export class ContactComponent implements OnInit, OnDestroy {
         this.isSubmitting = false;
       }
     } else if (!this.contactForm.valid) {
-  
-      // Log visual si el formulario no es válido
       this.submitError = true;
       setTimeout(() => {
         this.submitError = false;
@@ -242,7 +246,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       mainEntity: {
         '@type': 'Organization',
         name: 'Gargurevich.Dev',
-        email: 'hola@gargurevich.dev',
+        email: 'contacto@gargurevich.dev',
         telephone: '+51-1-234-5678',
         contactPoint: {
           '@type': 'ContactPoint',

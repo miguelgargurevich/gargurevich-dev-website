@@ -1,6 +1,6 @@
 
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, NgZone, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, NgZone, AfterViewInit, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AiChatService, ChatMessage } from '../../services/ai-chat.service';
 import { LinebreaksPipe } from '../../pipes/linebreaks.pipe';
@@ -17,21 +17,63 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
+export class AiChatComponent implements AfterViewInit, OnInit, OnDestroy {
+  private openListener: any;
+  private isBrowser: boolean;
 
-export class AiChatComponent implements AfterViewInit {
   chatForm: FormGroup;
-  messages$ = new BehaviorSubject<ChatMessage[]>([
-    { role: 'assistant', content: '¡Hola! ¿En qué puedo ayudarte hoy?' }
-  ]);
+  messages$: BehaviorSubject<ChatMessage[]>;
   loading = false;
   errorMsg = '';
   show = false;
 
   @ViewChild('scrollMe') scrollMe?: ElementRef<HTMLDivElement>;
 
-  constructor(private fb: FormBuilder, private ai: AiChatService, private ngZone: NgZone) {
+  constructor(
+    private fb: FormBuilder,
+    private ai: AiChatService,
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.chatForm = this.fb.group({ message: [''] });
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    this.messages$ = new BehaviorSubject<ChatMessage[]>([
+      { role: 'assistant', content: '¡Hola! ¿En qué puedo ayudarte hoy?' }
+    ]);
   }
+
+  private faqListener = (event: any) => {
+    if (event.detail && event.detail.question) {
+      this.ngZone.run(() => {
+        if (!this.show) this.toggleChat();
+        this.chatForm.get('message')?.setValue(event.detail.question);
+        setTimeout(() => {
+          const input = document.querySelector('.ai-chat-input input') as HTMLInputElement;
+          if (input) input.focus();
+        }, 100);
+      });
+    }
+  };
+  ngOnInit() {
+    if (this.isBrowser) {
+      this.openListener = () => {
+        if (!this.show) this.toggleChat();
+      };
+      window.addEventListener('open-ai-chat', this.openListener);
+      window.addEventListener('open-ai-chat', this.faqListener);
+    }
+  }
+
+
+  ngOnDestroy() {
+    if (this.isBrowser && this.openListener) {
+      window.removeEventListener('open-ai-chat', this.openListener);
+    }
+    if (this.isBrowser && this.faqListener) {
+      window.removeEventListener('open-ai-chat', this.faqListener);
+    }
+  }
+
 
   ngAfterViewInit() {
     // Scroll al abrir el chat

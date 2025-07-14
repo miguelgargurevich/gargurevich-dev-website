@@ -13,52 +13,19 @@
 <!-- Category Filter -->
 <section class="category-filter section-sm">
   <div class="container">
-    <div class="filter-tabs">
-      <button 
-        *ngFor="let category of categories"
-        [class.active]="selectedCategory === category.id"
-        (click)="selectCategory(category.id)"
-        class="filter-tab"
-      >
-        {{ category.name }}
-      </button>
-    </div>
-    
-    <div class="category-info text-center" *ngIf="getSelectedCategoryInfo()">
-      <p class="category-description">{{ getSelectedCategoryInfo()?.description }}</p>
-    </div>
-  </div>
-</section>
 
-<!-- Services Grid -->
-<section class="services-grid-section section">
-  <div class="container">
-    <div class="services-grid">
+    <div class="services-grid grid-responsive">
       <div 
-        class="service-detail-card card" 
+        class="service-detail-card card responsive-card" 
         *ngFor="let service of filteredServices; trackBy: trackByServiceId"
       >
-        <!-- Service Header -->
-        <div class="service-header">
-          <div class="service-icon-large">
-            <app-icon [name]="service.icon" size="48px" class="text-accent"></app-icon>
-          </div>
-          <div class="service-title-area">
-            <h3 class="service-title">{{ service.title }}</h3>
-            <p class="service-subtitle">{{ service.subtitle }}</p>
-          </div>
-          <div class="service-price">
-            <span *ngIf="service.price === 'Cotizar'" class="cotizar-label">Cotizar</span>
-            <span *ngIf="service.price !== 'Cotizar'">{{ service.price }}</span>
-          </div>
+        <!-- Icono principal del servicio -->
+        <div class="service-icon-header text-center">
+          <app-icon [name]="service.icon" size="40px" class="service-icon-large"></app-icon>
         </div>
-
-        <!-- Service Description -->
         <div class="service-description">
           <p>{{ service.description }}</p>
         </div>
-
-        <!-- Service Features -->
         <div class="service-features">
           <h4>¿Qué incluye?</h4>
           <ul class="features-list">
@@ -68,21 +35,12 @@
             </li>
           </ul>
         </div>
-
-        <!-- Technologies -->
         <div class="service-technologies">
           <h4>Tecnologías utilizadas</h4>
           <div class="tech-tags">
-            <span 
-              class="tech-tag" 
-              *ngFor="let tech of service.technologies"
-            >
-              {{ tech }}
-            </span>
+            <span class="tech-tag" *ngFor="let tech of service.technologies">{{ tech }}</span>
           </div>
         </div>
-
-        <!-- Service Info -->
         <div class="service-info">
           <div class="info-item">
             <strong>Duración:</strong> {{ service.duration }}
@@ -96,54 +54,9 @@
             </span>
           </div>
         </div>
-
-        <!-- Service Actions -->
         <div class="service-actions">
-          <a
-            *ngIf="service.id === 'landing-page'"
-            routerLink="/brief/landing-page"
-            class="btn btn-accent"
-          >
-            Cotizar
-          </a>
-          <a
-            *ngIf="service.id === 'institutional-web'"
-            routerLink="/brief/website"
-            class="btn btn-accent"
-          >
-            Cotizar
-          </a>
-          <a
-            *ngIf="service.id === 'scalable-web'"
-            routerLink="/brief/web-scalable"
-            class="btn btn-accent"
-          >
-            Cotizar
-          </a>
-          <a
-            *ngIf="service.id === 'ecommerce-basic' || service.id === 'ecommerce-advanced'"
-            routerLink="/brief/ecommerce"
-            class="btn btn-accent"
-          >
-            Cotizar
-          </a>
-          <a
-            *ngIf="service.id === 'custom-app'"
-            routerLink="/brief/custom-app"
-            class="btn btn-accent"
-          >
-            Cotizar
-          </a>
-          <a
-            *ngIf="service.id === 'ai-integration' || service.id === 'devops-automation'"
-            routerLink="/brief/ai-integration"
-            class="btn btn-accent"
-          >
-            Cotizar
-          </a>
-          <a routerLink="/cases" class="btn btn-outline">
-            Ver Ejemplos
-          </a>
+          <a routerLink="/contact" class="btn btn-accent">Cotizar</a>
+          <a routerLink="/cases" class="btn btn-outline">Ver Ejemplos</a>
         </div>
       </div>
     </div>

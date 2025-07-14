@@ -1,157 +1,80 @@
-.gemini-title {
-  color: #fff !important;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-// FAB con efecto glass y sombra
 
-// FAB coherente con modo claro/oscuro
-.ai-chat-fab {
+// Chat IA: estilo sobrio y simple, coherente con botones del sitio
+
+// WhatsApp-like floating chat redesign
+.ai-chat-fab.whatsapp-fab {
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-  z-index: 1000;
-  background: rgba(20,33,61,0.95);
-  color: #FCA311;
+  right: 2.2rem;
+  bottom: 2.2rem;
+  z-index: 1002;
+  background: linear-gradient(135deg, #FCA311 80%, #FFD166 100%);
+  color: #14213D;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  box-shadow: 0 4px 24px #0003;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 24px #0005;
   cursor: pointer;
-  transition: box-shadow 0.2s, background 0.2s, color 0.2s, border 0.2s;
-  border: 2px solid #FCA311;
-  backdrop-filter: blur(4px);
-  &:hover {
-    background: #FCA311;
-    color: #14213D;
-    border-color: #FCA311;
-    box-shadow: 0 12px 32px #0007;
-  }
+  border: none;
+  transition: box-shadow 0.2s, background 0.2s;
+  font-size: 2rem;
 }
-
-.light-theme .ai-chat-fab {
-  background: #3B82F6;
-  color: #fff;
-  border: 2px solid #FCA311;
-  &:hover {
-    background: #2563EB;
-    color: #fff;
-    border-color: #FCA311;
-    box-shadow: 0 12px 32px #2563EB55;
-  }
+.ai-chat-fab.whatsapp-fab:hover {
+  box-shadow: 0 6px 32px #FCA31155;
+  background: linear-gradient(135deg, #FFD166 60%, #FCA311 100%);
 }
-
-
-// Soporte para modo claro y oscuro
-.ai-chat-window {
+.ai-chat-window.whatsapp-style {
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-  width: 350px;
-  max-width: 95vw;
-  background: #14213D;
-  color: #fff;
-  border-radius: 1.1rem;
-  box-shadow: 0 8px 32px #0007;
+  right: 2.2rem;
+  bottom: 2.2rem;
+  width: 370px;
+  max-width: 98vw;
+  background: #fff;
+  color: #14213D;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 32px #0003;
   z-index: 1001;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  font-family: Montserrat, Arial, sans-serif;
-  border: 1.5px solid #223;
+  font-family: inherit;
+  border: 1.5px solid #FCA31155;
+  animation: chat-pop-in 0.25s cubic-bezier(.4,1.4,.6,1) 1;
 }
-
-// --- MODO CLARO ---
-.light-theme .ai-chat-window {
-  background: #fff;
-  color: #14213D;
-  border: 1.5px solid #E5E5E5;
-}
-// Cabecera modo claro: texto siempre blanco
-
-// Refuerzo de especificidad para modo claro
-// Cambia el azul del chat IA en modo claro por el azul del botón Iniciar Proyecto
-.light-theme .ai-chat-header,
-.light-theme .ai-chat-window .ai-chat-header {
-  background: #3B82F6;
-  border-bottom: 1.5px solid #E5E5E5;
-}
-
-.light-theme .close-btn {
+.dark-theme .ai-chat-window.whatsapp-style {
+  background: #14213D;
   color: #fff;
+  border-color: #FCA31199;
 }
-.light-theme .ai-chat-messages {
-  background: #fff;
-  color: #14213D;
-  scrollbar-color: #14213D #E5E5E5;
-}
-.light-theme .msg-bubble {
-  background: #fff;
-  color: #14213D;
-  border: 1px solid #E5E5E5;
-  box-shadow: 0 1px 4px #14213d11;
-}
-// Burbuja usuario modo claro: texto siempre blanco
-
-// Refuerzo de especificidad para burbuja usuario modo claro
-// Cambia el azul de la burbuja usuario en modo claro por el azul del botón Iniciar Proyecto
-.light-theme .user .msg-bubble,
-.light-theme .ai-chat-window .user .msg-bubble {
-  background: #3B82F6;
-  color: #fff !important;
-  border: 1px solid #3B82F655;
-  box-shadow: 0 1px 4px #3B82F622;
-}
-
-.light-theme .assistant .msg-bubble {
-  background: #fff;
-  color: #14213D;
-  border: 1px solid #E5E5E5;
-  box-shadow: 0 1px 4px #14213d11;
-}
-.light-theme .ai-chat-input {
-  background: #fff;
-  border-top: 1.5px solid #E5E5E5;
-}
-.light-theme .ai-chat-input input {
-  background: #fff;
-  color: #14213D;
-  border: 1.5px solid #E5E5E5;
-}
-.light-theme .ai-chat-input input:focus {
-  border: 1.5px solid #FCA311;
-  background: #fffbe6;
-}
-// Cambia el azul del botón de enviar en modo claro por el azul del botón Iniciar Proyecto
-.light-theme .ai-chat-input button {
-  background: #3B82F6;
-  color: #fff;
-}
-.light-theme .ai-chat-input button:hover {
-  background: #223;
-  color: #fff;
-}
-.light-theme .ai-chat-disclaimer {
-  background: #fff;
-  color: #14213D;
-  border-top: 1.5px solid #E5E5E5;
-}
-
-// --- FIN MODO CLARO ---
-
-.ai-chat-header {
-  background: #FCA311;
+.ai-chat-header.whatsapp-header {
+  background: linear-gradient(90deg, #FCA311 80%, #FFD166 100%);
   color: #14213D;
   font-weight: 700;
-  padding: 1rem 1.5rem;
+  padding: 0.9rem 1.4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-size: 1.1rem;
-  border-bottom: 1.5px solid #223;
+  border-bottom: 1.5px solid #FCA31155;
+  gap: 0.7rem;
+}
+.ai-avatar {
+  background: #fff;
+  color: #FCA311;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 1px 4px #FCA31122;
+}
+.ai-title {
+  font-weight: 700;
+  font-size: 1.1rem;
   letter-spacing: 0.01em;
 }
 .close-btn {
@@ -160,139 +83,154 @@
   font-size: 1.5rem;
   color: #14213D;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
+  margin-left: auto;
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
-.ai-chat-messages {
+.close-btn:hover {
+  opacity: 1;
+}
+.ai-chat-messages.whatsapp-messages {
   flex: 1 1 auto;
-  padding: 1rem;
+  padding: 1.1rem 1.2rem 0.7rem 1.2rem;
   overflow-y: auto;
-  background: #19213d;
-  max-height: 350px;
-  scrollbar-width: thin;
-  scrollbar-color: #FCA311 #223;
-}
-.msg-bubble {
-  background: #223;
-  color: #fff;
-  border-radius: 1rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  max-width: 90%;
-  word-break: break-word;
+  background: none;
+  max-height: 400px;
   font-size: 1rem;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.msg-row.animate-in {
+  animation: msg-in 0.18s cubic-bezier(.4,1.4,.6,1);
+}
+.msg-bubble {
+  background: #F8FAFC;
+  color: #14213D;
+  border-radius: 1.2rem 1.2rem 1.2rem 0.3rem;
+  padding: 0.7rem 1.1rem;
+  margin-bottom: 0.2rem;
+  max-width: 85%;
+  word-break: break-word;
+  border: 1.2px solid #E5E5E5;
+  font-size: 1rem;
+  display: flex;
+  align-items: flex-end;
   gap: 0.5rem;
-  border: 1px solid #223;
-  box-shadow: 0 1px 4px #0002;
+  box-shadow: 0 1px 4px #0001;
+}
+.dark-theme .msg-bubble {
+  background: #223;
+  color: #fff;
+  border-color: #FCA31133;
 }
 .user .msg-bubble {
   background: #FCA311;
-  color: #14213D;
+  color: #fff;
   align-self: flex-end;
-  border: 1px solid #FCA31155;
+  border: 1.2px solid #FCA31199;
+  border-radius: 1.2rem 1.2rem 0.3rem 1.2rem;
   box-shadow: 0 1px 4px #FCA31122;
 }
+.dark-theme .user .msg-bubble {
+  background: #FCA311;
+  color: #14213D;
+  border-color: #FFD166;
+}
 .assistant .msg-bubble {
+  background: #F8FAFC;
+  color: #14213D;
+  align-self: flex-start;
+  border: 1.2px solid #E5E5E5;
+  border-radius: 1.2rem 1.2rem 1.2rem 0.3rem;
+}
+.dark-theme .assistant .msg-bubble {
   background: #223;
   color: #fff;
-  align-self: flex-start;
-  border: 1px solid #223;
-  box-shadow: 0 1px 4px #0002;
+  border-color: #FCA31133;
 }
-.loading .dots::after {
-  content: '...';
-  animation: blink 1s steps(1) infinite;
+.msg-avatar {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px #0001;
 }
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+.user-avatar {
+  background: #FCA311;
+  color: #fff;
 }
-.ai-chat-input {
+.ai-chat-input.whatsapp-input {
   display: flex;
-  border-top: 1.5px solid #223;
-  background: #14213D;
-  padding: 0.75rem 1rem;
+  border-top: 1.5px solid #FCA31155;
+  background: none;
+  padding: 0.7rem 1.2rem;
   gap: 0.5rem;
   align-items: center;
 }
-.ai-chat-input input {
+.dark-theme .ai-chat-input.whatsapp-input {
+  border-top: 1.5px solid #FCA31199;
+}
+.ai-chat-input.whatsapp-input input {
   flex: 1 1 auto;
-  border: 1.5px solid #223;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
+  border: 1.2px solid #FCA31155;
+  border-radius: 1.2rem;
+  padding: 0.7rem 1.1rem;
   font-size: 1rem;
+  background: #fff;
+  color: #14213D;
+  transition: border 0.2s;
+}
+.dark-theme .ai-chat-input.whatsapp-input input {
   background: #223;
   color: #fff;
-  transition: border 0.2s;
-  &:focus {
-    outline: none;
-    border: 1.5px solid #FCA311;
-    background: #19213d;
-  }
+  border-color: #FCA31199;
 }
-.ai-chat-input button {
-  background: #FCA311;
+.ai-chat-input.whatsapp-input input:focus {
+  outline: none;
+  border: 1.2px solid #FCA311;
+}
+.ai-chat-input.whatsapp-input button {
+  background: linear-gradient(90deg, #FCA311 60%, #FFD166 100%);
   color: #14213D;
   border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  border-radius: 1.2rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-  font-weight: 600;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
   box-shadow: 0 1px 4px #FCA31122;
-  &:hover { background: #ffd166; }
 }
-.ai-chat-disclaimer {
+.ai-chat-input.whatsapp-input button:disabled {
+  background: #E5E5E5;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.dark-theme .ai-chat-input.whatsapp-input button {
+  background: linear-gradient(90deg, #FCA311 60%, #FFD166 100%);
+  color: #223;
+}
+.ai-chat-disclaimer.whatsapp-disclaimer {
   font-size: 0.8rem;
-  color: #FCA311;
-  background: #14213D;
+  color: #aaa;
+  background: none;
   text-align: center;
   padding: 0.5rem 1rem 0.75rem 1rem;
-  border-top: 1.5px solid #223;
+  border-top: none;
   letter-spacing: 0.01em;
 }
-
-// Animación de entrada para los mensajes
-.msg-row {
-  animation: fadeInMsg 0.35s cubic-bezier(0.4,0,0.2,1);
+@keyframes chat-pop-in {
+  0% { transform: scale(0.7) translateY(40px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
-
-@keyframes fadeInMsg {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.msg-avatar {
-  font-size: 1.2em;
-  margin-right: 0.5em;
-  flex-shrink: 0;
-}
-
-// Mejora de focus para accesibilidad
-.ai-chat-input input:focus,
-.ai-chat-input button:focus {
-  outline: 2px solid #FCA311;
-  outline-offset: 2px;
-}
-
-// Mobile: mayor padding y tamaño de input
-@media (max-width: 600px) {
-  .ai-chat-input input {
-    font-size: 1.1rem;
-    padding: 1rem 1.2rem;
-  }
-  .ai-chat-header {
-    font-size: 1rem;
-    padding: 0.7rem 1rem;
-  }
+@keyframes msg-in {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }

@@ -1,3 +1,25 @@
+## Habilidades y stack adicional: Sitios web modernos en React
+
+### Características principales
+- Sitio web en React con soporte completo para español e inglés (i18n)
+- UI moderna con Tailwind CSS y animaciones con Framer Motion
+- Sección de preguntas frecuentes (FAQ) y testimonios dinámicos
+- Formulario de contacto con validación, anti-spam y envío vía FormSubmit
+- Accesibilidad, SEO y favicon optimizados
+- Código abierto y fácil de mantener
+
+### Tecnologías utilizadas
+- **React** — Librería principal para la interfaz de usuario.
+- **TypeScript** — Tipado estático para JavaScript.
+- **Vite** — Herramienta de build y desarrollo rápido para proyectos React.
+- **Tailwind CSS** — Framework de utilidades CSS para estilos rápidos y responsivos.
+- **Framer Motion** — Animaciones y transiciones fluidas en React.
+- **Heroicons** — Iconos SVG modernos para React.
+- **React Hook Form** — Manejo de formularios y validaciones.
+- **Zod** — Validación de esquemas y datos en formularios.
+- **FormSubmit** — Envío de formularios por email sin backend.
+- **ESLint** — Linter para mantener la calidad del código.
+- **i18n personalizado** — Sistema propio de internacionalización (ES/EN).
 # Gargurevich.Dev - Instrucciones de Copilot
 
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->

@@ -1,34 +1,36 @@
 
-<div class="ai-chat-fab" (click)="toggleChat()" *ngIf="!show" aria-label="Abrir chat IA" tabindex="0" role="button">
-  <app-icon name="chat" size="28px"></app-icon>
+
+<div class="ai-chat-fab whatsapp-fab" (click)="toggleChat()" *ngIf="!show" aria-label="Abrir chat IA" tabindex="0" role="button">
+  <app-icon name="chat" size="32px"></app-icon>
 </div>
-<div class="ai-chat-window" *ngIf="show" role="dialog" aria-modal="true" aria-label="Chat con asistente IA">
-  <div class="ai-chat-header">
-    <span class="gemini-title">🤖 Gemini AI</span>
+<div class="ai-chat-window whatsapp-style" *ngIf="show" role="dialog" aria-modal="true" aria-label="Chat con asistente IA">
+  <div class="ai-chat-header whatsapp-header">
+    <span class="ai-avatar">🤖</span>
+    <span class="ai-title">Gargurevich IA</span>
     <button class="close-btn" (click)="toggleChat()" title="Cerrar" aria-label="Cerrar chat">×</button>
   </div>
-  <div class="ai-chat-messages" #scrollMe aria-live="polite" aria-atomic="false">
+  <div class="ai-chat-messages whatsapp-messages" #scrollMe aria-live="polite" aria-atomic="false">
     <ng-container *ngIf="messages$ | async as messages">
-      <div *ngFor="let msg of messages; trackBy: trackByIdx" [ngClass]="msg.role" class="msg-row">
+      <div *ngFor="let msg of messages; trackBy: trackByIdx" [ngClass]="msg.role" class="msg-row animate-in">
         <div class="msg-bubble" [attr.aria-label]="msg.role === 'assistant' ? 'Respuesta de la IA' : 'Mensaje de usuario'">
-          <span *ngIf="msg.role==='assistant'" class="msg-avatar">🤖</span>
-          <span *ngIf="msg.role==='user'" class="msg-avatar">🧑‍💻</span>
+          <span *ngIf="msg.role==='assistant'" class="msg-avatar ai-avatar">🤖</span>
+          <span *ngIf="msg.role==='user'" class="msg-avatar user-avatar">🧑‍💻</span>
           <span [innerHTML]="msg.content | linebreaks"></span>
         </div>
       </div>
     </ng-container>
-    <div *ngIf="loading" class="msg-bubble assistant loading" aria-live="assertive">
+    <div *ngIf="loading" class="msg-bubble assistant loading animate-in" aria-live="assertive">
       <span>🤖</span> <span class="dots">Pensando...</span>
     </div>
-    <div *ngIf="errorMsg" class="msg-bubble assistant error" aria-live="assertive">
+    <div *ngIf="errorMsg" class="msg-bubble assistant error animate-in" aria-live="assertive">
       <span>⚠️ {{errorMsg}}</span>
     </div>
   </div>
-  <form [formGroup]="chatForm" (ngSubmit)="send()" class="ai-chat-input" autocomplete="off" aria-label="Enviar mensaje al asistente IA">
-    <input type="text" formControlName="message" placeholder="Escribe tu consulta..." autocomplete="off" aria-label="Mensaje" [disabled]="loading">
+  <form [formGroup]="chatForm" (ngSubmit)="send()" class="ai-chat-input whatsapp-input" autocomplete="off" aria-label="Enviar mensaje al asistente IA">
+    <input type="text" formControlName="message" placeholder="Escribe tu mensaje..." autocomplete="off" aria-label="Mensaje">
     <button type="submit" [disabled]="loading || !chatForm.value.message?.trim()" aria-label="Enviar">
-      <app-icon name="send" size="18px"></app-icon>
+      <app-icon name="send" size="20px"></app-icon>
     </button>
   </form>
-  <div class="ai-chat-disclaimer">Asistente IA. Respuestas orientativas, no constituyen asesoría legal ni contractual.</div>
+  <div class="ai-chat-disclaimer whatsapp-disclaimer">Asistente IA. Respuestas orientativas, no constituyen asesoría legal ni contractual.</div>
 </div>

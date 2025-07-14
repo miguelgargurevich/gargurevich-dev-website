@@ -1,0 +1,51 @@
+.brief-ai-chat-fab.whatsapp-fab {
+  position: fixed;
+  right: 2.2rem;
+  bottom: 2.2rem;
+  z-index: 1002;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px #14213d22, 0 1.5px 8px #0002;
+  background: none;
+  transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+  animation: pop-in 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.brief-ai-chat-fab.whatsapp-fab svg {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+.brief-ai-chat-fab .chat-fab-bg {
+  fill: #3B82F6; /* Azul cielo en modo claro */
+  transition: fill 0.2s;
+}
+.brief-ai-chat-fab.whatsapp-fab:hover .chat-fab-bg {
+  fill: #FFF;
+}
+.brief-ai-chat-fab.whatsapp-fab:hover {
+  box-shadow: 0 8px 32px #14213d44, 0 2px 12px #0003;
+  transform: scale(1.07);
+}
+.dark-theme .brief-ai-chat-fab .chat-fab-bg {
+  fill: #14213D;
+}
+.dark-theme .brief-ai-chat-fab.whatsapp-fab:hover .chat-fab-bg {
+  fill: #FCA311;
+}
+.dark-theme .brief-ai-chat-fab.whatsapp-fab:hover .chat-fab-bg {
+  fill: #FCA311;
+}
+.dark-theme .brief-ai-chat-fab.whatsapp-fab {
+  box-shadow: 0 4px 24px #FCA31133, 0 1.5px 8px #0002;
+}
+@keyframes pop-in {
+  0% { transform: scale(0.7); opacity: 0; }
+  80% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}

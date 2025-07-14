@@ -2,12 +2,6 @@
   "routes": [
     "/",
     "/blog",
-    "/brief/ai-integration",
-    "/brief/custom-app",
-    "/brief/ecommerce",
-    "/brief/landing-page",
-    "/brief/web-scalable",
-    "/brief/website",
     "/cases",
     "/contact",
     "/privacy",

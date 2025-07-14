@@ -7,6 +7,35 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <svg [attr.width]="size" [attr.height]="size" [attr.viewBox]="viewBox" [attr.fill]="fill" [attr.stroke]="stroke" [attr.stroke-width]="strokeWidth" [class]="cssClass">
+      <!-- Briefcase -->
+      <ng-container *ngIf="name === 'briefcase'">
+        <rect x="3" y="7" width="18" height="13" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke-linecap="round" stroke-linejoin="round"/>
+      </ng-container>
+
+      <!-- Chat Bubble Left Ellipsis -->
+      <ng-container *ngIf="name === 'chat-bubble-left-ellipsis'">
+        <path d="M2 12c0-4.418 4.03-8 9-8s9 3.582 9 8-4.03 8-9 8c-1.07 0-2.09-.14-3.01-.4L2 22l1.41-3.39C2.52 16.13 2 14.13 2 12Z" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="8" cy="12" r="1" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1" fill="currentColor"/>
+        <circle cx="16" cy="12" r="1" fill="currentColor"/>
+      </ng-container>
+
+
+    <svg [attr.width]="size" [attr.height]="size" [attr.viewBox]="viewBox" [attr.fill]="fill" [attr.stroke]="stroke" [attr.stroke-width]="strokeWidth" [class]="cssClass">
+      <!-- Briefcase -->
+      <ng-container *ngIf="name === 'briefcase'">
+        <rect x="3" y="7" width="18" height="13" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke-linecap="round" stroke-linejoin="round"/>
+      </ng-container>
+
+      <!-- Chat Bubble Left Ellipsis -->
+      <ng-container *ngIf="name === 'chat-bubble-left-ellipsis'">
+        <path d="M2 12c0-4.418 4.03-8 9-8s9 3.582 9 8-4.03 8-9 8c-1.07 0-2.09-.14-3.01-.4L2 22l1.41-3.39C2.52 16.13 2 14.13 2 12Z" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="8" cy="12" r="1" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1" fill="currentColor"/>
+        <circle cx="16" cy="12" r="1" fill="currentColor"/>
+      </ng-container>
       <!-- Web Development -->
       <ng-container *ngIf="name === 'code'">
         <path d="M8 3l4 4-4 4m5-4h7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -282,6 +311,14 @@ import { CommonModule } from '@angular/common';
         <rect x="7" y="14" width="3" height="3" rx="1" ry="1"/>
         <rect x="14" y="14" width="3" height="3" rx="1" ry="1"/>
       </ng-container>
+
+      <!-- App (logo principal) -->
+      <ng-container *ngIf="name === 'app'">
+        <g>
+          <circle cx="12" cy="12" r="10" fill="#14213D"/>
+          <path d="M8.5 16V8h2.5a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H8.5m7 4-2-8" stroke="#FCA311" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </g>
+      </ng-container>
       
       <!-- AI Integration -->
       <ng-container *ngIf="name === 'ai-integration'">
@@ -393,7 +430,8 @@ export class IconComponent {
       'sun', 'moon', 'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down',
       'landing-page', 'website', 'web-scalable', 'ecommerce', 'custom-app',
       'ai-integration', 'chat', 'whatsapp', 'marketplace', 'migration',
-      'target', 'lightning', 'tools', 'handshake', 'growth'
+      'target', 'lightning', 'tools', 'handshake', 'growth',
+      'briefcase', 'chat-bubble-left-ellipsis'
     ];
     return knownIcons.includes(this.name);
   }

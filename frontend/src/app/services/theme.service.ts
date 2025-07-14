@@ -40,11 +40,12 @@ export class ThemeService {
   }
 
   private applyThemeToDOM(isDark: boolean): void {
-    // Dark mode es el tema base (sin clase), light mode usa .light-theme
+    // Aplica o quita las clases de tema en <body>
     if (isDark) {
+      document.body.classList.add('dark-theme');
       document.body.classList.remove('light-theme');
-      // No necesitamos agregar 'dark-theme' porque es el estilo base
     } else {
+      document.body.classList.remove('dark-theme');
       document.body.classList.add('light-theme');
     }
   }

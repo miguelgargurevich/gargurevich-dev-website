@@ -39,7 +39,7 @@ export class ServicesComponent {
     { id: 'web', name: 'Desarrollo Web', description: 'Sitios web y aplicaciones modernas' },
     { id: 'ecommerce', name: 'E-commerce', description: 'Tiendas online y sistemas de venta' },
     { id: 'custom', name: 'Desarrollo a Medida', description: 'Soluciones personalizadas' },
-    { id: 'advanced', name: 'Tecnologías Avanzadas', description: 'IA, DevOps y automatización' }
+
   ];
 
   services: ServiceDetail[] = [
@@ -89,29 +89,6 @@ export class ServicesComponent {
       includesSupport: true
     },
     {
-      id: 'scalable-web',
-      icon: 'web-scalable',
-      title: 'Webs Escalables con CMS',
-      subtitle: 'Soluciones intermedias avanzadas',
-      description: 'Aplicaciones web escalables con gestión de contenido headless, perfectas para empresas que necesitan flexibilidad y crecimiento futuro.',
-      features: [
-        'Arquitectura headless moderna',
-        'CMS avanzado con roles de usuario',
-        'API REST personalizada',
-        'Dashboard de administración',
-        'Blog y portafolio dinámico',
-        'Integración con servicios externos',
-        'CDN y optimización global',
-        'Backup automático'
-      ],
-      technologies: ['Angular', 'Strapi', 'Node.js', 'PostgreSQL', 'Docker', 'AWS'],
-      category: 'web',
-      price: 'Cotizar',
-      duration: '4-6 semanas',
-      includesHosting: true,
-      includesSupport: true
-    },
-    {
       id: 'ecommerce-basic',
       icon: 'ecommerce',
       title: 'Tienda Online Básica',
@@ -131,29 +108,6 @@ export class ServicesComponent {
       category: 'ecommerce',
       price: 'Cotizar',
       duration: '3-5 semanas',
-      includesHosting: true,
-      includesSupport: true
-    },
-    {
-      id: 'ecommerce-advanced',
-      icon: 'marketplace',
-      title: 'E-commerce Empresarial',
-      subtitle: 'Solución completa para grandes volúmenes',
-      description: 'Plataforma de e-commerce robusta para empresas con alto volumen de ventas. Incluye funcionalidades avanzadas y integración con sistemas empresariales.',
-      features: [
-        'Multi-tienda y multi-idioma',
-        'Gestión avanzada de inventario',
-        'B2B y B2C en una plataforma',
-        'Integración con ERP/CRM',
-        'Analytics avanzados',
-        'Marketing automation',
-        'API para aplicaciones móviles',
-        'Escalabilidad empresarial'
-      ],
-      technologies: ['Angular', 'Node.js', 'MongoDB', 'Redis', 'Docker', 'Kubernetes'],
-      category: 'ecommerce',
-      price: 'Cotizar',
-      duration: '6-10 semanas',
       includesHosting: true,
       includesSupport: true
     },
@@ -203,29 +157,6 @@ export class ServicesComponent {
       includesHosting: true,
       includesSupport: true
     },
-    {
-      id: 'devops-automation',
-      icon: 'migration',
-      title: 'DevOps y Automatización',
-      subtitle: 'CI/CD y despliegue automático',
-      description: 'Implementamos pipelines de CI/CD, automatización de despliegues, monitoreo y escalabilidad automática para tu aplicación web.',
-      features: [
-        'Pipeline CI/CD completo',
-        'Despliegue automático',
-        'Monitoreo 24/7',
-        'Escalabilidad automática',
-        'Backup automatizado',
-        'Seguridad y actualizaciones',
-        'Logs y alertas',
-        'Optimización de rendimiento'
-      ],
-      technologies: ['Docker', 'Kubernetes', 'Jenkins', 'AWS', 'Terraform', 'Prometheus'],
-      category: 'advanced',
-      price: 'Cotizar',
-      duration: '3-6 semanas',
-      includesHosting: false,
-      includesSupport: true
-    }
   ];
 
   get filteredServices() {

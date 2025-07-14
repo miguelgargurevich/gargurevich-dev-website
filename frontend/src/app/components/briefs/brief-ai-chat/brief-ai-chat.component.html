@@ -1,0 +1,43 @@
+<ng-container *ngIf="!isEmbedded">
+  <div class="brief-ai-chat-fab whatsapp-fab" (click)="toggleChat()" *ngIf="!show" aria-label="Abrir chat cotización" tabindex="0" role="button">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="12" class="chat-fab-bg" />
+      <path d="M7.5 12C7.5 13.3807 8.61929 14.5 10 14.5H13.5L16.5 17.5V14.5C17.8807 14.5 19 13.3807 19 12V9.5C19 8.11929 17.8807 7 16.5 7H10C8.61929 7 7.5 8.11929 7.5 9.5V12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</ng-container>
+<div class="brief-ai-chat-container whatsapp-style" *ngIf="show || isEmbedded" role="dialog" aria-modal="true" aria-label="Chat de cotización">
+  <div class="brief-ai-chat-header whatsapp-header">
+    <div class="ai-header-content">
+      <svg class="ai-avatar" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="12" class="ai-avatar-bg"/>
+        <rect x="7.5" y="9" width="9" height="6" rx="3" class="ai-avatar-face"/>
+        <circle cx="10" cy="12" r="1" class="ai-avatar-eye"/>
+        <circle cx="14" cy="12" r="1" class="ai-avatar-eye"/>
+      </svg>
+      <span class="ai-title">Cotización IA</span>
+    </div>
+    <button class="close-btn" (click)="toggleChat()" title="Cerrar" aria-label="Cerrar chat">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 6L14 14M14 6L6 14" stroke="#14213D" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <div class="brief-ai-chat-messages">
+    <div *ngFor="let msg of messages" [ngClass]="msg.sender">
+      <div class="msg-bubble" [innerHTML]="msg.text"></div>
+    </div>
+    <div *ngIf="sending" class="bot">
+      <div class="msg-bubble">Enviando cotización...</div>
+    </div>
+  </div>
+  <form class="brief-ai-chat-input" (ngSubmit)="sendMessage()" *ngIf="!finished">
+    <input [formControl]="userInputControl" autocomplete="off" placeholder="Escribe tu mensaje..." />
+    <button type="submit" [disabled]="!userInputControl.value?.trim() || userInputControl.disabled" aria-label="Enviar mensaje" title="Enviar">
+      <app-icon name="send"></app-icon>
+    </button>
+  </form>
+  <div *ngIf="finished" class="brief-ai-chat-finish">
+    <button (click)="restart()">Nueva cotización</button>
+  </div>
+</div>

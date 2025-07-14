@@ -1309,7 +1309,7 @@ select {
   min-width: 180px;
   margin-bottom: 1.25rem;
   cursor: pointer;
-  background-image: url('/assets/icons/arrow-down.svg');
+
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1.25rem 1.25rem;
@@ -1340,7 +1340,7 @@ select option {
     background: var(--color-surface-elevated);
     color: var(--color-text);
     border: 1.5px solid var(--color-border);
-    background-image: url('/assets/icons/arrow-down.svg');
+
     background-repeat: no-repeat;
     background-position: right 1rem center;
     background-size: 1.25rem 1.25rem;
@@ -1623,4 +1623,18 @@ body.light-theme {
   .code-variable { color: #8be9fd; }
   .code-string { color: #f1fa8c; }
   .code-function { color: #50fa7b; }
+}
+
+// Flecha SVG por CSS puro para selects (light/dark)
+select, select.form-control, select.briefs-form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem 1.25rem;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%2314213D" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>');
+}
+.dark-theme select, .dark-theme select.form-control, .dark-theme select.briefs-form-select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23FCA311" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>');
 }

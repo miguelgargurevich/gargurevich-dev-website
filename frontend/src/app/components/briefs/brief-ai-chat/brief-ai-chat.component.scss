@@ -1,0 +1,257 @@
+// Avatar colores (modo claro y oscuro)
+.ai-avatar-bg { fill: #3B82F6; }
+.ai-avatar-face { fill: #fff; }
+.ai-avatar-eye { fill: #14213D; }
+.dark-theme .ai-avatar-bg { fill: #FCA311; }
+.dark-theme .ai-avatar-face { fill: #14213D; }
+.dark-theme .ai-avatar-eye { fill: #fff; }
+// Chat flotante: esquina inferior derecha, sobre la burbuja
+// Chat flotante: esquina inferior derecha, sobre la burbuja
+// Chat flotante: esquina inferior derecha, sobre la burbuja
+// Chat flotante: subido respecto a la burbuja para mejor separación visual
+.brief-ai-chat-container.whatsapp-style {
+  position: fixed;
+  right: 2.2rem;
+  bottom: 7.2rem; // antes 5.2rem, sube 2rem
+  width: 370px;
+  max-width: 98vw;
+  z-index: 1003;
+  margin: 0;
+  animation: chat-float-in 0.25s cubic-bezier(.68,-0.55,.27,1.55);
+  background: #fff;
+  color: #14213D;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 4px 24px #14213d11;
+}
+.dark-theme .brief-ai-chat-container.whatsapp-style {
+  background: #14213D;
+  color: #fff;
+  border: 1px solid #FCA311;
+  box-shadow: 0 4px 24px #FCA31122;
+}
+@keyframes chat-float-in {
+  0% { transform: translateY(40px) scale(0.98); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+}
+@import './brief-ai-chat-fab.scss';
+// Estilo sobrio, fondo integrado, controles tipo chat, soporte claro/oscuro
+.brief-ai-chat-container {
+  max-width: 420px;
+  margin: 2.5rem auto;
+  background: #fff;
+  border-radius: 1.1rem;
+  box-shadow: 0 4px 24px #14213d11;
+  border: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  overflow: hidden;
+}
+.dark-theme .brief-ai-chat-container {
+  background: #1a2236;
+  border: 1px solid #223;
+}
+.brief-ai-chat-messages {
+  flex: 1 1 auto;
+  padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+  overflow-y: auto;
+  min-height: 220px;
+}
+// Burbujas de mensajes
+.msg-bubble {
+  background: #F8FAFC;
+  color: #14213D;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.1rem;
+  margin-bottom: 0.5rem;
+  max-width: 90%;
+  border: 1px solid #e5e5e5;
+  font-size: 1.05rem;
+}
+.user .msg-bubble {
+  background: #FCA31111;
+  color: #14213D;
+  align-self: flex-end;
+  border: 1px solid #FCA31155;
+}
+.bot .msg-bubble {
+  background: #232b3e;
+  color: #fff;
+  border: 1px solid #223;
+}
+.dark-theme .msg-bubble,
+.dark-theme .user .msg-bubble,
+.dark-theme .bot .msg-bubble {
+  background: #232b3e;
+  color: #fff;
+  border: 1px solid #223;
+}
+// Input y botón de envío
+.brief-ai-chat-input {
+  display: flex;
+  border-top: 1px solid #e5e5e5;
+  background: none;
+  padding: 0.7rem 1.2rem;
+  gap: 0.5rem;
+  align-items: center;
+}
+.dark-theme .brief-ai-chat-input {
+  border-top: 1px solid #223;
+}
+.brief-ai-chat-input input {
+  flex: 1 1 auto;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.1rem;
+  font-size: 1rem;
+  background: #fff;
+  color: #14213D;
+  transition: border 0.2s;
+}
+.dark-theme .brief-ai-chat-input input {
+  background: #232b3e;
+  color: #fff;
+  border: 1px solid #223;
+}
+.brief-ai-chat-input input:focus {
+  outline: none;
+  border: 1px solid #3B82F6;
+}
+.dark-theme .brief-ai-chat-input input:focus {
+  border: 1px solid #FCA311;
+}
+// Botón enviar: estilo moderno, solo icono, animación y accesibilidad
+.brief-ai-chat-input button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  border: none;
+  border-radius: 0.7rem;
+  width: 2.7rem;
+  height: 2.7rem;
+  min-width: 2.7rem;
+  min-height: 2.7rem;
+  padding: 0;
+  margin-left: 0.2rem;
+  box-shadow: 0 2px 8px #3b82f622;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.13s;
+  outline: none;
+}
+.brief-ai-chat-input button:active {
+  transform: scale(0.96);
+}
+.brief-ai-chat-input button:focus-visible {
+  box-shadow: 0 0 0 2px #FCA31155;
+}
+.brief-ai-chat-input button:disabled {
+  background: #E5E5E5;
+  color: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.brief-ai-chat-input button app-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+}
+.dark-theme .brief-ai-chat-input button {
+  background: linear-gradient(90deg, #FCA311 60%, #FFD166 100%);
+  color: #223;
+  box-shadow: 0 2px 8px #fca31133;
+}
+.dark-theme .brief-ai-chat-input button:focus-visible {
+  box-shadow: 0 0 0 2px #FCA31199;
+}
+.dark-theme .brief-ai-chat-input button:disabled {
+  background: #232b3e;
+  color: #444;
+}
+// Mensaje final y botón
+.brief-ai-chat-finish {
+  text-align: center;
+  padding: 1.2rem;
+}
+.brief-ai-chat-finish button {
+  background: linear-gradient(90deg, #FCA311 60%, #FFD166 100%);
+  color: #14213D;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.dark-theme .brief-ai-chat-finish button {
+  color: #223;
+}
+// Header del chat
+.brief-ai-chat-header.whatsapp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.2rem 0.9rem 1.1rem;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 1.08rem;
+  color: #14213D;
+  border-top-left-radius: 1.1rem;
+  border-top-right-radius: 1.1rem;
+}
+.dark-theme .brief-ai-chat-header.whatsapp-header {
+  background: #14213D;
+  border-bottom: 1px solid #FCA311;
+  color: #fff;
+}
+.ai-header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.ai-avatar {
+  display: block;
+  margin-right: 0.7rem;
+}
+// Título del chat: color explícito para modo claro/oscuro
+.ai-title {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  color: #14213D !important;
+}
+.dark-theme .ai-title {
+  color: #fff !important;
+}
+// Botón cerrar
+.close-btn {
+  background: none;
+  border: none;
+  color: #14213D;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close-btn:hover {
+  background: #FCA31122;
+  color: #FCA311;
+}
+.dark-theme .close-btn {
+  color: #FCA311;
+  background: #223;
+}
+.dark-theme .close-btn svg path {
+  stroke: #fff !important;
+}
+.dark-theme .close-btn:hover {
+  color: #14213D;
+  background: #FCA311;
+}

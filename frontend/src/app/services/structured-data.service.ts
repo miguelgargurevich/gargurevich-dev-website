@@ -34,7 +34,7 @@ export class StructuredDataService {
       url: 'https://gargurevich.dev',
       logo: 'https://gargurevich.dev/assets/logo.png',
       description: 'Empresa especializada en desarrollo web de alta calidad. Creamos soluciones digitales modernas y escalables.',
-      email: 'hola@gargurevich.dev',
+      email: 'contacto@gargurevich.dev',
       telephone: '+51-1-234-5678',
       address: {
         '@type': 'PostalAddress',
